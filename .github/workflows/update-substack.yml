@@ -1,17 +1,16 @@
 name: Update Substack Feed
 on:
   schedule:
-    - cron: '0 */6 * * *' # Every 6 hours
+    - cron: '0 */3 * * *' # Every 3 hours
   workflow_dispatch:      # Manual trigger
 jobs:
   fetch:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # <--- THIS IS CRITICAL
-    steps:
-      ...
-      - uses: actions/checkout@v4
-      - name: Fetch Feed
+      contents: write # Line 12
+    steps:            # Line 13 (Must be aligned with 'permissions')
+      - name: Checkout repository
+        uses: actions/checkout@v4
         uses: Promptly-Technologies-LLC/rss-fetch-action@v2
         with:
           feed_url: https://thinkersdilemma.substack.com/feed
