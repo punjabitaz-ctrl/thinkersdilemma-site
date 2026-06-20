@@ -1,3 +1,22 @@
-- name: Fetch Feed
-      run: |
-        curl "https://api.rss2json.com/v1/api.json?rss_url=https://thinkersdilemma.substack.com/feed" > articles.json
+name: Update Substack Feed
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch and Save Feed
+        run: |
+          curl -L "https://api.rss2json.com/v1/api.json?rss_url=https://thinkersdilemma.substack.com/feed" > articles.json
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add articles.json
+          git commit -m "Auto-update Substack articles" || exit 0
+          git push
