@@ -1,0 +1,23 @@
+name: Update Substack Feed
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Every 6 hours
+  workflow_dispatch:      # Manual trigger
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    permissions: { contents: write }
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch Feed
+        uses: Promptly-Technologies-LLC/rss-fetch-action@v2
+        with:
+          feed_url: https://thinkersdilemma.substack.com/feed
+          file_path: ./assets/data/articles.json # Ensure this path matches your site's structure
+      - name: Commit & Push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add assets/data/articles.json
+          git commit -m "Auto-update Substack articles" || exit 0
+          git push
