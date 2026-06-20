@@ -46,9 +46,9 @@ window.TD_CONTENT = {
       columns: [
         { title: "Read", links: [
           { label: "Latest essay", href: "essay-005.html" },
-          { label: "All essays", href: "essays-substack.html" },
-          { label: "Subscribe free", href: "index-substack.html#subscribe" },
-          { label: "Archive", href: "archive-substack.html" }
+          { label: "All essays", href: "essays.html" },
+          { label: "Subscribe free", href: "index.html#subscribe" },
+          { label: "Archive", href: "archive.html" }
         ]},
         { title: "Topics", links: [
           { label: "Diaspora & identity", href: "#" },

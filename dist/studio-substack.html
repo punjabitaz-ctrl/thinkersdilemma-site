@@ -171,7 +171,7 @@ select { cursor:pointer; }
   <div class="bar-actions">
     <span id="authUserBadge" style="display:none;font:500 11px/1 var(--mono);letter-spacing:.12em;color:var(--ink-3);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
     <button id="btnSignOut" class="btn ghost" style="display:none;" onclick="signOut()">Sign out</button>
-    <a href="index-substack.html" class="btn ghost" style="text-decoration:none;">← Live site</a>
+    <a href="index.html" class="btn ghost" style="text-decoration:none;">← Live site</a>
     <a href="studio-distribute.html" class="btn ghost" style="text-decoration:none;">Distribute ↗</a>
     <span class="saved-msg" id="savedMsg">Saved</span>
     <button class="btn ghost" id="btnPreview">Preview ↗</button>
@@ -834,7 +834,7 @@ function signOut() {
   });
 
   document.getElementById("btnPreview").addEventListener("click",function(){
-    autoSave();window.open("index-substack.html?tdpreview=1","_blank");
+    autoSave();window.open("index.html?tdpreview=1","_blank");
   });
 
   /* ---- Init ------------------------------------------------------ */
