@@ -292,13 +292,13 @@ textarea.out:focus{outline:none;border-color:var(--signal);}
     <!-- GITHUB ACTIONS -->
     <div class="panel" id="panel-github">
       <div class="sect-title">GitHub Actions — Free Automation</div>
-      <p class="sect-desc">Your project already has <code>.github/workflows/sync-rss.yml</code> running every 6 hours. You can extend it to also cross-post to each platform using their APIs — free, no third-party services needed.</p>
+      <p class="sect-desc">The site auto-updates from Substack in the browser (<code>dist/rss-sync.js</code>) — no workflow needed for that. If you also want free server-side cross-posting to each platform, you can add a GitHub Actions workflow from scratch:</p>
       <div class="steps">
         <div class="step"><span class="step-n">1</span><div class="step-body"><h4>Push your project to GitHub</h4><p>If you haven't already: create a repo, <code>git init</code>, add your files, push. The <code>.github/workflows/</code> folder will activate automatically.</p></div></div>
         <div class="step"><span class="step-n">2</span><div class="step-body"><h4>Create platform API credentials</h4><p><strong>Reddit:</strong> reddit.com/prefs/apps → create "script" app. <strong>LinkedIn:</strong> linkedin.com/developers/apps → request <code>w_member_social</code>. <strong>Facebook:</strong> developers.facebook.com → create app, get Page token. <strong>Medium:</strong> medium.com/me/settings → Integration tokens.</p></div></div>
         <div class="step"><span class="step-n">3</span><div class="step-body"><h4>Add secrets to GitHub</h4><p>In your repo: <strong>Settings → Secrets and variables → Actions</strong>. Add each credential as a secret: <code>REDDIT_CLIENT_ID</code>, <code>REDDIT_SECRET</code>, <code>REDDIT_USERNAME</code>, <code>REDDIT_PASSWORD</code>, <code>LINKEDIN_TOKEN</code>, <code>FACEBOOK_PAGE_TOKEN</code>, <code>FACEBOOK_PAGE_ID</code>, <code>MEDIUM_TOKEN</code>.</p></div></div>
-        <div class="step"><span class="step-n">4</span><div class="step-body"><h4>Add posting scripts</h4><p>The existing <code>scripts/sync-rss-node.js</code> already detects new essays. Add posting functions to it or create separate scripts — one per platform. Each script: fetch the latest essay from the RSS feed, POST to the platform API using the stored secrets.</p></div></div>
-        <div class="step"><span class="step-n">5</span><div class="step-body"><h4>Update the workflow</h4><p>In <code>.github/workflows/sync-rss.yml</code>, add a step after the RSS sync: <code>node scripts/post-to-platforms.js</code>. Gate it with <code>if: steps.sync.outputs.new_content == 'true'</code> so it only runs when there's actually a new essay — avoiding duplicate posts.</p></div></div>
+        <div class="step"><span class="step-n">4</span><div class="step-body"><h4>Add posting scripts</h4><p>Create a small Node script per platform under <code>scripts/</code>. Each script: fetch the latest essay from the Substack RSS feed, then POST to that platform's API using the stored secrets.</p></div></div>
+        <div class="step"><span class="step-n">5</span><div class="step-body"><h4>Add a workflow</h4><p>Create a workflow in <code>.github/workflows/</code> that runs your posting scripts on a schedule (e.g. every 6 hours), gated so it only posts when a new essay has appeared — avoiding duplicate posts.</p></div></div>
       </div>
     </div>
 
@@ -308,7 +308,7 @@ textarea.out:focus{outline:none;border-color:var(--signal);}
         <div class="sect-title" style="margin:0;border:none;padding:0;">Status &amp; Validation</div>
         <button id="btnRefreshStatus" class="copy-btn" style="background:var(--ink);">&#8635; Refresh</button>
       </div>
-      <p class="sect-desc">Live view of <code>dist/status.json</code> — written by GitHub Actions after every sync and cross-post run.</p>
+      <p class="sect-desc">View of <code>dist/status.json</code> — a static snapshot. (The automated writer was removed; if you add the cross-post workflow above, have it update this file.)</p>
       <div id="statusBody" style="font:400 italic 16px/1.4 var(--serif);color:var(--ink-3);padding:32px 0;">Loading…</div>
     </div>
 
