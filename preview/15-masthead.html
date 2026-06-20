@@ -1,0 +1,36 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Masthead</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 24px 32px; background: var(--paper); }
+  .masthead {
+    border-top: 6px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 14px 0;
+    display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px;
+  }
+  .left, .right { display: flex; gap: 16px; align-items: center; }
+  .right { justify-content: flex-end; }
+  .left .meta, .right .meta { font: 500 11px/1 var(--mono); letter-spacing: 0.18em; color: var(--ink-2); text-transform: uppercase; }
+  .center { text-align: center; }
+  .name { font: 500 italic 38px/1 var(--serif); color: var(--ink); letter-spacing: -0.01em; }
+  .tag  { font: 500 10px/1 var(--mono); letter-spacing: 0.32em; color: var(--signal); text-transform: uppercase; margin-top: 6px; }
+  .strap { display:flex; justify-content: space-between; padding-top: 10px; }
+  .strap .item { font: 500 11px/1 var(--mono); letter-spacing: 0.18em; color: var(--ink-3); text-transform: uppercase; }
+  .strap .item b { color: var(--signal); font-weight: 500; }
+</style></head>
+<body>
+  <div class="masthead">
+    <div class="left"><span class="meta">Issue № 014</span></div>
+    <div class="center">
+      <div class="name">Thinkers Dilemma</div>
+      <div class="tag">A work of inquiry</div>
+    </div>
+    <div class="right"><span class="meta">04 · 23 · 2026</span></div>
+  </div>
+  <div class="strap">
+    <span class="item">Essay <b>·</b> The Watchers</span>
+    <span class="item">Video <b>·</b> 9'42"</span>
+    <span class="item">Field notes <b>·</b> 3 letters</span>
+    <span class="item">Subscribers <b>·</b> 21,402</span>
+  </div>
+</body></html>

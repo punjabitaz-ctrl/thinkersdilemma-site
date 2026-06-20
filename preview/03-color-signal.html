@@ -1,0 +1,28 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Color — Signal</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 24px 32px; background: var(--paper); }
+  .header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+  .title { font: 500 italic 28px/1 var(--serif); color: var(--ink); }
+  .kicker { font: var(--kicker); letter-spacing: 0.2em; color: var(--ink-3); text-transform: uppercase; }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .swatch { aspect-ratio: 16/11; border-radius: 2px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; }
+  .swatch .name { font: var(--label); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+  .swatch .hex  { font: var(--numeral); font-size: 13px; font-feature-settings: "tnum"; }
+  .on-cream { background: var(--signal); color: #fff; }
+  .deep     { background: var(--signal-deep); color: #fff; }
+  .quiet    { background: var(--signal-quiet); color: #fff; }
+  .tint     { background: var(--signal-tint); color: var(--signal-deep); border: 1px solid var(--rule); }
+</style></head>
+<body>
+  <div class="header">
+    <div class="title">Signal — Vermilion</div>
+    <span class="kicker">The accent · one color does the work</span>
+  </div>
+  <div class="row">
+    <div class="swatch on-cream"><span class="name">Signal</span><span class="hex">#D9351F</span></div>
+    <div class="swatch deep"><span class="name">Deep</span><span class="hex">#9F2614</span></div>
+    <div class="swatch quiet"><span class="name">Quiet</span><span class="hex">#B23725</span></div>
+    <div class="swatch tint"><span class="name">Tint</span><span class="hex">#F6D9D2</span></div>
+  </div>
+</body></html>

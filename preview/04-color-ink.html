@@ -1,0 +1,28 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Color — Ink</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 24px 32px; background: var(--paper); }
+  .header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+  .title { font: 500 italic 28px/1 var(--serif); color: var(--ink); }
+  .kicker { font: var(--kicker); letter-spacing: 0.2em; color: var(--ink-3); text-transform: uppercase; }
+  .row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .swatch { aspect-ratio: 16/11; border-radius: 2px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid var(--rule-soft); }
+  .swatch .name { font: var(--label); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; }
+  .swatch .hex  { font: var(--numeral); font-size: 13px; font-feature-settings: "tnum"; }
+  .s1 { background: var(--ink);   color: var(--paper-hi); }
+  .s2 { background: var(--ink-2); color: var(--paper-hi); }
+  .s3 { background: var(--ink-3); color: var(--paper-hi); }
+  .s4 { background: var(--ink-4); color: var(--ink); }
+</style></head>
+<body>
+  <div class="header">
+    <div class="title">Ink — Foreground</div>
+    <span class="kicker">Warm near-black · never pure</span>
+  </div>
+  <div class="row">
+    <div class="swatch s1"><span class="name">Ink</span><span class="hex">#14110E</span></div>
+    <div class="swatch s2"><span class="name">Ink-2</span><span class="hex">#3A342C</span></div>
+    <div class="swatch s3"><span class="name">Ink-3</span><span class="hex">#6B6258</span></div>
+    <div class="swatch s4"><span class="name">Ink-4</span><span class="hex">#A39988</span></div>
+  </div>
+</body></html>

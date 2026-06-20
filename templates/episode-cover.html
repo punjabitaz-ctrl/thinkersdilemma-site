@@ -1,0 +1,125 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Episode / series cover</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; background:#2a2522; display:grid; place-items:center; min-height:100vh; }
+  .frame { width: 1400px; height: 1400px; background: var(--paper); position: relative; overflow: hidden;
+           font-family: var(--sans); }
+  .frame::before {
+    content:""; position:absolute; inset:0; pointer-events:none; mix-blend-mode: multiply; opacity: 0.9;
+    background-image:
+      radial-gradient(circle at 23% 19%, rgba(20,17,14,0.028) 0 1.4px, transparent 2px),
+      radial-gradient(circle at 71% 63%, rgba(20,17,14,0.025) 0 1.2px, transparent 2px),
+      radial-gradient(circle at 47% 88%, rgba(20,17,14,0.022) 0 1.2px, transparent 2px),
+      radial-gradient(circle at 88% 32%, rgba(20,17,14,0.028) 0 1.4px, transparent 2px);
+    background-size: 18px 18px, 24px 24px, 30px 30px, 22px 22px;
+  }
+
+  /* Magazine cover-style layout */
+  .border {
+    position: absolute; inset: 60px; border: 1px solid var(--ink); z-index: 1;
+  }
+
+  /* Masthead at top */
+  .masthead {
+    position: absolute; top: 60px; left: 60px; right: 60px;
+    border-bottom: 1px solid var(--ink);
+    padding: 28px 36px;
+    background: var(--paper);
+    display: flex; justify-content: space-between; align-items: center; z-index: 2;
+  }
+  .top-bar { position:absolute; top: 60px; left: 60px; right: 60px; height: 12px; background: var(--ink); z-index: 3; }
+  .masthead .pub { font: 500 italic 56px/1 var(--serif); color: var(--ink); letter-spacing: -0.01em; padding-top: 18px; }
+  .masthead .meta { font: 500 16px/1 var(--mono); letter-spacing: 0.28em; color: var(--ink-2); text-transform: uppercase; padding-top: 18px; }
+
+  /* Center stage */
+  .stage { position:absolute; top: 240px; bottom: 240px; left: 110px; right: 110px;
+           display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: stretch; z-index: 2; }
+
+  .left { display: flex; flex-direction: column; justify-content: space-between; gap: 28px; }
+  .kicker { display: flex; gap: 18px; align-items: center; }
+  .kicker .no { font: 500 18px/1 var(--mono); letter-spacing: 0.28em; color: var(--signal); text-transform: uppercase; }
+  .kicker .dash { width: 36px; height: 1px; background: var(--ink); }
+  .kicker .cat { font: 500 18px/1 var(--mono); letter-spacing: 0.22em; color: var(--ink-2); text-transform: uppercase; }
+
+  .hl { font: 500 italic 200px/0.86 var(--serif); color: var(--ink); letter-spacing: -0.03em; }
+  .hl em { color: var(--signal); font-style: italic; }
+  .hl .underline { display: inline-block; border-bottom: 8px solid var(--signal); padding-bottom: 4px; }
+
+  .dek { font: 400 24px/1.4 var(--sans); color: var(--ink-2); max-width: 540px; margin-top: 14px; }
+  .byline { font: 500 14px/1 var(--mono); letter-spacing: 0.22em; color: var(--ink-2); text-transform: uppercase; }
+  .byline b { color: var(--signal); font-weight: 500; }
+
+  /* Right plate */
+  .right { display: flex; flex-direction: column; gap: 24px; align-items: stretch; justify-content: space-between; }
+  .plate { background: var(--ink); color: var(--paper); padding: 36px 32px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .plate .label { font: 500 13px/1 var(--mono); letter-spacing: 0.32em; text-transform: uppercase; color: rgba(242,235,221,0.55); }
+  .plate .num   { font: 500 280px/0.85 var(--mono); font-feature-settings:"tnum"; letter-spacing: -0.05em; color: var(--paper); margin-top: 18px; }
+  .plate .accent { width: 72px; height: 5px; background: var(--signal); margin: 22px 0 16px; }
+  .plate .name  { font: 500 italic 42px/1 var(--serif); color: var(--paper); }
+  .plate .sub   { font: 500 14px/1.4 var(--mono); letter-spacing: 0.22em; color: rgba(242,235,221,0.7); text-transform: uppercase; margin-top: 14px; }
+
+  /* Bottom bar */
+  .bottom { position:absolute; bottom: 80px; left: 110px; right: 110px;
+            border-top: 4px solid var(--ink); border-bottom: 1px solid var(--ink);
+            padding: 22px 0;
+            display:flex; justify-content: space-between; align-items: center; z-index: 2; }
+  .bottom .left-grp { display: flex; gap: 18px; align-items: center; }
+  .bottom .stamp { color: var(--ink); }
+  .bottom .stamp svg { width: 72px; height: 72px; display: block; }
+  .bottom .tag { font: 500 italic 26px/1 var(--serif); color: var(--ink); }
+  .bottom .right-grp { display: flex; gap: 28px; align-items: center; }
+  .bottom .meta { font: 500 14px/1 var(--mono); letter-spacing: 0.22em; color: var(--ink-2); text-transform: uppercase; }
+</style></head>
+<body>
+  <div class="frame">
+    <div class="border"></div>
+    <div class="top-bar"></div>
+    <div class="masthead">
+      <div class="pub">Thinkers Dilemma</div>
+      <div class="meta">A work of inquiry · MMXXVI</div>
+    </div>
+
+    <div class="stage">
+      <div class="left">
+        <div class="kicker">
+          <span class="no">Issue № 014</span>
+          <span class="dash"></span>
+          <span class="cat">Surveillance · Series</span>
+        </div>
+        <div class="hl">The<br><em><span class="underline">watchers</span></em>.</div>
+        <div>
+          <div class="dek">Six episodes on ambient surveillance — what it costs, who pays, and the quiet hands that shape consent into compliance.</div>
+          <div class="byline" style="margin-top:18px">By <b>—</b> The Editor &nbsp; · &nbsp; vi parts &nbsp; · &nbsp; 04 · 23 · 2026</div>
+        </div>
+      </div>
+      <div class="right">
+        <div class="plate">
+          <div>
+            <div class="label">Issue</div>
+            <div class="num">014</div>
+            <div class="accent"></div>
+            <div class="name">The Watchers</div>
+          </div>
+          <div class="sub">Part i — VI<br>9'42" runtime</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom">
+      <div class="left-grp">
+        <div class="stamp">
+          <svg viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="3"/>
+            <line x1="50" y1="4" x2="50" y2="96" stroke="currentColor" stroke-width="3"/>
+            <path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/>
+            <circle cx="68" cy="50" r="3.5" fill="currentColor"/>
+          </svg>
+        </div>
+        <span class="tag">A standing question, asked again.</span>
+      </div>
+      <div class="right-grp">
+        <span class="meta">Substack · YouTube · TikTok</span>
+      </div>
+    </div>
+  </div>
+</body></html>

@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The DEI rollback and the illusion it shattered — Thinkers Dilemma</title>
+<meta name="description" content="The dismantling of corporate diversity programs has exposed the gap between performing equity and practising it. What was always compliance theater has been revealed.">
+<meta name="theme-color" content="#F2EBDD">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>(function(){try{var s=localStorage.getItem("td-theme");var n=s?s==="night":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(n)document.documentElement.setAttribute("data-theme","night");}catch(e){}})();</script>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="site.css">
+<style>
+  :root{--signal:#C54430;--signal-deep:#A03323;--signal-tint:#F7EAE7;--signal-quiet:#D4553E;}
+  html[data-theme="night"]{--signal:#D9553F;--signal-deep:#B03D2C;}
+  .substack-cta{display:inline-flex;align-items:center;gap:5px;font:600 10px/1 var(--mono);letter-spacing:0.18em;text-transform:uppercase;color:var(--signal);text-decoration:none;padding:2px 8px;border:1px solid var(--signal);border-radius:2px;transition:background var(--t-fast),color var(--t-fast);}
+  .substack-cta:hover{background:var(--signal);color:#fff;}
+  .variant-note{font:400 11px/1.5 var(--mono);letter-spacing:0.08em;color:var(--ink-4);text-align:center;padding:18px 0 6px;}
+  .variant-note a{color:var(--signal);text-decoration:none;}
+  .variant-note a:hover{text-decoration:underline;}
+  .progress{position:fixed;top:0;left:0;height:3px;background:var(--signal);width:0;z-index:100;transition:width 80ms linear;}
+  .art-head{padding:56px 0 36px;border-bottom:2px solid var(--ink);text-align:center;max-width:860px;margin:0 auto;}
+  .art-head .kicker-row{justify-content:center;}
+  .art-head .hl{font:500 italic clamp(44px,6vw,84px)/0.96 var(--serif);letter-spacing:-0.025em;margin:6px 0 22px;}
+  .art-head .hl em{color:var(--signal);font-style:italic;}
+  .art-head .dek{font:400 23px/1.5 var(--serif);color:var(--ink-2);max-width:660px;margin:0 auto 28px;}
+  .art-meta{display:flex;justify-content:center;gap:16px;align-items:center;flex-wrap:wrap;font:500 11px/1 var(--mono);letter-spacing:0.18em;text-transform:uppercase;color:var(--ink-3);}
+  .art-meta b{color:var(--signal);font-weight:500;}
+  .hero-fig{margin:40px auto;max-width:1040px;}
+  .hero-fig .thumb{aspect-ratio:21/9;}
+  .hero-fig .cap{font:400 13px/1.5 var(--mono);letter-spacing:0.04em;color:var(--ink-3);margin-top:10px;display:flex;gap:10px;}
+  .hero-fig .cap .src{color:var(--signal);text-transform:uppercase;letter-spacing:0.16em;font-weight:500;}
+  .art-body{max-width:1180px;margin:0 auto;padding:24px 0 0;display:grid;grid-template-columns:200px 1fr 200px;gap:48px;align-items:start;}
+  .rail-left{position:sticky;top:80px;}
+  .rail-left .lbl{font:500 11px/1 var(--mono);letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-3);padding-bottom:12px;border-bottom:1px solid var(--rule);margin-bottom:14px;}
+  .rail-left .toc a{display:block;font:400 14px/1.35 var(--sans);color:var(--ink-2);padding:8px 0;border-bottom:1px solid var(--rule-soft);transition:color var(--t-fast) var(--ease);}
+  .rail-left .toc a:hover,.rail-left .toc a.active{color:var(--signal);}
+  .rail-left .share{margin-top:24px;display:flex;flex-direction:column;gap:8px;}
+  .rail-left .share a{font:500 11px/1 var(--mono);letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-2);padding:9px 0;border-top:1px solid var(--rule-soft);transition:color var(--t-fast) var(--ease);}
+  .rail-left .share a:hover{color:var(--signal);}
+  .prose{font:var(--body-lg);color:var(--ink);max-width:680px;}
+  .prose>p{margin:0 0 22px;}
+  .prose .lede{font:400 24px/1.45 var(--serif);color:var(--ink);margin-bottom:26px;}
+  .prose .lede::first-letter{font:500 italic 96px/0.66 var(--serif);float:left;color:var(--signal);padding:10px 12px 0 0;margin-top:6px;}
+  .prose h3{font:500 italic 32px/1.1 var(--serif);letter-spacing:-0.01em;margin:44px 0 18px;}
+  .prose h3 .n{font:500 13px/1 var(--mono);letter-spacing:0.2em;color:var(--signal);display:block;margin-bottom:8px;text-transform:uppercase;}
+  .prose blockquote{margin:36px 0;padding:0 0 0 28px;border-left:3px solid var(--signal);}
+  .prose blockquote p{font:400 italic 28px/1.25 var(--serif);color:var(--ink);margin:0;}
+  .prose .standfirst{background:var(--paper-hi);border:1px solid var(--rule);padding:22px 26px;margin:32px 0;}
+  .prose .standfirst .l{font:500 11px/1 var(--mono);letter-spacing:0.22em;text-transform:uppercase;color:var(--signal);display:block;margin-bottom:10px;}
+  .prose .standfirst p{font:400 17px/1.55 var(--sans);color:var(--ink-2);margin:0;}
+  .prose .pull{font:400 italic 34px/1.2 var(--serif);color:var(--signal);margin:36px 0;letter-spacing:-0.01em;}
+  .rail-right{position:sticky;top:80px;display:flex;flex-direction:column;gap:24px;}
+  .rail-right .plate{background:var(--ink);color:var(--paper);padding:22px 20px;}
+  .rail-right .plate .label{font:500 10px/1 var(--mono);letter-spacing:0.28em;text-transform:uppercase;color:rgba(242,235,221,0.55);}
+  .rail-right .plate .num{font:500 76px/0.85 var(--mono);margin:10px 0;font-feature-settings:"tnum";letter-spacing:-0.03em;}
+  .rail-right .plate .accent{width:40px;height:3px;background:var(--signal);margin-bottom:10px;}
+  .rail-right .plate .name{font:500 italic 20px/1.05 var(--serif);}
+  .rail-right .box{border:1px solid var(--rule);padding:18px;}
+  .rail-right .box h5{font:500 11px/1 var(--mono);letter-spacing:0.2em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px;}
+  .rail-right .box .qrow{display:flex;gap:10px;padding:8px 0;border-top:1px solid var(--rule-soft);font:400 15px/1.3 var(--serif);}
+  .rail-right .box .qrow:first-of-type{border-top:0;}
+  .rail-right .box .qrow .q{color:var(--signal);font-weight:500;}
+  .art-foot{max-width:680px;margin:56px auto 0;padding:28px 0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink);display:flex;gap:18px;align-items:center;}
+  .art-foot .av{width:56px;height:56px;border-radius:999px;background:var(--ink);color:var(--paper);display:grid;place-items:center;font:500 italic 24px/1 var(--serif);flex-shrink:0;}
+  .art-foot .who .n{font:500 italic 22px/1 var(--serif);}
+  .art-foot .who .d{font:400 14px/1.5 var(--sans);color:var(--ink-2);margin-top:4px;}
+  .more{max-width:1040px;margin:0 auto;padding:48px 0;}
+  @media(max-width:1080px){.art-body{grid-template-columns:1fr;gap:32px;max-width:720px;}.rail-left,.rail-right{position:static;}.rail-left .toc{display:none;}.rail-right{flex-direction:row;flex-wrap:wrap;}.rail-right .plate,.rail-right .box{flex:1;min-width:200px;}}
+</style>
+</head>
+<body class="paper-grain" data-page="article">
+
+<div class="progress" id="progress"></div>
+
+<div class="utility">
+  <div class="wrap">
+    <div class="group">
+      <a href="index-substack.html">← Front Page</a>
+      <span class="dot">·</span>
+      Issue № 005 · Power &amp; systems
+    </div>
+    <div class="group">
+      <a class="substack-cta" href="https://thinkersdilemma.substack.com/p/the-dei-rollback-and-the-illusion" target="_blank" rel="noopener">Read on Substack ↗</a>
+    </div>
+  </div>
+</div>
+
+<nav class="mainnav">
+  <div class="wrap">
+    <a href="index-substack.html" class="mini-mark" aria-label="Thinkers Dilemma">
+      <svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="5"/><line x1="50" y1="4" x2="50" y2="96" stroke="currentColor" stroke-width="5"/><path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/><circle cx="68" cy="50" r="4" fill="currentColor"/></svg>
+    </a>
+    <a href="index-substack.html">Front Page</a>
+    <a href="essays-substack.html" class="active">Essays</a>
+    <a href="episodes-substack.html">Episodes</a>
+    <a href="notes-substack.html">Field Notes</a>
+    <a href="archive-substack.html">Archive</a>
+    <a href="about-substack.html">About</a>
+    <a href="index-substack.html#subscribe">Subscribe</a>
+  </div>
+</nav>
+
+<main class="wrap-wide">
+
+  <header class="art-head" data-screen-label="Article header">
+    <div class="kicker-row">
+      <span class="kicker-tag">Issue № 005 · Power &amp; systems</span>
+      <span class="kicker-dot"></span>
+      <span class="kicker-cat">Corporate America</span>
+    </div>
+    <h1 class="hl">The DEI rollback and<br>the <em>illusion</em> it shattered.</h1>
+    <p class="dek">The dismantling of corporate diversity programs has exposed the gap between performing equity and practising it. When the rollback arrived, it revealed something that was always compliance theater — and the people who built their careers on those promises are now reckoning with what the contract was actually worth.</p>
+    <div class="art-meta">
+      <span>By <b>Taz Punjabi</b></span><span>·</span>
+      <span>June 18, 2026</span><span>·</span>
+      <span>12 min read</span>
+    </div>
+  </header>
+
+  <figure class="hero-fig">
+    <div class="thumb">
+      <div class="big-q"><div class="q" style="font-size:56px">Was it ever <em>real?</em></div></div>
+    </div>
+    <figcaption class="cap"><span class="src">Essay 005</span> Power &amp; systems · June 18, 2026 · Thinkers Dilemma</figcaption>
+  </figure>
+
+  <div class="art-body">
+
+    <aside class="rail-left">
+      <div class="lbl">In this essay</div>
+      <nav class="toc" id="toc">
+        <a href="#s1" class="active">i · The Announcement</a>
+        <a href="#s2">ii · Compliance Theater</a>
+        <a href="#s3">iii · What Was Actually Built</a>
+        <a href="#s4">iv · The Real Work</a>
+      </nav>
+      <div class="share">
+        <a href="https://thinkersdilemma.substack.com/p/the-dei-rollback-and-the-illusion" target="_blank" rel="noopener">↗ Full essay on Substack</a>
+        <a href="essays-substack.html">← All essays</a>
+      </div>
+    </aside>
+
+    <article class="prose">
+      <p class="lede">Sometime in the quiet transition between the political volatility of 2024 and the corporate realignment of 2025, a coordinated signal began to emerge across the Fortune 500. The subject lines were sanitized. The word <em>diversity</em> was replaced by <em>meritocracy</em>, or simply omitted altogether.</p>
+
+      <h3 id="s1"><span class="n">Section i</span>The Announcement</h3>
+      <p>The rollback did not arrive as a scandal. It arrived as a press release. Companies did not announce that they were abandoning equity — they announced they were "refocusing on core business priorities" or "streamlining operational structures." The language was careful precisely because the reality was not.</p>
+      <p>What was being dismantled was a decade of commitments: hiring pipelines, sponsorship programs, supplier diversity mandates that had been made, in many cases, in the emotional heat of 2020, without the institutional infrastructure to sustain them. When the commitments were soft, the dismantling was quiet. When they had been written into vendor contracts or executive scorecards, the dismantling required lawyers.</p>
+
+      <div class="standfirst">
+        <span class="l">The central question</span>
+        <p>The rollback did not destroy something real. It revealed what was always compliance theater. The question it forces is more useful than the performative answer that preceded it: what would structural equity actually look like?</p>
+      </div>
+
+      <h3 id="s2"><span class="n">Section ii</span>Compliance Theater</h3>
+      <p>The most striking data point from the rollback period is how little changed in companies where equity had been structurally embedded, and how quickly everything changed in companies where it had not. This is not a surprise to organizational researchers. It is the predicted outcome of a system built on theater rather than architecture.</p>
+      <p>A DEI training day is not a policy. A heritage month calendar is not a retention strategy. A diversity statement on a website is not a sponsorship pipeline. The companies that made meaningful, durable progress on representation did so through one mechanism: they tied executive compensation to measurable, audited retention outcomes. Not to workshop attendance — to outcomes.</p>
+
+      <blockquote><p>Everything else was compliance theater — and when compliance theater becomes politically inconvenient, it is dropped without consequence, because it was never built into anything that mattered.</p></blockquote>
+
+      <h3 id="s3"><span class="n">Section iii</span>What Was Actually Built</h3>
+      <p>The gap between performance and practice was always visible to the people who were supposed to benefit from it. The employees hired as "diversity hires" and then systematically excluded from leadership tracks. The supplier diversity programs that generated press releases without generating contracts. The mentorship programs that matched people across difference without changing who controlled promotions.</p>
+      <p class="pull">The rollback did not destroy something real. It revealed what was always compliance theater.</p>
+      <p>This is, in its way, a clarification. The question it forces — what would structural equity actually require? — is more useful than the performative answer that was offered in its place for a decade. We now know exactly how much of it was load-bearing.</p>
+
+      <h3 id="s4"><span class="n">Section iv</span>The Real Work</h3>
+      <p>The data is clear: organizations with measurable, structural equity practices outperform those without them on retention, innovation, and long-term profitability. This has been replicated across enough industries to be considered established. The business case is not the problem.</p>
+      <p>The problem is that structural equity is hard and unglamorous. It requires changing compensation systems. It requires building sponsorship pipelines that connect junior employees from underrepresented groups to decision-makers with actual power. It requires auditing hiring processes for structural bias, not just training managers to feel less biased. It requires accountability mechanisms that survive changes in political climate.</p>
+      <p>None of this can be announced in a press release. Most of it cannot be photographed for the annual report. It is the slow, unglamorous, highly technical work of changing how human beings are valued inside an institution — and it is work that a compliance theater approach was never designed to do. The rollback has ended the theater. The question is whether anyone will do the play.</p>
+    </article>
+
+    <aside class="rail-right">
+      <div class="plate">
+        <div class="label">Essay</div>
+        <div class="num">005</div>
+        <div class="accent"></div>
+        <div class="name">The DEI Rollback</div>
+      </div>
+      <div class="box">
+        <h5>The questions</h5>
+        <div class="qrow"><span class="q">i.</span><span>Who was DEI actually serving?</span></div>
+        <div class="qrow"><span class="q">ii.</span><span>What got dismantled vs. what was always theater?</span></div>
+        <div class="qrow"><span class="q">iii.</span><span>What does structural equity actually require?</span></div>
+      </div>
+    </aside>
+
+  </div>
+
+  <div class="art-foot">
+    <div class="av">TP</div>
+    <div class="who">
+      <div class="n">Taz Punjabi</div>
+      <div class="d">Thinkers Dilemma is an introspective into the human existence — a newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.</div>
+    </div>
+  </div>
+
+  <section class="more">
+    <div class="sec-head">
+      <span class="num">Next</span>
+      <span class="title">Keep reading</span>
+      <span class="note"><a href="archive-substack.html">Full archive →</a></span>
+    </div>
+    <div class="story-grid">
+      <a href="essay-004.html" class="story">
+        <div class="kicker-row"><span class="kicker-tag">№ 004 · Diaspora</span></div>
+        <h3 class="hl">Diaspora Dispatch: The American Dream moves abroad.</h3>
+        <span class="meta">Essay · 14 min</span>
+      </a>
+      <a href="essay-003.html" class="story">
+        <div class="kicker-row"><span class="kicker-tag">№ 003 · Economy</span></div>
+        <h3 class="hl">The housing crisis is a policy choice.</h3>
+        <span class="meta">Essay · 11 min</span>
+      </a>
+      <a href="essay-002.html" class="story">
+        <div class="kicker-row"><span class="kicker-tag">№ 002 · Technology</span></div>
+        <h3 class="hl">Tech ethics in the age of AI.</h3>
+        <span class="meta">Essay · 13 min</span>
+      </a>
+      <a href="index-substack.html#subscribe" class="story">
+        <div class="kicker-row"><span class="kicker-tag">Free · weekly</span></div>
+        <h3 class="hl">Subscribe to the inquiry.</h3>
+        <span class="meta">One essay · one episode</span>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="wm" data-bind="site.brand">Thinkers Dilemma</div>
+        <div class="tag" data-bind="site.tagline">An introspective into the human existence</div>
+        <p data-bind="site.footer.blurb">A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking.</p>
+      </div>
+      <span data-render="footer-cols" style="display:contents"></span>
+    </div>
+    <div class="bottom">
+      <span data-bind="site.footer.copyright">© MMXXVI Taz Punjabi · Thinkers Dilemma</span>
+      <span data-bind="site.questions">Who benefits? · Who pays? · Who decides?</span>
+    </div>
+  </div>
+</footer>
+<p class="variant-note">
+  <a href="https://thinkersdilemma.substack.com/p/the-dei-rollback-and-the-illusion" target="_blank" rel="noopener">Read the original on Substack ↗</a> · Thinkers Dilemma · June 2026
+</p>
+
+<script src="content-substack.js"></script>
+<script src="render.js"></script>
+<script src="site.js"></script>
+<script>
+  var bar=document.getElementById('progress');
+  function onScroll(){var h=document.documentElement;var max=h.scrollHeight-h.clientHeight;bar.style.width=(max>0?(h.scrollTop||document.body.scrollTop)/max*100:0)+'%';}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function onToc(){var idx=0;for(var i=0;i<secs.length;i++){if(secs[i]&&secs[i].getBoundingClientRect().top<160)idx=i;}links.forEach(function(a,i){a.classList.toggle('active',i===idx);});}
+  window.addEventListener('scroll',onToc,{passive:true});onToc();
+</script>
+</body>
+</html>

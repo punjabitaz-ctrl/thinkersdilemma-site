@@ -1,0 +1,10 @@
+# Keep text LF in repo and working tree (CNAME especially must not get a CR,
+# or GitHub Pages can reject the custom domain). App/site is served on Linux.
+* text=auto eol=lf
+dist/CNAME text eol=lf
+*.svg text eol=lf
+*.woff2 binary
+*.zip binary
+*.png binary
+*.jpg binary
+*.jpeg binary

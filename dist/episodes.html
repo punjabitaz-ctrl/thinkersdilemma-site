@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Episodes — Thinkers Dilemma</title>
+<meta name="description" content="Watch Thinkers Dilemma on screen. A new episode every Friday — one question, followed as far as it goes.">
+<meta name="theme-color" content="#F2EBDD">
+<meta property="og:title" content="Thinkers Dilemma">
+<meta property="og:description" content="Watch Thinkers Dilemma on screen. A new episode every Friday — one question, followed as far as it goes.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>(function(){try{var s=localStorage.getItem("td-theme");var n=s?s==="night":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(n)document.documentElement.setAttribute("data-theme","night");}catch(e){}})();</script>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="site.css">
+</head>
+<body class="paper-grain" data-page="episodes">
+
+<!-- UTILITY BAR -->
+<div class="utility">
+  <div class="wrap">
+    <div class="group">
+      <span data-bind="site.dateLine">Friday · May 30 · 2026</span>
+      <span class="dot">·</span>
+      <span>Issue № <span data-bind="site.issueNo">014</span></span>
+    </div>
+    <div class="group">
+      <span data-render="social" style="display:contents"></span>
+      <span class="dot">·</span>
+      <span class="live" data-bind="site.liveLabel">New episode Friday</span>
+    </div>
+  </div>
+</div>
+
+<!-- PRIMARY NAV -->
+<nav class="mainnav">
+  <div class="wrap">
+    <a href="index.html" class="mini-mark" aria-label="Thinkers Dilemma — front page">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="5"/>
+        <line x1="50" y1="4" x2="50" y2="96" stroke="currentColor" stroke-width="5"/>
+        <path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/>
+        <circle cx="68" cy="50" r="4" fill="currentColor"/>
+      </svg>
+    </a>
+    <a href="index.html">Front Page</a>
+    <a href="essays.html">Essays</a>
+    <a href="episodes.html" class="active">Episodes</a>
+    <a href="notes.html">Field Notes</a>
+    <a href="archive.html">Archive</a>
+    <a href="about.html">About</a>
+    <a href="index.html#subscribe">Subscribe</a>
+  </div>
+</nav>
+
+<div class="page-top"></div>
+
+<main class="wrap">
+
+  <!-- PAGE HEAD -->
+  <header class="page-head" data-screen-label="Episodes — page head">
+    <div>
+      <div class="ph-kicker">
+        <span data-bind="page.kicker">On screen · YouTube</span>
+        <span class="sep"></span>
+        <span class="muted" data-bind="page.kickerMuted">New episode every Friday</span>
+      </div>
+      <h1 class="ph-title" data-bind-html="page.titleHtml">Episodes</h1>
+      <p class="ph-dek" data-bind="page.dek">The inquiry, on screen.</p>
+    </div>
+    <div class="ph-side">
+      <span class="big" data-bind="page.sideBig">14</span>
+      <span class="lbl" data-bind-html="page.sideLabelHtml">Episodes · 2.1M<br>minutes watched</span>
+    </div>
+  </header>
+
+  <!-- FEATURED EPISODE -->
+  <section class="ep-hero" data-screen-label="Featured episode" data-render="episode-featured">
+    <a href="#" class="thumb grain">
+      <span class="corner">№ 014 · Latest</span>
+      <div class="big-q"><div class="q">Who watches the <em>watchers?</em></div></div>
+      <div class="play"><div class="ring"></div></div>
+      <span class="runtime">09:42</span>
+    </a>
+    <div class="info">
+      <div class="tag">Episode 014 · Surveillance · Part i of vi</div>
+      <h2 class="ttl">The <em>Watchers</em></h2>
+      <p class="dek">Ambient surveillance was sold to us as convenience. We follow the money, the metadata, and the quiet hands that shaped consent into compliance.</p>
+      <div class="row">
+        <a href="#" class="watch">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>
+          Watch on YouTube
+        </a>
+        <span class="submeta">2 days ago · 84k views</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar" data-screen-label="Episodes — filter bar">
+    <label class="search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+      <input type="search" data-search placeholder="Search episodes…" aria-label="Search episodes">
+    </label>
+    <div class="chips">
+      <button class="chip active" data-cat="all">All</button>
+      <button class="chip" data-cat="surveillance">Surveillance</button>
+      <button class="chip" data-cat="economy">Economy</button>
+      <button class="chip" data-cat="media">Media</button>
+      <button class="chip" data-cat="power">Power</button>
+      <button class="chip" data-cat="method">Method</button>
+    </div>
+    <div class="count"><b data-count>13</b> &nbsp;episodes</div>
+  </div>
+
+  <!-- EPISODE GRID -->
+  <section style="padding: 32px 0 24px;">
+    <div class="episodes" data-list data-render="episodes">
+
+      <a href="#" class="episode" data-cat="surveillance" data-title="the watchers who watches surveillance ambient consent">
+        <div class="thumb grain">
+          <span class="corner">№ 014</span>
+          <div class="big-q"><div class="q">Who watches the <em>watchers?</em></div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">09:42</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 014</span><span class="epttl">The Watchers</span></div>
+        <div class="submeta">Surveillance · Part i of vi · 84k views</div>
+      </a>
+
+      <a href="#" class="episode" data-cat="economy" data-title="promised time four hour week productivity economy labor">
+        <div class="thumb grain">
+          <span class="corner">№ 013</span>
+          <div class="big-q"><div class="q">The <em>four-hour</em> week that wasn't.</div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">12:18</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 013</span><span class="epttl">Promised Time</span></div>
+        <div class="submeta">Economy · 112k views · Last week</div>
+      </a>
+
+      <a href="#" class="episode" data-cat="media" data-title="the mood machine who owns the feed algorithm media scroll">
+        <div class="thumb grain">
+          <span class="corner">№ 012</span>
+          <div class="big-q"><div class="q">Who owns <em>the feed?</em></div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">10:51</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 012</span><span class="epttl">The Mood Machine</span></div>
+        <div class="submeta">Media · 156k views · Two weeks ago</div>
+      </a>
+
+      <a href="#" class="episode" data-cat="power" data-title="the committee default settings policy power phone governance">
+        <div class="thumb grain">
+          <span class="corner">№ 011</span>
+          <div class="big-q"><div class="q">A default is a <em>decision.</em></div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">08:30</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 011</span><span class="epttl">The Committee</span></div>
+        <div class="submeta">Power · 98k views · Three weeks ago</div>
+      </a>
+
+      <a href="#" class="episode" data-cat="method" data-title="manufactured urgency outrage cycle method tempo slow reading">
+        <div class="thumb grain">
+          <span class="corner">№ 010</span>
+          <div class="big-q"><div class="q">Why is everything an <em>emergency?</em></div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">11:04</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 010</span><span class="epttl">Manufactured Urgency</span></div>
+        <div class="submeta">Method · 134k views · Last month</div>
+      </a>
+
+      <a href="#" class="episode" data-cat="economy" data-title="frictionless price convenience transfer data economy checkout">
+        <div class="thumb grain">
+          <span class="corner">№ 009</span>
+          <div class="big-q"><div class="q">What does <em>frictionless</em> cost?</div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">13:47</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 009</span><span class="epttl">The Frictionless Life</span></div>
+        <div class="submeta">Economy · 201k views · Apr 25</div>
+      </a>
+
+      <a href="#" class="episode" data-cat="surveillance" data-title="doorbell remembers camera neighborhood watch facial recognition surveillance">
+        <div class="thumb grain">
+          <span class="corner">№ 008</span>
+          <div class="big-q"><div class="q">The doorbell that <em>remembers.</em></div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">07:55</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 008</span><span class="epttl">The Porch Witness</span></div>
+        <div class="submeta">Surveillance · 88k views · Apr 18</div>
+      </a>
+
+      <a href="#" class="episode" data-cat="power" data-title="who decides glitch error accountability automated systems power">
+        <div class="thumb grain">
+          <span class="corner">№ 007</span>
+          <div class="big-q"><div class="q">Who decides what's a <em>glitch?</em></div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">09:12</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 007</span><span class="epttl">Just a Glitch</span></div>
+        <div class="submeta">Power · 76k views · Apr 11</div>
+      </a>
+
+      <a href="#" class="episode" data-cat="media" data-title="recommendation is the message taste algorithm culture discovery media">
+        <div class="thumb grain">
+          <span class="corner">№ 006</span>
+          <div class="big-q"><div class="q">Who chose <em>this</em> for you?</div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">12:33</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 006</span><span class="epttl">The Recommendation</span></div>
+        <div class="submeta">Media · 142k views · Apr 04</div>
+      </a>
+
+      <a href="#" class="episode" data-cat="economy" data-title="renting ownership subscription licenses economy property">
+        <div class="thumb grain">
+          <span class="corner">№ 005</span>
+          <div class="big-q"><div class="q">Do you <em>own</em> anything?</div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">10:08</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 005</span><span class="epttl">Renting Everything</span></div>
+        <div class="submeta">Economy · 119k views · Mar 28</div>
+      </a>
+
+      <a href="#" class="episode" data-cat="method" data-title="read the terms all of them consent fine print method exhaustion">
+        <div class="thumb grain">
+          <span class="corner">№ 004</span>
+          <div class="big-q"><div class="q">We read <em>every</em> term.</div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">14:21</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 004</span><span class="epttl">The Fine Print</span></div>
+        <div class="submeta">Method · 167k views · Mar 21</div>
+      </a>
+
+      <a href="#" class="episode" data-cat="surveillance" data-title="the score you cannot see credit reliability rating surveillance opacity">
+        <div class="thumb grain">
+          <span class="corner">№ 003</span>
+          <div class="big-q"><div class="q">The score you <em>cannot</em> see.</div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">08:47</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 003</span><span class="epttl">The Hidden Score</span></div>
+        <div class="submeta">Surveillance · 93k views · Mar 14</div>
+      </a>
+
+      <a href="#" class="episode" data-cat="power" data-title="cui bono who benefits first principles manifesto power working definition">
+        <div class="thumb grain">
+          <span class="corner">№ 002</span>
+          <div class="big-q"><div class="q">Who <em>benefits?</em></div></div>
+          <div class="play"><div class="ring"></div></div>
+          <span class="runtime">06:39</span>
+        </div>
+        <div class="cap"><span class="epno">Ep 002</span><span class="epttl">Cui Bono</span></div>
+        <div class="submeta">Power · 71k views · Mar 07</div>
+      </a>
+
+    </div>
+
+    <!-- EMPTY STATE -->
+    <div class="no-results is-hidden" data-empty>
+      <div class="q">No episodes match <em>that.</em></div>
+      <p>Try a different category, or clear your search to see the whole series.</p>
+    </div>
+  </section>
+
+</main>
+
+<!-- QUOTE BAND -->
+<section class="quote-band">
+  <div class="wrap">
+    <div class="glyph">“</div>
+    <div>
+      <div class="q">We are less interested in <span class="hi">alarm</span> than in attention. The watchers are not hiding.</div>
+      <div class="attr">
+        <span class="line"></span>
+        <span class="src">Episode 014,</span>
+        <span class="meta">The Watchers</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="wm" data-bind="site.brand">Thinkers Dilemma</div>
+        <div class="tag" data-bind="site.tagline">A work of inquiry</div>
+        <p data-bind="site.footer.blurb">Society through a critical lens — asking the tough questions, in good faith and at unhurried length.</p>
+      </div>
+      <span data-render="footer-cols" style="display:contents"></span>
+    </div>
+    <div class="bottom">
+      <span data-bind="site.footer.copyright">© MMXXVI Thinkers Dilemma</span>
+      <span data-bind="site.questions">Who benefits? · Who pays? · Who decides?</span>
+    </div>
+  </div>
+</footer>
+
+<script src="content.js"></script>
+<script src="render.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

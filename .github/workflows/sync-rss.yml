@@ -1,0 +1,125 @@
+name: Sync RSS · Distribute · Validate · Deploy
+
+# ── Triggers ─────────────────────────────────────────────────────────
+on:
+  schedule:
+    - cron: "0 */12 * * *"   # Every 12 hours
+  workflow_dispatch:
+    inputs:
+      force_post:
+        description: "Force cross-post even if already posted"
+        required: false
+        default: "false"
+        type: boolean
+
+# ── Permissions ──────────────────────────────────────────────────────
+# NOTE: GitHub Actions commits (GITHUB_TOKEN) do NOT trigger other
+# workflow runs. So this workflow must also deploy Pages itself —
+# we cannot rely on deploy-pages.yml being triggered by our commits.
+permissions:
+  contents: write   # push updated files
+  pages: write      # deploy to GitHub Pages
+  id-token: write   # OIDC token for Pages
+  issues: write     # open failure issue
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  pipeline:
+    name: RSS → Content → Distribute → Deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      # ── 1. Checkout ─────────────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # ── 2. Sync RSS → content-substack.js ───────────────────────────
+      - name: Sync RSS feed
+        id: sync
+        run: node scripts/sync-rss-node.js
+
+      - name: Commit updated content
+        if: steps.sync.outputs.new_content == 'true'
+        run: |
+          git config user.name  "rss-sync[bot]"
+          git config user.email "rss-sync@users.noreply.github.com"
+          git add dist/content-substack.js
+          git diff --cached --quiet || \
+            git commit -m "chore: sync new essay from Substack"
+          git push
+
+      # ── 3. Cross-post to platforms ───────────────────────────────────
+      - name: Cross-post to all platforms
+        id: post
+        if: steps.sync.outputs.new_content == 'true' || github.event.inputs.force_post == 'true'
+        run: node scripts/post-to-platforms.js
+        env:
+          REDDIT_CLIENT_ID:       ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_SECRET:          ${{ secrets.REDDIT_SECRET }}
+          REDDIT_USERNAME:        ${{ secrets.REDDIT_USERNAME }}
+          REDDIT_PASSWORD:        ${{ secrets.REDDIT_PASSWORD }}
+          REDDIT_SUBREDDIT:       ${{ secrets.REDDIT_SUBREDDIT }}
+          FACEBOOK_PAGE_TOKEN:    ${{ secrets.FACEBOOK_PAGE_TOKEN }}
+          FACEBOOK_PAGE_ID:       ${{ secrets.FACEBOOK_PAGE_ID }}
+          LINKEDIN_TOKEN:         ${{ secrets.LINKEDIN_TOKEN }}
+          LINKEDIN_AUTHOR_URN:    ${{ secrets.LINKEDIN_AUTHOR_URN }}
+          MEDIUM_TOKEN:           ${{ secrets.MEDIUM_TOKEN }}
+          MEDIUM_PUBLICATION_ID:  ${{ secrets.MEDIUM_PUBLICATION_ID }}
+
+      # ── 4. Write status.json ─────────────────────────────────────────
+      - name: Write status dashboard
+        if: always()
+        run: node scripts/write-status.js
+
+      - name: Commit status and cache
+        if: always()
+        run: |
+          git config user.name  "rss-sync[bot]"
+          git config user.email "rss-sync@users.noreply.github.com"
+          git add dist/status.json
+          git add .posted-cache.json 2>/dev/null || true
+          git diff --cached --quiet || \
+            git commit -m "chore: update status"
+          git push
+
+      # ── 5. Deploy dist/ to GitHub Pages ─────────────────────────────
+      # Runs every time so the live site always reflects the latest state.
+      - name: Configure Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload dist/ as Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v4
+        id: deploy
+
+      # ── 6. Notify on failure ─────────────────────────────────────────
+      - name: Open failure issue
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo:  context.repo.repo,
+              title: `🚨 Pipeline failed — ${new Date().toISOString().split('T')[0]}`,
+              body:  `Automated RSS sync or Pages deploy failed.\n\n**Run:** ${runUrl}\n\nCheck which step failed and re-run manually from the Actions tab.`,
+              labels: ["automation", "bug"]
+            });

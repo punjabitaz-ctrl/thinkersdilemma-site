@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thinkers Dilemma — Distribution Hub</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+:root{--signal:#C54430;--signal-deep:#A03323;--signal-tint:#F7EAE7;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font:400 14px/1.5 var(--sans);background:var(--paper-hi);color:var(--ink);min-height:100vh;}
+
+.bar{position:fixed;top:0;left:0;right:0;z-index:100;height:48px;background:var(--ink);
+  display:flex;align-items:center;border-bottom:2px solid var(--signal);}
+.bar-brand{display:flex;align-items:center;gap:10px;padding:0 20px;
+  border-right:1px solid rgba(242,235,221,.12);height:100%;
+  font:600 12px/1 var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--paper);
+  white-space:nowrap;flex-shrink:0;}
+.bar-brand svg{width:22px;height:22px;}
+.bar-brand .sig{color:var(--signal);}
+.bar-nav{display:flex;align-items:stretch;height:100%;flex:1;overflow-x:auto;scrollbar-width:none;}
+.bar-nav::-webkit-scrollbar{display:none;}
+.bar-link{display:flex;align-items:center;padding:0 16px;height:100%;
+  font:500 11px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;
+  color:rgba(242,235,221,.5);white-space:nowrap;text-decoration:none;
+  border-right:1px solid rgba(242,235,221,.06);transition:color .15s,background .15s;}
+.bar-link:hover{color:var(--paper);background:rgba(242,235,221,.06);}
+.bar-link.active{color:var(--signal);background:rgba(197,68,48,.1);}
+.bar-right{display:flex;align-items:center;gap:8px;padding:0 16px;flex-shrink:0;
+  border-left:1px solid rgba(242,235,221,.12);}
+.btn{height:30px;padding:0 14px;font:600 11px/1 var(--mono);letter-spacing:.15em;text-transform:uppercase;
+  border:1.5px solid rgba(242,235,221,.3);border-radius:2px;background:transparent;color:var(--paper);
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;}
+.btn:hover{border-color:var(--paper);}
+.btn.primary{background:var(--signal);border-color:var(--signal);color:#fff;}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 48px);margin-top:48px;}
+.sidebar{background:var(--paper);border-right:1px solid var(--rule);padding:28px 0;position:sticky;
+  top:48px;height:calc(100vh - 48px);overflow-y:auto;}
+.sidebar-section{font:600 9px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink-4);padding:0 20px;margin:20px 0 8px;}
+.sidebar-section:first-child{margin-top:0;}
+.plat-btn{display:flex;align-items:center;gap:10px;width:100%;padding:10px 20px;
+  border:none;background:transparent;text-align:left;cursor:pointer;
+  font:500 13px/1 var(--sans);color:var(--ink-2);transition:background .1s,color .1s;}
+.plat-btn:hover{background:var(--paper-hi);color:var(--ink);}
+.plat-btn.active{background:var(--signal-tint);color:var(--signal);}
+.plat-icon{width:20px;height:20px;border-radius:4px;background:var(--rule);display:grid;
+  place-items:center;font:600 9px/1 var(--mono);flex-shrink:0;transition:background .1s;}
+.plat-btn.active .plat-icon{background:var(--signal);color:#fff;}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--rule);margin-left:auto;flex-shrink:0;}
+.status-dot.manual{background:#f0b429;}
+.status-dot.auto{background:#3cb371;}
+
+.main{padding:36px 40px 80px;max-width:860px;}
+.panel{display:none;} .panel.active{display:block;}
+
+/* Cards */
+.sect-title{font:600 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;
+  color:var(--signal);border-bottom:1px solid var(--rule);padding-bottom:12px;margin-bottom:20px;}
+.sect-desc{font:400 13px/1.6 var(--sans);color:var(--ink-2);margin-bottom:22px;margin-top:-10px;}
+.essay-card{background:var(--paper);border:1px solid var(--rule);padding:16px 20px;
+  margin-bottom:28px;border-left:3px solid var(--signal);}
+.essay-card .no{font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:8px;}
+.essay-card .title{font:500 italic 22px/1.1 var(--serif);color:var(--ink);margin-bottom:6px;}
+.essay-card .meta{font:400 12px/1 var(--mono);color:var(--ink-3);letter-spacing:.06em;}
+
+.output-block{margin-bottom:24px;}
+.output-label{font:600 10px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.copy-btn{height:24px;padding:0 10px;font:600 10px/1 var(--mono);letter-spacing:.12em;
+  text-transform:uppercase;background:var(--signal);color:#fff;border:none;border-radius:2px;cursor:pointer;
+  transition:background .15s;}
+.copy-btn:hover{background:var(--signal-deep);}
+.copy-btn.copied{background:#3cb371;}
+textarea.out{width:100%;padding:12px 14px;font:400 13px/1.6 var(--mono);color:var(--ink);
+  background:var(--paper);border:1px solid var(--rule);border-radius:2px;resize:vertical;
+  min-height:120px;letter-spacing:.01em;}
+textarea.out:focus{outline:none;border-color:var(--signal);}
+
+/* Steps */
+.steps{display:flex;flex-direction:column;gap:0;}
+.step{display:grid;grid-template-columns:32px 1fr;gap:12px;padding:14px 0;
+  border-bottom:1px solid var(--rule-soft);}
+.step:last-child{border-bottom:none;}
+.step-n{font:600 13px/1 var(--mono);color:var(--signal);padding-top:2px;}
+.step-body h4{font:600 13px/1.2 var(--sans);color:var(--ink);margin-bottom:4px;}
+.step-body p{font:400 13px/1.55 var(--sans);color:var(--ink-2);}
+.step-body code{font:400 12px/1.4 var(--mono);background:var(--paper-hi);
+  border:1px solid var(--rule);padding:1px 5px;border-radius:2px;color:var(--signal);}
+.step-body a{color:var(--signal);}
+
+/* Automation grid */
+.auto-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;}
+.auto-card{background:var(--paper);border:1px solid var(--rule);padding:18px 20px;}
+.auto-card h3{font:500 italic 20px/1.1 var(--serif);margin-bottom:8px;}
+.auto-card .tag{display:inline-block;font:600 9px/1 var(--mono);letter-spacing:.16em;
+  text-transform:uppercase;padding:3px 8px;border:1px solid;border-radius:2px;margin-bottom:10px;}
+.auto-card .tag.free{color:#3cb371;border-color:#3cb371;}
+.auto-card .tag.paid{color:#f0b429;border-color:#f0b429;}
+.auto-card p{font:400 13px/1.55 var(--sans);color:var(--ink-2);margin-bottom:12px;}
+.auto-card a{color:var(--signal);font:500 12px/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;}
+
+/* RSS feeds */
+.agg-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:24px;}
+.agg-pill{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;
+  border:1px solid var(--rule);border-radius:2px;font:500 12px/1 var(--sans);color:var(--ink);
+  text-decoration:none;transition:border-color .12s,color .12s;}
+.agg-pill:hover{border-color:var(--signal);color:var(--signal);}
+.feed-url{font:400 13px/1 var(--mono);background:var(--paper);border:1px solid var(--rule);
+  padding:10px 14px;border-radius:2px;color:var(--signal);word-break:break-all;margin-bottom:12px;}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar-brand">
+    <svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="7"/><path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/><circle cx="68" cy="50" r="5" fill="var(--signal)"/></svg>
+    <span>TD <span class="sig">Distribute</span></span>
+  </div>
+  <nav class="bar-nav">
+    <a href="studio-substack.html" class="bar-link">← Studio</a>
+    <a href="index-substack.html" class="bar-link" target="_blank">Live site ↗</a>
+  </nav>
+  <div class="bar-right">
+    <span id="essayLabel" style="font:500 11px/1 var(--mono);letter-spacing:.1em;color:rgba(242,235,221,.5);"></span>
+  </div>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">Platforms</div>
+    <button class="plat-btn active" data-panel="reddit"><span class="plat-icon">Rd</span>Reddit<span class="status-dot manual" title="Manual posting"></span></button>
+    <button class="plat-btn" data-panel="facebook"><span class="plat-icon">Fb</span>Facebook<span class="status-dot manual"></span></button>
+    <button class="plat-btn" data-panel="linkedin"><span class="plat-icon">Li</span>LinkedIn<span class="status-dot manual"></span></button>
+    <button class="plat-btn" data-panel="medium"><span class="plat-icon">Md</span>Medium<span class="status-dot manual"></span></button>
+    <div class="sidebar-section">Discovery</div>
+    <button class="plat-btn" data-panel="rss"><span class="plat-icon">↗</span>RSS Aggregators<span class="status-dot auto"></span></button>
+    <div class="sidebar-section">Automation</div>
+    <button class="plat-btn" data-panel="zapier"><span class="plat-icon">Z</span>Zapier / Make<span class="status-dot manual"></span></button>
+    <button class="plat-btn" data-panel="github"><span class="plat-icon">GH</span>GitHub Actions<span class="status-dot manual"></span></button>
+    <div class="sidebar-section">Validation</div>
+    <button class="plat-btn" data-panel="status"><span class="plat-icon" style="background:var(--signal);color:#fff;font-size:12px;">✓</span>Status &amp; Logs<span class="status-dot" id="statusIndicatorDot"></span></button>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- REDDIT -->
+    <div class="panel active" id="panel-reddit">
+      <div class="sect-title">Reddit</div>
+      <p class="sect-desc">Post to your subreddit (r/ThinkersDialemma or similar). Reddit users respond best to text posts with a genuine excerpt — not just a link drop.</p>
+      <div class="essay-card" id="reddit-essay-card"></div>
+      <div class="output-block">
+        <div class="output-label">Post title <button class="copy-btn" data-target="reddit-title">Copy</button></div>
+        <textarea class="out" id="reddit-title" rows="1"></textarea>
+      </div>
+      <div class="output-block">
+        <div class="output-label">Post body <button class="copy-btn" data-target="reddit-body">Copy</button></div>
+        <textarea class="out" id="reddit-body" style="min-height:180px;"></textarea>
+      </div>
+      <div class="sect-title" style="margin-top:32px;">Setup</div>
+      <div class="steps">
+        <div class="step"><span class="step-n">1</span><div class="step-body"><h4>Create your subreddit</h4><p>Go to <a href="https://www.reddit.com/subreddits/create" target="_blank">reddit.com/subreddits/create</a> and create <code>r/ThinkersDialemma</code>. Set it to public, add a description and banner.</p></div></div>
+        <div class="step"><span class="step-n">2</span><div class="step-body"><h4>Post each essay manually</h4><p>Use the formatted text above. Post as a "Text" post, not a link — Reddit's algorithm favors native content. Include the Substack URL at the end.</p></div></div>
+        <div class="step"><span class="step-n">3</span><div class="step-body"><h4>Automate with Zapier (optional)</h4><p>See the <strong>Zapier / Make</strong> panel. You can auto-post each new RSS item as a Reddit link post to your subreddit.</p></div></div>
+        <div class="step"><span class="step-n">4</span><div class="step-body"><h4>Reddit API (fully automated)</h4><p>Create a Reddit app at <a href="https://www.reddit.com/prefs/apps" target="_blank">reddit.com/prefs/apps</a>. Use the script type, note your <code>client_id</code> and <code>client_secret</code>, then add them to GitHub Secrets and the provided GitHub Actions workflow.</p></div></div>
+      </div>
+    </div>
+
+    <!-- FACEBOOK -->
+    <div class="panel" id="panel-facebook">
+      <div class="sect-title">Facebook Page</div>
+      <p class="sect-desc">Facebook's algorithm amplifies native video and long-form text. Share as a Page post — paste the excerpt and link; let Facebook generate the link preview.</p>
+      <div class="essay-card" id="fb-essay-card"></div>
+      <div class="output-block">
+        <div class="output-label">Page post <button class="copy-btn" data-target="fb-body">Copy</button></div>
+        <textarea class="out" id="fb-body" style="min-height:160px;"></textarea>
+      </div>
+      <div class="sect-title" style="margin-top:32px;">Setup</div>
+      <div class="steps">
+        <div class="step"><span class="step-n">1</span><div class="step-body"><h4>Create a Facebook Page</h4><p>Go to <a href="https://www.facebook.com/pages/create" target="_blank">facebook.com/pages/create</a>. Choose "Public Figure" or "Media/News". Name it "Thinkers Dilemma".</p></div></div>
+        <div class="step"><span class="step-n">2</span><div class="step-body"><h4>Post manually</h4><p>Paste the formatted text above into a new post. Paste the Substack URL — Facebook generates the preview automatically. Delete the URL from the post text once the preview loads.</p></div></div>
+        <div class="step"><span class="step-n">3</span><div class="step-body"><h4>Automate with Meta Business Suite</h4><p>Go to <a href="https://business.facebook.com" target="_blank">business.facebook.com</a> → Content → RSS Feed. Add <code>https://thinkersdilemma.substack.com/feed</code>. Meta will auto-post new items to your Page.</p></div></div>
+        <div class="step"><span class="step-n">4</span><div class="step-body"><h4>Automate with Zapier</h4><p>Trigger: RSS Feed (new item). Action: Facebook Pages → Create Page Post. Maps title + excerpt + link automatically. See the Zapier panel for full setup.</p></div></div>
+      </div>
+    </div>
+
+    <!-- LINKEDIN -->
+    <div class="panel" id="panel-linkedin">
+      <div class="sect-title">LinkedIn</div>
+      <p class="sect-desc">LinkedIn rewards "document" posts and thoughtful text posts — not just link shares. The formatted post below is styled for maximum organic reach.</p>
+      <div class="essay-card" id="li-essay-card"></div>
+      <div class="output-block">
+        <div class="output-label">LinkedIn post <button class="copy-btn" data-target="li-body">Copy</button></div>
+        <textarea class="out" id="li-body" style="min-height:200px;"></textarea>
+      </div>
+      <div class="sect-title" style="margin-top:32px;">Setup</div>
+      <div class="steps">
+        <div class="step"><span class="step-n">1</span><div class="step-body"><h4>Create a LinkedIn Page</h4><p>Go to <a href="https://www.linkedin.com/company/setup/new/" target="_blank">linkedin.com/company/setup/new</a>. Create "Thinkers Dilemma" as a Media company page.</p></div></div>
+        <div class="step"><span class="step-n">2</span><div class="step-body"><h4>Post manually</h4><p>Post as yourself or as the Page. Paste the formatted text, then add the Substack URL as a first comment (not in the post body — this improves organic reach).</p></div></div>
+        <div class="step"><span class="step-n">3</span><div class="step-body"><h4>Automate with Zapier</h4><p>Trigger: RSS Feed. Action: LinkedIn → Create Company Update or Share Post. The Zapier LinkedIn integration maps RSS fields to post fields automatically.</p></div></div>
+        <div class="step"><span class="step-n">4</span><div class="step-body"><h4>LinkedIn API</h4><p>Create an app at <a href="https://www.linkedin.com/developers/apps" target="_blank">linkedin.com/developers/apps</a>. Request the <code>w_member_social</code> scope. Store tokens in GitHub Secrets. The GitHub Actions workflow can then post on each sync.</p></div></div>
+      </div>
+    </div>
+
+    <!-- MEDIUM -->
+    <div class="panel" id="panel-medium">
+      <div class="sect-title">Medium</div>
+      <p class="sect-desc">Medium has a built-in RSS import that creates drafts from your Substack feed automatically — no API needed for basic use.</p>
+      <div class="essay-card" id="md-essay-card"></div>
+      <div class="output-block">
+        <div class="output-label">Medium subtitle / lede <button class="copy-btn" data-target="md-dek">Copy</button></div>
+        <textarea class="out" id="md-dek" rows="3"></textarea>
+      </div>
+      <div class="sect-title" style="margin-top:32px;">Setup</div>
+      <div class="steps">
+        <div class="step"><span class="step-n">1</span><div class="step-body"><h4>Import via RSS (recommended)</h4><p>Go to <a href="https://medium.com/me/import" target="_blank">medium.com/me/import</a>. Enter <code>https://thinkersdilemma.substack.com/feed</code>. Medium imports all posts as drafts — you review and publish each one.</p></div></div>
+        <div class="step"><span class="step-n">2</span><div class="step-body"><h4>Create a Medium Publication</h4><p>Set up "Thinkers Dilemma" as a Medium publication. This lets readers follow the publication independently of your personal account.</p></div></div>
+        <div class="step"><span class="step-n">3</span><div class="step-body"><h4>Add canonical URL</h4><p>In Medium's story settings, set the canonical URL to the Substack post URL. This tells Google the Substack version is the primary source — prevents duplicate content penalties.</p></div></div>
+        <div class="step"><span class="step-n">4</span><div class="step-body"><h4>Medium API (fully automated)</h4><p>Get your integration token at <a href="https://medium.com/me/settings/security" target="_blank">medium.com/me/settings</a>. Add it to GitHub Secrets as <code>MEDIUM_TOKEN</code>. The GitHub Actions workflow can auto-publish on each RSS sync.</p></div></div>
+      </div>
+    </div>
+
+    <!-- RSS AGGREGATORS -->
+    <div class="panel" id="panel-rss">
+      <div class="sect-title">RSS Aggregators &amp; Discovery</div>
+      <p class="sect-desc">Your Substack RSS feed is already live and valid. Submit it to major aggregators — readers who use RSS readers will automatically receive every new essay.</p>
+      <div class="sect-title" style="margin-top:0;border-top:none;">Your RSS feed URL</div>
+      <div class="feed-url">https://thinkersdilemma.substack.com/feed</div>
+      <button class="copy-btn" data-target-text="https://thinkersdilemma.substack.com/feed" style="margin-bottom:28px;">Copy URL</button>
+      <div class="sect-title">Submit to these aggregators</div>
+      <div class="agg-grid">
+        <a class="agg-pill" href="https://feedly.com/i/subscription/feed/https://thinkersdilemma.substack.com/feed" target="_blank">+ Feedly</a>
+        <a class="agg-pill" href="https://www.inoreader.com/?add_feed=https://thinkersdilemma.substack.com/feed" target="_blank">+ Inoreader</a>
+        <a class="agg-pill" href="https://www.flipboard.com/profile/edit" target="_blank">Flipboard ↗</a>
+        <a class="agg-pill" href="https://getpocket.com" target="_blank">Pocket ↗</a>
+        <a class="agg-pill" href="https://www.newsblur.com" target="_blank">NewsBlur ↗</a>
+        <a class="agg-pill" href="https://theoldreader.com" target="_blank">The Old Reader ↗</a>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="step-n">✓</span><div class="step-body"><h4>Feedly &amp; Inoreader — one click</h4><p>The links above open pre-filled subscription pages. Users who click "Follow on Substack" or subscribe to your Feedly source auto-receive new essays.</p></div></div>
+        <div class="step"><span class="step-n">✓</span><div class="step-body"><h4>Google Discover / Search</h4><p>Substack generates a valid <code>sitemap.xml</code> and RSS. Google indexes these automatically. No action needed.</p></div></div>
+        <div class="step"><span class="step-n">→</span><div class="step-body"><h4>Flipboard</h4><p>Create a Flipboard account, then go to <strong>Profile → Manage Magazines</strong> and add your RSS URL as a source magazine. Flipboard will surface posts to its 100M+ user base.</p></div></div>
+      </div>
+    </div>
+
+    <!-- ZAPIER / MAKE -->
+    <div class="panel" id="panel-zapier">
+      <div class="sect-title">Zapier / Make — Automated Cross-Posting</div>
+      <p class="sect-desc">Set up once. Every time you publish on Substack, all connected platforms update automatically — no manual work. Zapier and Make.com are the simplest paths.</p>
+      <div class="auto-grid">
+        <div class="auto-card">
+          <h3>Zapier</h3>
+          <span class="tag paid">~$20 / month</span>
+          <p>5 Zaps for 5 platforms. Easiest setup — no code, visual editor, pre-built Substack + Reddit + LinkedIn + Facebook + Medium integrations.</p>
+          <a href="https://zapier.com" target="_blank">zapier.com ↗</a>
+        </div>
+        <div class="auto-card">
+          <h3>Make (Integromat)</h3>
+          <span class="tag paid">~$10 / month</span>
+          <p>More powerful than Zapier. One "Scenario" can handle all 5 platforms in a single flow. Better for custom formatting per platform.</p>
+          <a href="https://make.com" target="_blank">make.com ↗</a>
+        </div>
+        <div class="auto-card">
+          <h3>n8n (self-hosted)</h3>
+          <span class="tag free">Free (self-hosted)</span>
+          <p>Open-source Zapier alternative. Host on Railway or Render for ~$5/mo. Full control, no usage limits. Steeper setup than Zapier.</p>
+          <a href="https://n8n.io" target="_blank">n8n.io ↗</a>
+        </div>
+        <div class="auto-card">
+          <h3>GitHub Actions</h3>
+          <span class="tag free">Free</span>
+          <p>Already set up in your project. Add platform API keys to GitHub Secrets and posting scripts — runs every 6 hours alongside the RSS sync.</p>
+          <a href="#" onclick="document.querySelector('[data-panel=github]').click();return false;">See GitHub Actions panel ↗</a>
+        </div>
+      </div>
+      <div class="sect-title">Zapier setup — step by step</div>
+      <div class="steps">
+        <div class="step"><span class="step-n">1</span><div class="step-body"><h4>Create a Zapier account</h4><p>Go to <a href="https://zapier.com" target="_blank">zapier.com</a> and sign up. The Starter plan (~$20/mo) covers 5 Zaps and 750 tasks/month — enough for weekly essays across 5 platforms.</p></div></div>
+        <div class="step"><span class="step-n">2</span><div class="step-body"><h4>Create Zap 1 — Trigger</h4><p>Click "Create Zap". Trigger app: <strong>RSS by Zapier</strong>. Event: <strong>New Item in Feed</strong>. Feed URL: <code>https://thinkersdilemma.substack.com/feed</code>. Test — Zapier fetches your latest post.</p></div></div>
+        <div class="step"><span class="step-n">3</span><div class="step-body"><h4>Add an Action for each platform</h4><p>Add an Action step for each platform. Map RSS fields: <code>title</code> → Post Title, <code>description</code> → Post Body, <code>link</code> → URL. You can add a Filter step to only trigger for essays (not podcast-only posts) by checking if the title contains certain keywords.</p></div></div>
+        <div class="step"><span class="step-n">4</span><div class="step-body"><h4>Platform-specific actions</h4><p><strong>Reddit:</strong> "Create Post" → subreddit, title, URL. &nbsp; <strong>Facebook:</strong> "Create Page Post" → message + link. &nbsp; <strong>LinkedIn:</strong> "Create Company Update". &nbsp; <strong>Medium:</strong> "Create Post" using the Medium integration (requires your integration token from medium.com/me/settings).</p></div></div>
+        <div class="step"><span class="step-n">5</span><div class="step-body"><h4>Test &amp; turn on</h4><p>Test each action with the latest post. Zapier shows you exactly what will be sent. Turn the Zap on — from now on, every new Substack post triggers all 5 platform actions within ~15 minutes of publishing.</p></div></div>
+      </div>
+    </div>
+
+    <!-- GITHUB ACTIONS -->
+    <div class="panel" id="panel-github">
+      <div class="sect-title">GitHub Actions — Free Automation</div>
+      <p class="sect-desc">Your project already has <code>.github/workflows/sync-rss.yml</code> running every 6 hours. You can extend it to also cross-post to each platform using their APIs — free, no third-party services needed.</p>
+      <div class="steps">
+        <div class="step"><span class="step-n">1</span><div class="step-body"><h4>Push your project to GitHub</h4><p>If you haven't already: create a repo, <code>git init</code>, add your files, push. The <code>.github/workflows/</code> folder will activate automatically.</p></div></div>
+        <div class="step"><span class="step-n">2</span><div class="step-body"><h4>Create platform API credentials</h4><p><strong>Reddit:</strong> reddit.com/prefs/apps → create "script" app. <strong>LinkedIn:</strong> linkedin.com/developers/apps → request <code>w_member_social</code>. <strong>Facebook:</strong> developers.facebook.com → create app, get Page token. <strong>Medium:</strong> medium.com/me/settings → Integration tokens.</p></div></div>
+        <div class="step"><span class="step-n">3</span><div class="step-body"><h4>Add secrets to GitHub</h4><p>In your repo: <strong>Settings → Secrets and variables → Actions</strong>. Add each credential as a secret: <code>REDDIT_CLIENT_ID</code>, <code>REDDIT_SECRET</code>, <code>REDDIT_USERNAME</code>, <code>REDDIT_PASSWORD</code>, <code>LINKEDIN_TOKEN</code>, <code>FACEBOOK_PAGE_TOKEN</code>, <code>FACEBOOK_PAGE_ID</code>, <code>MEDIUM_TOKEN</code>.</p></div></div>
+        <div class="step"><span class="step-n">4</span><div class="step-body"><h4>Add posting scripts</h4><p>The existing <code>scripts/sync-rss-node.js</code> already detects new essays. Add posting functions to it or create separate scripts — one per platform. Each script: fetch the latest essay from the RSS feed, POST to the platform API using the stored secrets.</p></div></div>
+        <div class="step"><span class="step-n">5</span><div class="step-body"><h4>Update the workflow</h4><p>In <code>.github/workflows/sync-rss.yml</code>, add a step after the RSS sync: <code>node scripts/post-to-platforms.js</code>. Gate it with <code>if: steps.sync.outputs.new_content == 'true'</code> so it only runs when there's actually a new essay — avoiding duplicate posts.</p></div></div>
+      </div>
+    </div>
+
+    <!-- STATUS PANEL -->
+    <div class="panel" id="panel-status">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <div class="sect-title" style="margin:0;border:none;padding:0;">Status &amp; Validation</div>
+        <button id="btnRefreshStatus" class="copy-btn" style="background:var(--ink);">&#8635; Refresh</button>
+      </div>
+      <p class="sect-desc">Live view of <code>dist/status.json</code> — written by GitHub Actions after every sync and cross-post run.</p>
+      <div id="statusBody" style="font:400 italic 16px/1.4 var(--serif);color:var(--ink-3);padding:32px 0;">Loading…</div>
+    </div>
+
+  </div>
+</div>
+
+<script src="content-substack.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  var C = window.TD_CONTENT || {};
+  var essays = C.essays || [];
+  var latest = essays[0] || {};
+
+  /* ---- Fill essay card in each panel ---- */
+  function fillCard(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML =
+      '<div class="no">Essay № ' + (latest.no||'—') + ' · ' + (latest.cat||'') + '</div>' +
+      '<div class="title">' + (latest.titleHtml||'No essays yet') + '</div>' +
+      '<div class="meta">' + (latest.date||'') + ' · ' + (latest.readMin||'—') + ' min read · <a href="' + (latest.href||'#') + '" target="_blank" style="color:var(--signal)">Substack ↗</a></div>';
+  }
+  ['reddit-essay-card','fb-essay-card','li-essay-card','md-essay-card'].forEach(fillCard);
+  var essayLbl = document.getElementById('essayLabel');
+  if (essayLbl && latest.no) essayLbl.textContent = 'Latest: №' + latest.no;
+
+  /* ---- Strip HTML tags ---- */
+  function strip(html){ return String(html||'').replace(/<[^>]*>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').trim(); }
+
+  var title = strip(latest.titleHtml);
+  var dek = strip(latest.dek||'').slice(0,280);
+  var url = latest.href || 'https://thinkersdilemma.substack.com';
+  var date = latest.date || '';
+  var readMin = latest.readMin || '—';
+  var cat = (latest.cat||'power');
+  var capCat = cat.charAt(0).toUpperCase()+cat.slice(1);
+
+  /* ---- Platform-specific formatted outputs ---- */
+  function set(id, text) { var el = document.getElementById(id); if (el) el.value = text; }
+
+  // Reddit
+  set('reddit-title', title);
+  set('reddit-body',
+    dek + '\n\n' +
+    '→ Read the full essay: ' + url + '\n\n' +
+    '---\n' +
+    'Thinkers Dilemma is a weekly newsletter on technology, culture, diaspora, and systems thinking.\n' +
+    'Subscribe free: https://thinkersdilemma.substack.com'
+  );
+
+  // Facebook
+  set('fb-body',
+    'New essay: ' + title + '\n\n' +
+    dek + '\n\n' +
+    'Read it free → ' + url + '\n\n' +
+    '📖 Follow Thinkers Dilemma for weekly essays on technology, culture, diaspora experience, and systems thinking.'
+  );
+
+  // LinkedIn
+  var hashtags = '#ThinkersDialemma #' + capCat + ' #SystemsThinking #Diaspora #Technology';
+  set('li-body',
+    title + '\n\n' +
+    dek + '\n\n' +
+    '→ ' + url + '\n\n' +
+    hashtags
+  );
+
+  // Medium
+  set('md-dek', dek);
+
+  /* ---- Sidebar nav ---- */
+  document.querySelectorAll('.plat-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      document.querySelectorAll('.plat-btn').forEach(function(b){ b.classList.remove('active'); });
+      document.querySelectorAll('.panel').forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      var panel = document.getElementById('panel-' + btn.getAttribute('data-panel'));
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  /* ---- Copy buttons ---- */
+  document.querySelectorAll('.copy-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var targetId = btn.getAttribute('data-target');
+      var targetText = btn.getAttribute('data-target-text');
+      var text = targetText || (document.getElementById(targetId) ? document.getElementById(targetId).value : '');
+      if (!text) return;
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(function(){flash(btn);}).catch(function(){fallback(text,btn);});
+      } else { fallback(text, btn); }
+    });
+  });
+
+  function flash(btn) {
+    var orig = btn.textContent;
+    btn.textContent = 'Copied ✓'; btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  }
+  function fallback(text, btn) {
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+    document.body.removeChild(ta); flash(btn);
+  }
+
+})();
+</script>
+<script>
+/* ---- Status panel ------------------------------------------------- */
+(function(){
+  var dot = document.getElementById('statusIndicatorDot');
+
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    var d = new Date(iso);
+    return d.toLocaleString(undefined, {month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+  }
+
+  function renderStatus(s) {
+    if (dot) {
+      var allOk = Object.values(s.platforms||{}).every(function(p){
+        return ['success','skipped','never'].indexOf(p.lastStatus) !== -1;
+      });
+      dot.style.background = allOk ? '#3cb371' : '#d03a20';
+    }
+
+    var h = '';
+
+    /* Summary row */
+    h += '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px;">';
+    [['Last Checked', fmtDate(s.lastChecked)],
+     ['Last Posted',  fmtDate(s.lastPosted)],
+     ['Total Posted', (s.totalPosted||0)+' essays']]
+    .forEach(function(row){
+      h += '<div style="background:var(--paper);border:1px solid var(--rule);padding:13px 15px;">';
+      h += '<div style="font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin-bottom:6px;">'+row[0]+'</div>';
+      h += '<div style="font:500 13px/1 var(--sans);">'+row[1]+'</div></div>';
+    });
+    h += '</div>';
+
+    /* Latest essay */
+    if (s.lastEssayTitle) {
+      h += '<div style="background:var(--paper);border:1px solid var(--rule);border-left:3px solid var(--signal);padding:12px 16px;margin-bottom:22px;">';
+      h += '<div style="font:600 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--signal);margin-bottom:6px;">Latest Essay</div>';
+      h += '<span style="font:500 italic 17px/1.1 var(--serif);">'+s.lastEssayTitle+'</span>';
+      if (s.lastEssayUrl) h += ' <a href="'+s.lastEssayUrl+'" target="_blank" style="font:500 10px/1 var(--mono);color:var(--signal);letter-spacing:.1em;text-transform:uppercase;">Substack ↗</a>';
+      h += '</div>';
+    }
+
+    /* Platform grid */
+    h += '<div class="sect-title">Per-Platform Status</div>';
+    h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:26px;">';
+    Object.entries(s.platforms||{}).forEach(function(entry){
+      var p=entry[0], d=entry[1];
+      var colors = {success:'#3cb371', skipped:'#f0b429', error:'#d03a20', never:'var(--ink-4)'};
+      var icons  = {success:'✅', skipped:'⚠️', error:'❌', never:'—'};
+      var col = colors[d.lastStatus] || 'var(--ink-3)';
+      h += '<div style="background:var(--paper);border:1px solid var(--rule);padding:14px;">';
+      h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;">';
+      h += '<span style="font:600 12px/1 var(--sans);">'+p+'</span>';
+      h += '<span style="font:600 11px/1 var(--mono);color:'+col+';">'+icons[d.lastStatus]+' '+d.lastStatus+'</span></div>';
+      h += '<div style="font:400 12px/1.3 var(--sans);color:var(--ink-3);">'+fmtDate(d.lastPosted)+'</div>';
+      if (d.lastUrl) h += '<a href="'+d.lastUrl+'" target="_blank" style="font:500 10px/1 var(--mono);color:var(--signal);letter-spacing:.1em;text-transform:uppercase;display:block;margin-top:7px;">View post ↗</a>';
+      else h += '<div style="font:400 11px/1 var(--sans);color:var(--ink-4);margin-top:7px;">'+d.detail+'</div>';
+      h += '</div>';
+    });
+    h += '</div>';
+
+    /* History */
+    if (s.history && s.history.length) {
+      h += '<div class="sect-title">Post History</div>';
+      h += '<div style="border-top:1px solid var(--rule);">';
+      s.history.slice(0,6).forEach(function(entry){
+        var badges = Object.entries(entry.results||{}).map(function(e){
+          var st=e[1].status; return '<span style="font:500 9px/1 var(--mono);color:'+(st==='success'?'#3cb371':st==='error'?'#d03a20':'var(--ink-3)')+';">'+e[0][0]+':'+({'success':'✓','error':'✗','skipped':'◯'}[st]||'—')+'</span>';
+        }).join(' ');
+        h += '<div style="display:flex;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid var(--rule-soft);flex-wrap:wrap;">';
+        h += '<a href="'+entry.url+'" target="_blank" style="font:500 italic 13px/1.1 var(--serif);color:var(--ink);flex:1;min-width:140px;">'+entry.title+'</a>';
+        h += '<span style="font:400 11px/1 var(--mono);color:var(--ink-3);white-space:nowrap;">'+fmtDate(entry.postedAt)+'</span>';
+        h += '<span>'+badges+'</span></div>';
+      });
+      h += '</div>';
+    }
+
+    /* Not yet configured note */
+    if (!s.lastPosted) {
+      h += '<div style="background:var(--paper-hi);border:1px solid var(--rule);padding:18px 20px;margin-top:16px;">';
+      h += '<div style="font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--signal);margin-bottom:10px;">Not yet configured</div>';
+      h += '<p style="font:400 13px/1.6 var(--sans);color:var(--ink-2);margin:0;">Status will populate here once the GitHub Actions workflow runs. Push your project to GitHub and add platform credentials to Secrets. The workflow runs every 30 minutes.</p>';
+      h += '</div>';
+    }
+
+    document.getElementById('statusBody').innerHTML = h;
+  }
+
+  function loadStatus() {
+    fetch('./status.json?v=' + Date.now())
+      .then(function(r){ return r.ok ? r.json() : Promise.reject(r.status); })
+      .then(renderStatus)
+      .catch(function(err){
+        document.getElementById('statusBody').innerHTML =
+          '<p style="font:400 italic 14px/1.5 var(--sans);color:var(--ink-3);">'+
+          'status.json not found ('+err+'). Push to GitHub and run the workflow to generate it.</p>';
+      });
+  }
+
+  /* Trigger on sidebar click */
+  document.querySelectorAll('.plat-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (btn.getAttribute('data-panel') === 'status') setTimeout(loadStatus, 50);
+    });
+  });
+
+  var refreshBtn = document.getElementById('btnRefreshStatus');
+  if (refreshBtn) refreshBtn.addEventListener('click', loadStatus);
+
+  loadStatus(); /* initial load */
+  setInterval(loadStatus, 60000); /* auto-refresh */
+})();
+</script>
+</body>
+</html>

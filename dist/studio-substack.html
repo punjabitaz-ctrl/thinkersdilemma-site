@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thinkers Dilemma — Substack Studio</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="colors_and_type.css">
+<!-- Google Identity Services — provides the sign-in button -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+/* Studio — Substack variant. Signal shifted to burgundy. */
+:root { --signal:#C54430; --signal-deep:#A03323; --signal-tint:#F7EAE7; }
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+body { font:400 14px/1.5 var(--sans); background:var(--paper-hi); color:var(--ink); min-height:100vh; }
+
+.bar { position:fixed; top:0; left:0; right:0; z-index:100; height:48px; background:var(--ink);
+  display:flex; align-items:center; border-bottom:2px solid var(--signal); }
+.bar-brand { display:flex; align-items:center; gap:10px; padding:0 20px;
+  border-right:1px solid rgba(242,235,221,.12); height:100%;
+  font:600 12px/1 var(--mono); letter-spacing:.2em; text-transform:uppercase; color:var(--paper);
+  white-space:nowrap; flex-shrink:0; }
+.bar-brand svg { width:22px; height:22px; flex-shrink:0; }
+.bar-brand .sig { color:var(--signal); }
+.bar-tabs { display:flex; align-items:stretch; height:100%; overflow-x:auto; flex:1;
+  scrollbar-width:none; }
+.bar-tabs::-webkit-scrollbar { display:none; }
+.bar-tab { display:flex; align-items:center; padding:0 16px; height:100%;
+  font:500 11px/1 var(--mono); letter-spacing:.16em; text-transform:uppercase;
+  color:rgba(242,235,221,.5); white-space:nowrap; cursor:pointer; border:none; background:transparent;
+  border-right:1px solid rgba(242,235,221,.06); transition:color .15s,background .15s; }
+.bar-tab:hover { color:var(--paper); background:rgba(242,235,221,.06); }
+.bar-tab.active { color:var(--signal); background:rgba(197,68,48,.1); }
+.bar-tab.rss-tab { border-left:1px solid rgba(242,235,221,.12); }
+.bar-actions { display:flex; align-items:center; gap:8px; padding:0 16px; flex-shrink:0;
+  border-left:1px solid rgba(242,235,221,.12); }
+.btn { height:30px; padding:0 14px; font:600 11px/1 var(--mono); letter-spacing:.15em;
+  text-transform:uppercase; border:1.5px solid rgba(242,235,221,.3); border-radius:2px;
+  background:transparent; color:var(--paper); cursor:pointer; transition:border-color .15s,background .15s; }
+.btn:hover { border-color:var(--paper); background:rgba(242,235,221,.08); }
+.btn:disabled { opacity:.4; cursor:default; }
+.btn.primary { background:var(--signal); border-color:var(--signal); color:#fff; }
+.btn.primary:hover { background:var(--signal-deep); border-color:var(--signal-deep); }
+.btn.ghost { opacity:.6; } .btn.ghost:hover { opacity:1; }
+.saved-msg { font:500 11px/1 var(--mono); letter-spacing:.1em; color:var(--signal); opacity:0; transition:opacity .4s; }
+.saved-msg.show { opacity:1; }
+
+.studio-body { padding-top:48px; min-height:100vh; }
+.panel { display:none; padding:32px 0 80px; }
+.panel.active { display:block; }
+.panel-inner { max-width:820px; margin:0 auto; padding:0 32px; }
+
+.sec-title { font:600 11px/1 var(--mono); letter-spacing:.22em; text-transform:uppercase;
+  color:var(--signal); border-bottom:1px solid var(--rule); padding-bottom:14px; margin-bottom:28px; }
+.sec-desc { font:400 13px/1.6 var(--sans); color:var(--ink-2); margin-top:-18px; margin-bottom:24px; }
+.field-group { margin-bottom:24px; }
+.field-group + .sec-title { margin-top:40px; }
+.field-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.field-row.three { grid-template-columns:1fr 1fr 1fr; }
+
+label { display:block; font:600 10px/1 var(--mono); letter-spacing:.18em; text-transform:uppercase;
+  color:var(--ink-3); margin-bottom:6px; }
+label .hint { font-weight:400; color:var(--ink-4); letter-spacing:.05em; text-transform:none; font-size:10px; }
+input[type="text"],input[type="number"],input[type="email"],textarea,select {
+  width:100%; padding:9px 12px; font:400 13px/1.5 var(--sans); color:var(--ink);
+  background:var(--paper); border:1px solid var(--rule); border-radius:2px; outline:none;
+  transition:border-color .15s; -webkit-appearance:none; appearance:none; }
+input:focus,textarea:focus,select:focus { border-color:var(--signal); }
+textarea { resize:vertical; min-height:80px; }
+select { cursor:pointer; }
+.checkbox-row { display:flex; align-items:center; gap:8px; font:400 13px/1 var(--sans); }
+.checkbox-row input { width:auto; }
+
+.list-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.count { font:500 11px/1 var(--mono); letter-spacing:.1em; color:var(--ink-3); }
+.item-list { display:flex; flex-direction:column; gap:6px; }
+.item-card { background:var(--paper); border:1px solid var(--rule); border-radius:2px; overflow:hidden; }
+.item-head { display:flex; align-items:center; gap:12px; padding:10px 14px; cursor:pointer;
+  user-select:none; transition:background .12s; }
+.item-head:hover { background:var(--paper-hi); }
+.item-no { font:600 10px/1 var(--mono); color:var(--signal); letter-spacing:.1em; flex-shrink:0; width:32px; }
+.item-title-preview { flex:1; font:400 13px/1.3 var(--sans); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.item-cat-badge { font:500 10px/1 var(--mono); letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3); flex-shrink:0; }
+.item-chevron { width:16px; height:16px; flex-shrink:0; color:var(--ink-3); transition:transform .2s; }
+.item-card.open .item-chevron { transform:rotate(90deg); }
+.item-body { display:none; padding:16px; border-top:1px solid var(--rule); background:var(--paper-hi); }
+.item-card.open .item-body { display:block; }
+.item-actions { display:flex; gap:8px; justify-content:flex-end; padding-top:12px;
+  border-top:1px solid var(--rule); margin-top:12px; flex-wrap:wrap; }
+.btn-sm { height:26px; padding:0 10px; font:500 10px/1 var(--mono); letter-spacing:.1em;
+  text-transform:uppercase; border:1px solid var(--rule); border-radius:2px;
+  background:transparent; color:var(--ink-3); cursor:pointer; transition:color .12s,border-color .12s; }
+.btn-sm:hover { color:var(--ink); border-color:var(--ink-2); }
+.btn-sm.del:hover { color:#d03a20; border-color:#d03a20; }
+.btn-sm.accent { color:var(--signal); border-color:var(--signal-tint); }
+.btn-sm.accent:hover { background:var(--signal); border-color:var(--signal); color:#fff; }
+
+.ticker-row { display:flex; align-items:center; gap:8px; background:var(--paper);
+  border:1px solid var(--rule); border-radius:2px; padding:6px 10px; margin-bottom:4px; }
+.ticker-row input { flex:1; border:none; background:transparent; padding:2px 4px; }
+.ticker-row input:focus { outline:none; }
+.ticker-chk { display:flex; align-items:center; gap:4px; flex-shrink:0; }
+.ticker-chk label { margin:0; font-size:10px; cursor:pointer; }
+.ticker-chk input { width:auto; }
+
+.footer-cols { display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; }
+.footer-link-row { display:flex; gap:6px; margin-bottom:6px; }
+.footer-link-row input:first-child { flex:1; }
+.footer-link-row input:last-child { flex:0 0 130px; }
+
+/* RSS Import panel */
+.rss-item { background:var(--paper); border:1px solid var(--rule); border-radius:2px;
+  display:flex; align-items:center; gap:12px; padding:10px 14px; margin-bottom:6px; }
+.rss-item-title { flex:1; font:400 14px/1.3 var(--sans); }
+.rss-item-date { font:500 10px/1 var(--mono); letter-spacing:.1em; color:var(--ink-3); white-space:nowrap; }
+.rss-imported { font:500 10px/1 var(--mono); letter-spacing:.12em; text-transform:uppercase;
+  color:var(--ink-4); padding:4px 8px; border:1px solid var(--rule); border-radius:2px;
+  white-space:nowrap; }
+.rss-empty { font:400 italic 18px/1.4 var(--serif); color:var(--ink-3); padding:48px 0; text-align:center; }
+
+.toast { position:fixed; bottom:24px; right:24px; z-index:200; background:var(--ink); color:var(--paper);
+  font:500 12px/1 var(--mono); letter-spacing:.12em; padding:12px 18px; border-radius:2px;
+  border-left:3px solid var(--signal); transform:translateY(16px); opacity:0;
+  transition:transform .3s,opacity .3s; pointer-events:none; }
+.toast.show { transform:none; opacity:1; }
+</style>
+</head>
+<body>
+
+<!-- ══ Auth Overlay ════════════════════════════════════════════════
+     SETUP: 1) Get a Client ID at console.cloud.google.com
+             (APIs & Services → Credentials → Create OAuth 2.0 Client ID)
+             2) Replace YOUR_CLIENT_ID_HERE in data-client_id below
+             3) Add your Gmail to STUDIO_ALLOWED_EMAILS in the <script>
+     Until configured, the studio runs in dev-bypass mode.
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="authOverlay" style="position:fixed;inset:0;z-index:9999;background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:40px;">
+  <div style="text-align:center;max-width:360px;">
+    <svg viewBox="0 0 100 100" fill="none" style="width:44px;height:44px;margin:0 auto 18px;display:block;"><circle cx="50" cy="50" r="46" stroke="var(--signal)" stroke-width="7"/><path d="M50 4 A46 46 0 0 0 50 96 Z" fill="var(--signal)"/><circle cx="68" cy="50" r="5" fill="var(--signal)"/></svg>
+    <div style="font:600 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--signal);margin-bottom:12px;">Thinkers Dilemma</div>
+    <div style="font:500 italic 32px/1.05 var(--serif);color:var(--ink);margin-bottom:10px;">Content Studio</div>
+    <div style="font:400 14px/1.55 var(--sans);color:var(--ink-2);">Sign in with your authorized Google account to access the studio.</div>
+  </div>
+  <div id="g_id_onload" data-client_id="YOUR_CLIENT_ID_HERE" data-callback="handleGoogleAuth" data-auto_prompt="false"></div>
+  <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
+  <div id="authError" style="font:400 13px/1.4 var(--sans);color:#d03a20;display:none;padding:10px 16px;border:1px solid #d03a20;border-radius:2px;max-width:320px;text-align:center;"></div>
+  <div style="font:400 11px/1.5 var(--sans);color:var(--ink-4);max-width:300px;text-align:center;border-top:1px solid var(--rule);padding-top:18px;">Only authorized accounts can access the studio. Configure in the <a href="studio-distribute.html" style="color:var(--signal);">Distribution Hub ↗</a></div>
+</div>
+<div id="authDevNotice" style="display:none;position:fixed;top:56px;left:50%;transform:translateX(-50%);z-index:200;background:var(--ink);color:var(--paper);font:500 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;padding:9px 18px;border-left:3px solid var(--signal);white-space:nowrap;">⚠ Auth not configured — running in dev mode &nbsp;·&nbsp; <a href="studio-distribute.html" style="color:var(--signal);text-decoration:none;">Setup in Distribution Hub ↗</a></div>
+
+<header class="bar">
+  <div class="bar-brand">
+    <svg viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="7"/>
+      <path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/>
+      <circle cx="68" cy="50" r="5" fill="var(--signal)"/>
+    </svg>
+    <span>TD <span class="sig">Substack</span> Studio</span>
+  </div>
+  <div class="bar-tabs" id="barTabs">
+    <button class="bar-tab active" data-panel="site">Site &amp; Issue</button>
+    <button class="bar-tab" data-panel="lead">Lead Story</button>
+    <button class="bar-tab" data-panel="essays">Essays</button>
+    <button class="bar-tab" data-panel="episodes">Episodes</button>
+    <button class="bar-tab" data-panel="notes">Field Notes</button>
+    <button class="bar-tab" data-panel="pages">Page Intros</button>
+    <button class="bar-tab" data-panel="ticker">Ticker</button>
+    <button class="bar-tab" data-panel="footer">Footer</button>
+    <button class="bar-tab rss-tab" data-panel="rss">↓ RSS Import</button>
+  </div>
+  <div class="bar-actions">
+    <span id="authUserBadge" style="display:none;font:500 11px/1 var(--mono);letter-spacing:.12em;color:var(--ink-3);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+    <button id="btnSignOut" class="btn ghost" style="display:none;" onclick="signOut()">Sign out</button>
+    <a href="index-substack.html" class="btn ghost" style="text-decoration:none;">← Live site</a>
+    <a href="studio-distribute.html" class="btn ghost" style="text-decoration:none;">Distribute ↗</a>
+    <span class="saved-msg" id="savedMsg">Saved</span>
+    <button class="btn ghost" id="btnPreview">Preview ↗</button>
+    <button class="btn primary" id="btnExport">Export content-substack.js</button>
+  </div>
+</header>
+
+<div class="studio-body">
+<div id="panels">
+
+  <!-- SITE & ISSUE -->
+  <div class="panel active" id="panel-site">
+    <div class="panel-inner">
+      <div class="sec-title">Site &amp; Issue</div>
+      <p class="sec-desc">These values appear on every page — masthead, utility bar, footer, and dateline.</p>
+      <div class="field-row">
+        <div class="field-group"><label>Brand name</label><input type="text" data-path="site.brand"></div>
+        <div class="field-group"><label>Tagline</label><input type="text" data-path="site.tagline"></div>
+      </div>
+      <div class="field-row three">
+        <div class="field-group"><label>Issue №</label><input type="text" data-path="site.issueNo"></div>
+        <div class="field-group"><label>Issue label</label><input type="text" data-path="site.issueLabel"></div>
+        <div class="field-group"><label>Established</label><input type="text" data-path="site.established"></div>
+      </div>
+      <div class="field-row">
+        <div class="field-group"><label>Date line</label><input type="text" data-path="site.dateLine"></div>
+        <div class="field-group"><label>Volume line</label><input type="text" data-path="site.volume"></div>
+      </div>
+      <div class="field-group"><label>Three questions</label><input type="text" data-path="site.questions"></div>
+      <div class="field-row">
+        <div class="field-group"><label>Dateline centre <span class="hint">— HTML</span></label><input type="text" data-path="site.datelineCenter"></div>
+        <div class="field-group"><label>Live label</label><input type="text" data-path="site.liveLabel"></div>
+      </div>
+      <div class="field-group"><label>Reader count</label><input type="number" data-path="site.readers"></div>
+    </div>
+  </div>
+
+  <!-- LEAD STORY -->
+  <div class="panel" id="panel-lead">
+    <div class="panel-inner">
+      <div class="sec-title">Lead Story</div>
+      <p class="sec-desc">The headline story on the front page. Fields marked HTML accept &lt;em&gt;, &lt;br&gt; etc.</p>
+      <div class="field-row">
+        <div class="field-group"><label>Kicker tag</label><input type="text" data-path="home.lead.kickerTag"></div>
+        <div class="field-group"><label>Kicker category</label><input type="text" data-path="home.lead.kickerCat"></div>
+      </div>
+      <div class="field-group"><label>Headline <span class="hint">— HTML</span></label><input type="text" data-path="home.lead.titleHtml"></div>
+      <div class="field-group"><label>Dek</label><textarea data-path="home.lead.dek"></textarea></div>
+      <div class="field-group"><label>Byline <span class="hint">— HTML</span></label><input type="text" data-path="home.lead.byline"></div>
+      <div class="sec-title">Issue Plate</div>
+      <div class="field-row three">
+        <div class="field-group"><label>Plate label</label><input type="text" data-path="home.lead.plateLabel"></div>
+        <div class="field-group"><label>Issue number</label><input type="text" data-path="home.lead.plateNum"></div>
+        <div class="field-group"><label>Issue name</label><input type="text" data-path="home.lead.plateName"></div>
+      </div>
+      <div class="field-group"><label>Sub-line <span class="hint">— HTML</span></label><input type="text" data-path="home.lead.plateSub"></div>
+      <div class="sec-title">Pull Quote</div>
+      <div class="field-group"><label>Quote text <span class="hint">— HTML; wrap highlight in &lt;span class="hi"&gt;</span></label><textarea data-path="home.quote.textHtml"></textarea></div>
+      <div class="field-row">
+        <div class="field-group"><label>Attribution source</label><input type="text" data-path="home.quote.src"></div>
+        <div class="field-group"><label>Attribution meta</label><input type="text" data-path="home.quote.meta"></div>
+      </div>
+      <div class="sec-title">Subscribe Block</div>
+      <div class="field-group"><label>Heading <span class="hint">— HTML</span></label><input type="text" data-path="home.subscribe.headingHtml"></div>
+      <div class="field-group"><label>Body copy</label><textarea data-path="home.subscribe.body"></textarea></div>
+    </div>
+  </div>
+
+  <!-- ESSAYS -->
+  <div class="panel" id="panel-essays">
+    <div class="panel-inner">
+      <div class="list-header">
+        <div class="sec-title" style="margin:0;border:none;padding:0">Essays</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="count" id="essay-count"></span>
+          <button class="btn" id="addEssay">+ New essay</button>
+        </div>
+      </div>
+      <p class="sec-desc" style="margin-top:12px">Newest first. The first item is the lead story. Use the RSS Import tab to pull directly from Substack.</p>
+      <div class="item-list" id="essayList"></div>
+    </div>
+  </div>
+
+  <!-- EPISODES -->
+  <div class="panel" id="panel-episodes">
+    <div class="panel-inner">
+      <div class="list-header">
+        <div class="sec-title" style="margin:0;border:none;padding:0">Episodes</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="count" id="episode-count"></span>
+          <button class="btn" id="addEpisode">+ New episode</button>
+        </div>
+      </div>
+      <p class="sec-desc" style="margin-top:12px">The first item with featured: true appears as the hero on the episodes page.</p>
+      <div class="item-list" id="episodeList"></div>
+    </div>
+  </div>
+
+  <!-- NOTES -->
+  <div class="panel" id="panel-notes">
+    <div class="panel-inner">
+      <div class="list-header">
+        <div class="sec-title" style="margin:0;border:none;padding:0">Field Notes</div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <span class="count" id="note-count"></span>
+          <button class="btn" id="addNote">+ New note</button>
+        </div>
+      </div>
+      <p class="sec-desc" style="margin-top:12px">Key pullquotes — one per essay.</p>
+      <div class="item-list" id="noteList"></div>
+    </div>
+  </div>
+
+  <!-- PAGE INTROS -->
+  <div class="panel" id="panel-pages">
+    <div class="panel-inner">
+      <div class="sec-title">Page Intros</div>
+      <p class="sec-desc">The masthead header for each listing page.</p>
+      <div id="pageIntros"></div>
+    </div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="panel" id="panel-ticker">
+    <div class="panel-inner">
+      <div class="sec-title">Transmission Ticker</div>
+      <p class="sec-desc">The scrolling strip below the utility bar. ✦ star and Hot flags are optional.</p>
+      <div id="tickerItems"></div>
+      <button class="btn" id="addTicker" style="margin-top:8px">+ Add item</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="panel" id="panel-footer">
+    <div class="panel-inner">
+      <div class="sec-title">Footer</div>
+      <div class="field-group"><label>Brand blurb</label><textarea data-path="site.footer.blurb"></textarea></div>
+      <div class="field-group"><label>Copyright line</label><input type="text" data-path="site.footer.copyright"></div>
+      <div class="sec-title">Footer Columns</div>
+      <p class="sec-desc">Three link columns — label + URL per row.</p>
+      <div class="footer-cols" id="footerCols"></div>
+    </div>
+  </div>
+
+  <!-- RSS IMPORT -->
+  <div class="panel" id="panel-rss">
+    <div class="panel-inner">
+      <div class="sec-title">RSS Import</div>
+      <p class="sec-desc">Fetch the latest posts from <strong>thinkersdilemma.substack.com/feed</strong> and import them directly into your content. Items already in your essays list are shown as already imported. After importing, switch to the Essays tab to review and edit, then Export.</p>
+      <div style="display:flex;gap:14px;align-items:center;margin-bottom:28px;flex-wrap:wrap;">
+        <button class="btn primary" id="btnFetchRSS">↓ Fetch from Substack</button>
+        <button class="btn ghost" id="btnClearCache">Clear RSS cache</button>
+        <span id="rssStatus" style="font:400 12px/1.4 var(--sans);color:var(--ink-3);"></span>
+      </div>
+      <div id="rssResults"><div class="rss-empty">Press "Fetch from Substack" to load the latest posts.</div></div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================================
+   STUDIO — Google Authentication
+   ─────────────────────────────────────────────────────────────────────
+   Configure the two values below, then refresh.
+   ===================================================================== */
+
+// 1. Your authorized Gmail address(es). Empty = allow any Google account.
+var STUDIO_ALLOWED_EMAILS = [
+  // 'you@gmail.com'
+];
+
+// 2. Read the Client ID from the data attribute (edit it in the HTML above).
+var GOOGLE_CLIENT_ID = (document.getElementById('g_id_onload') || {}).getAttribute
+  ? document.getElementById('g_id_onload').getAttribute('data-client_id') : '';
+var DEV_MODE = !GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === 'YOUR_CLIENT_ID_HERE';
+
+// Called by Google GIS after the user picks an account
+function handleGoogleAuth(response) {
+  try {
+    var b64 = response.credential.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+    while (b64.length % 4) b64 += '=';
+    var payload = JSON.parse(atob(b64));
+    var email = payload.email || '';
+    var ok = STUDIO_ALLOWED_EMAILS.length === 0 || STUDIO_ALLOWED_EMAILS.indexOf(email) !== -1;
+    if (ok) {
+      sessionStorage.setItem('td-studio-session', email);
+      showStudio(email);
+    } else {
+      var e = document.getElementById('authError');
+      e.textContent = '"' + email + '" is not authorized. Add it to STUDIO_ALLOWED_EMAILS.';
+      e.style.display = 'block';
+    }
+  } catch(err) {
+    var e2 = document.getElementById('authError');
+    if (e2) { e2.textContent = 'Authentication error — please try again.'; e2.style.display = 'block'; }
+  }
+}
+
+function showStudio(email) {
+  var ov = document.getElementById('authOverlay');
+  if (ov) ov.style.display = 'none';
+  var b = document.getElementById('authUserBadge');
+  if (b) { b.textContent = email; b.style.display = 'inline'; }
+  var so = document.getElementById('btnSignOut');
+  if (so) so.style.display = 'inline-flex';
+}
+
+function signOut() {
+  sessionStorage.removeItem('td-studio-session');
+  location.reload();
+}
+
+(function initAuth() {
+  if (DEV_MODE) {
+    // No Client ID configured — bypass and show the dev notice
+    var ov = document.getElementById('authOverlay');
+    if (ov) ov.style.display = 'none';
+    var nd = document.getElementById('authDevNotice');
+    if (nd) nd.style.display = 'flex';
+    return;
+  }
+  var session = sessionStorage.getItem('td-studio-session');
+  if (session) {
+    var ok = STUDIO_ALLOWED_EMAILS.length === 0 || STUDIO_ALLOWED_EMAILS.indexOf(session) !== -1;
+    if (ok) { showStudio(session); return; }
+  }
+  // Overlay stays visible; GIS renders the button
+})();
+</script>
+<script src="content-substack.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var S = JSON.parse(JSON.stringify(window.TD_CONTENT || {}));
+  var CAT = ["power", "diaspora", "economy", "technology"];
+
+  /* ---- Utilities -------------------------------------------------- */
+  function get(o, path) { return path.split(".").reduce(function(a,k){return a&&a[k]!=null?a[k]:undefined;},o); }
+  function set(o, path, v) {
+    var p=path.split("."),obj=o;
+    for(var i=0;i<p.length-1;i++){if(obj[p[i]]==null)obj[p[i]]={};obj=obj[p[i]];}
+    obj[p[p.length-1]]=v;
+  }
+  function esc(s){return String(s||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");}
+  function strip(html){return String(html||"").replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g,"$1").replace(/<[^>]*>/g,"").replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&nbsp;/g," ").replace(/&#\d+;/g,"").trim();}
+  function truncate(s,max){if(s.length<=max)return s;var cut=s.lastIndexOf(".",max);return s.slice(0,cut>60?cut+1:max)+(cut<=60?"…":"");}
+  function parseDate(str){var d=new Date(str);if(isNaN(d))return{full:"",short:"",year:""};
+    var M=["January","February","March","April","May","June","July","August","September","October","November","December"];
+    var p=function(n){return(n<10?"0":"")+n;};
+    return{full:M[d.getMonth()]+" "+d.getDate()+", "+d.getFullYear(),
+      short:p(d.getMonth()+1)+" · "+p(d.getDate())+" · "+String(d.getFullYear()).slice(2),year:String(d.getFullYear())};}
+  function mapCat(cats,title){var s=((cats||[]).join(" ")+" "+(title||"")).toLowerCase();
+    if(/diaspora|migrat|immigr|identity/.test(s))return"diaspora";
+    if(/housing|economy|polic|financ|money/.test(s))return"economy";
+    if(/tech|ai\b|algorithm|data|digital/.test(s))return"technology";
+    return"power";}
+  function pad(n){return(n<10?"00":n<100?"0":"")+n;}
+  function readMin(html){return Math.max(3,Math.round(strip(html).split(/\s+/).length/200));}
+  function stripTags(s){return String(s||"").replace(/<[^>]*>/g,"");}
+  function h(tag,cls,inner){var el=document.createElement(tag);if(cls)el.className=cls;if(inner)el.innerHTML=inner;return el;}
+  function mk(tag){return document.createElement(tag);}
+  function sel(opts,val,cb){var s=mk("select");opts.forEach(function(o){var op=mk("option");op.value=op.textContent=o;if(o===val)op.selected=true;s.appendChild(op);});s.addEventListener("change",cb);return s;}
+
+  function toast(msg){var t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(function(){t.classList.remove("show");},2400);}
+  function autoSave(){try{localStorage.setItem("td-studio-draft",JSON.stringify(S));}catch(e){}
+    var m=document.getElementById("savedMsg");m.classList.add("show");setTimeout(function(){m.classList.remove("show");},1600);}
+
+  /* ---- Tabs ------------------------------------------------------- */
+  document.getElementById("barTabs").addEventListener("click",function(e){
+    var btn=e.target.closest(".bar-tab");if(!btn)return;
+    document.querySelectorAll(".bar-tab").forEach(function(b){b.classList.remove("active");});
+    document.querySelectorAll(".panel").forEach(function(p){p.classList.remove("active");});
+    btn.classList.add("active");
+    var panel=document.getElementById("panel-"+btn.getAttribute("data-panel"));
+    if(panel)panel.classList.add("active");
+  });
+
+  /* ---- Bind simple data-path inputs ------------------------------ */
+  function bindInputs(){
+    document.querySelectorAll("[data-path]").forEach(function(inp){
+      var path=inp.getAttribute("data-path"),val=get(S,path);
+      if(val!=null)inp.value=String(val);
+      inp.addEventListener("input",function(){set(S,path,inp.type==="number"?(parseFloat(inp.value)||0):inp.value);autoSave();});
+    });
+  }
+
+  /* ---- Essay helpers --------------------------------------------- */
+  function renderEssays(){
+    var list=document.getElementById("essayList");list.innerHTML="";
+    document.getElementById("essay-count").textContent=(S.essays||[]).length+" items";
+    (S.essays||[]).forEach(function(e,i){list.appendChild(makeEssayCard(e,i));});
+  }
+  function makeEssayCard(essay,i){
+    var card=h("div","item-card");
+    var head=h("div","item-head",
+      '<span class="item-no">№'+esc(essay.no||"—")+'</span>'+
+      '<span class="item-title-preview">'+esc(stripTags(essay.titleHtml||""))+'</span>'+
+      '<span class="item-cat-badge">'+esc(essay.cat||"")+'</span>'+
+      '<svg class="item-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5,3 11,8 5,13"/></svg>');
+    card.appendChild(head);
+    head.addEventListener("click",function(){card.classList.toggle("open");});
+    var body=h("div","item-body");
+
+    function fg(lbl,hint){var d=h("div","field-group");d.appendChild(h("label","",lbl+(hint?'<span class="hint"> — '+hint+'</span>':"")));return d;}
+    function row(){return h("div","field-row");}
+    function inp(parent,val,cb,big){var el=big?mk("textarea"):mk("input");if(!big)el.type="text";el.value=val||"";el.addEventListener("input",function(){cb(el.value);autoSave();});parent.appendChild(el);return el;}
+
+    var r1=row();body.appendChild(r1);
+    var f1=fg("Issue №");r1.appendChild(f1);inp(f1,essay.no,function(v){essay.no=v;});
+    var f2=fg("Category");r1.appendChild(f2);var s=sel(CAT,essay.cat,function(){essay.cat=s.value;autoSave();});f2.appendChild(s);
+
+    var ft=fg("Headline","HTML");body.appendChild(ft);inp(ft,essay.titleHtml,function(v){essay.titleHtml=v;});
+    var fd=fg("Dek");body.appendChild(fd);inp(fd,essay.dek,function(v){essay.dek=v;},true);
+    var fm=fg("Meta line","author · date");body.appendChild(fm);inp(fm,essay.meta||"",function(v){essay.meta=v;});
+
+    var r2=row();body.appendChild(r2);
+    var f3=fg("Date (long)");r2.appendChild(f3);inp(f3,essay.date||"",function(v){essay.date=v;});
+    var f4=fg("Date (short)");r2.appendChild(f4);inp(f4,essay.dateShort||"",function(v){essay.dateShort=v;});
+
+    var r3=row();body.appendChild(r3);
+    var f5=fg("Year");r3.appendChild(f5);inp(f5,essay.year||"",function(v){essay.year=v;});
+    var f6=fg("Read time (min)");r3.appendChild(f6);
+    var ni=mk("input");ni.type="number";ni.value=essay.readMin||6;ni.addEventListener("input",function(){essay.readMin=parseInt(ni.value)||6;autoSave();});f6.appendChild(ni);
+
+    var r4=row();body.appendChild(r4);
+    var fh=fg("Substack URL");r4.appendChild(fh);inp(fh,essay.href||"",function(v){essay.href=v;});
+    var fl=fg("Local page");r4.appendChild(fl);inp(fl,essay.localHref||"",function(v){essay.localHref=v||null;});
+
+    var fLead=h("label","checkbox-row");var cb=mk("input");cb.type="checkbox";cb.checked=!!essay.lead;
+    cb.addEventListener("change",function(){essay.lead=cb.checked;autoSave();});
+    fLead.appendChild(cb);fLead.appendChild(document.createTextNode(" Mark as lead story"));body.appendChild(fLead);
+
+    var acts=h("div","item-actions");
+    var bUp=h("button","btn-sm","↑");bUp.addEventListener("click",function(){if(i>0){var a=S.essays,t=a[i];a[i]=a[i-1];a[i-1]=t;renderEssays();}});
+    var bDn=h("button","btn-sm","↓");bDn.addEventListener("click",function(){var a=S.essays;if(i<a.length-1){var t=a[i];a[i]=a[i+1];a[i+1]=t;renderEssays();}});
+    var bCopy=h("button","btn-sm accent","Copy essay template");
+    bCopy.addEventListener("click",function(){copyEssayTemplate(essay);});
+    var bDel=h("button","btn-sm del","Delete");
+    bDel.addEventListener("click",function(){if(confirm("Delete this essay?")){ S.essays.splice(i,1);autoSave();renderEssays();}});
+    acts.appendChild(bUp);acts.appendChild(bDn);acts.appendChild(bCopy);acts.appendChild(bDel);
+    body.appendChild(acts);
+    card.appendChild(body);
+    return card;
+  }
+  document.getElementById("addEssay").addEventListener("click",function(){
+    S.essays.unshift({no:"000",cat:"power",titleHtml:"New essay title",dek:"",type:"Essay",readMin:7,date:"",dateShort:"",year:"2026",href:"",localHref:null});
+    autoSave();renderEssays();
+    document.getElementById("essayList").firstElementChild.classList.add("open");
+  });
+
+  /* Copy essay HTML template to clipboard */
+  function copyEssayTemplate(e){
+    var cat=e.cat||"power";var capCat=cat.charAt(0).toUpperCase()+cat.slice(1);
+    var html='<!doctype html>\n<html lang="en">\n<head>\n'+
+      '<meta charset="utf-8">\n<meta name="viewport" content="width=device-width, initial-scale=1">\n'+
+      '<title>'+stripTags(e.titleHtml||"Essay")+'  — Thinkers Dilemma</title>\n'+
+      '<link rel="icon" href="favicon.svg" type="image/svg+xml">\n'+
+      '<link rel="stylesheet" href="colors_and_type.css">\n'+
+      '<link rel="stylesheet" href="site.css">\n'+
+      '<!-- Copy full <style> block from essay-005.html -->\n'+
+      '</head>\n<body class="paper-grain" data-page="article">\n'+
+      '<!-- Copy nav, art-head, hero-fig, art-body from essay-005.html\n'+
+      '     and replace the content below -->\n\n'+
+      '<!-- Essay № '+esc(e.no||"")+'  /  '+capCat+' -->\n'+
+      '<!-- Title: '+stripTags(e.titleHtml||"")+'  -->\n'+
+      '<!-- Date:  '+esc(e.date||"")+'  -->\n'+
+      '<!-- Dek:   '+stripTags(e.dek||"")+'  -->\n'+
+      '<!-- Substack: '+esc(e.href||"")+'  -->\n\n'+
+      '<script src="content-substack.js"><\/script>\n'+
+      '<script src="render.js"><\/script>\n'+
+      '<script src="site.js"><\/script>\n'+
+      '</body>\n</html>';
+    if(navigator.clipboard){
+      navigator.clipboard.writeText(html).then(function(){toast("Essay HTML template copied to clipboard.");}).catch(function(){fallbackCopy(html);});
+    } else { fallbackCopy(html); }
+  }
+  function fallbackCopy(text){var ta=mk("textarea");ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand("copy");document.body.removeChild(ta);toast("Template copied.");}
+
+  /* ---- Episodes --------------------------------------------------- */
+  function renderEpisodes(){
+    var list=document.getElementById("episodeList");list.innerHTML="";
+    document.getElementById("episode-count").textContent=(S.episodes||[]).length+" items";
+    (S.episodes||[]).forEach(function(ep,i){list.appendChild(makeEpCard(ep,i));});
+  }
+  function makeEpCard(ep,i){
+    var card=h("div","item-card");
+    var head=h("div","item-head",
+      '<span class="item-no">Ep '+esc(ep.no||"—")+'</span>'+
+      '<span class="item-title-preview">'+esc(stripTags(ep.questionHtml||ep.title||""))+'</span>'+
+      '<span class="item-cat-badge">'+esc(ep.cat||"")+'</span>'+
+      '<svg class="item-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5,3 11,8 5,13"/></svg>');
+    card.appendChild(head);head.addEventListener("click",function(){card.classList.toggle("open");});
+    var body=h("div","item-body");
+    function fg(lbl){var d=h("div","field-group");d.appendChild(h("label","",lbl));return d;}
+    function row(){return h("div","field-row");}
+    function ai(parent,val,cb,big){var el=big?mk("textarea"):mk("input");if(!big)el.type="text";el.value=val||"";el.addEventListener("input",function(){cb(el.value);autoSave();});parent.appendChild(el);}
+
+    var r1=row();body.appendChild(r1);
+    var f1=fg("Episode №");r1.appendChild(f1);ai(f1,ep.no,function(v){ep.no=v;});
+    var f2=fg("Title");r1.appendChild(f2);ai(f2,ep.title,function(v){ep.title=v;});
+    var fq=fg("Question (HTML)");body.appendChild(fq);ai(fq,ep.questionHtml,function(v){ep.questionHtml=v;});
+    var fd=fg("Dek");body.appendChild(fd);ai(fd,ep.dek||"",function(v){ep.dek=v;},true);
+    var r2=row();body.appendChild(r2);
+    var fc=fg("Category");r2.appendChild(fc);var s=sel(CAT,ep.cat,function(){ep.cat=s.value;autoSave();});fc.appendChild(s);
+    var fr=fg("Runtime");r2.appendChild(fr);ai(fr,ep.runtime,function(v){ep.runtime=v;});
+    var fsm=fg("Sub-meta");body.appendChild(fsm);ai(fsm,ep.submeta,function(v){ep.submeta=v;});
+    var fh=fg("Substack URL");body.appendChild(fh);ai(fh,ep.href||"",function(v){ep.href=v;});
+    var fl=fg("Local page");body.appendChild(fl);ai(fl,ep.localHref||"",function(v){ep.localHref=v||null;});
+    var fFeat=h("label","checkbox-row");var cbF=mk("input");cbF.type="checkbox";cbF.checked=!!ep.featured;
+    cbF.addEventListener("change",function(){ep.featured=cbF.checked;autoSave();});
+    fFeat.appendChild(cbF);fFeat.appendChild(document.createTextNode(" Featured hero"));body.appendChild(fFeat);
+    var acts=h("div","item-actions");
+    var bU=h("button","btn-sm","↑");bU.addEventListener("click",function(){if(i>0){var a=S.episodes,t=a[i];a[i]=a[i-1];a[i-1]=t;renderEpisodes();}});
+    var bD=h("button","btn-sm","↓");bD.addEventListener("click",function(){var a=S.episodes;if(i<a.length-1){var t=a[i];a[i]=a[i+1];a[i+1]=t;renderEpisodes();}});
+    var bDl=h("button","btn-sm del","Delete");bDl.addEventListener("click",function(){if(confirm("Delete?")){S.episodes.splice(i,1);autoSave();renderEpisodes();}});
+    acts.appendChild(bU);acts.appendChild(bD);acts.appendChild(bDl);body.appendChild(acts);
+    card.appendChild(body);return card;
+  }
+  document.getElementById("addEpisode").addEventListener("click",function(){
+    S.episodes.unshift({no:"000",title:"New episode",questionHtml:"New <em>question?</em>",runtime:"~45 min",cat:"power",submeta:"Podcast · 2026",featured:false,href:"",localHref:null});
+    autoSave();renderEpisodes();document.getElementById("episodeList").firstElementChild.classList.add("open");
+  });
+
+  /* ---- Notes ------------------------------------------------------ */
+  function renderNotes(){
+    var list=document.getElementById("noteList");list.innerHTML="";
+    document.getElementById("note-count").textContent=(S.notes||[]).length+" items";
+    (S.notes||[]).forEach(function(n,i){list.appendChild(makeNoteCard(n,i));});
+  }
+  function makeNoteCard(note,i){
+    var card=h("div","item-card");
+    var head=h("div","item-head",
+      '<span class="item-no">'+esc(note.no)+'</span>'+
+      '<span class="item-title-preview">'+esc(stripTags(note.questionHtml||""))+'</span>'+
+      '<span class="item-cat-badge">'+esc(note.cat||"")+'</span>'+
+      '<svg class="item-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5,3 11,8 5,13"/></svg>');
+    card.appendChild(head);head.addEventListener("click",function(){card.classList.toggle("open");});
+    var body=h("div","item-body");
+    var r1=h("div","field-row");body.appendChild(r1);
+    var fn=h("div","field-group");fn.appendChild(h("label","","Note №"));r1.appendChild(fn);
+    var ni=mk("input");ni.type="text";ni.value=note.no;ni.addEventListener("input",function(){note.no=ni.value;autoSave();});fn.appendChild(ni);
+    var fc=h("div","field-group");fc.appendChild(h("label","","Category"));r1.appendChild(fc);
+    var s=sel(CAT,note.cat,function(){note.cat=s.value;autoSave();});fc.appendChild(s);
+    var fq=h("div","field-group");fq.appendChild(h("label","","Question (HTML)"));body.appendChild(fq);
+    var qi=mk("input");qi.type="text";qi.value=note.questionHtml||"";qi.addEventListener("input",function(){note.questionHtml=qi.value;autoSave();});fq.appendChild(qi);
+    var fm=h("div","field-group");fm.appendChild(h("label","","Meta"));body.appendChild(fm);
+    var mi=mk("input");mi.type="text";mi.value=note.meta||"";mi.addEventListener("input",function(){note.meta=mi.value;autoSave();});fm.appendChild(mi);
+    var fl=h("div","field-group");fl.appendChild(h("label","","Local page (essay-00N.html)"));body.appendChild(fl);
+    var li2=mk("input");li2.type="text";li2.value=note.localHref||"";li2.addEventListener("input",function(){note.localHref=li2.value||null;autoSave();});fl.appendChild(li2);
+    var acts=h("div","item-actions");
+    var bU=h("button","btn-sm","↑");bU.addEventListener("click",function(){if(i>0){var a=S.notes,t=a[i];a[i]=a[i-1];a[i-1]=t;renderNotes();}});
+    var bD=h("button","btn-sm","↓");bD.addEventListener("click",function(){var a=S.notes;if(i<a.length-1){var t=a[i];a[i]=a[i+1];a[i+1]=t;renderNotes();}});
+    var bDl=h("button","btn-sm del","Delete");bDl.addEventListener("click",function(){if(confirm("Delete?")){S.notes.splice(i,1);autoSave();renderNotes();}});
+    acts.appendChild(bU);acts.appendChild(bD);acts.appendChild(bDl);body.appendChild(acts);
+    card.appendChild(body);return card;
+  }
+  document.getElementById("addNote").addEventListener("click",function(){
+    S.notes.unshift({no:"00",questionHtml:"New <em>observation.</em>",cat:"power",meta:"Essay · 2026",localHref:null});
+    autoSave();renderNotes();document.getElementById("noteList").firstElementChild.classList.add("open");
+  });
+
+  /* ---- Page intros ----------------------------------------------- */
+  function renderPageIntros(){
+    var host=document.getElementById("pageIntros");host.innerHTML="";
+    ["essays","episodes","notes","archive"].forEach(function(pk){
+      var pg=(S.pages&&S.pages[pk])||{};
+      var sec=h("div");
+      var st=h("div","sec-title");st.textContent=pk.charAt(0).toUpperCase()+pk.slice(1)+" page";
+      sec.appendChild(st);
+      function fgp(lbl){var d=h("div","field-group");d.appendChild(h("label","",lbl));return d;}
+      function addB(parent,key,big){
+        var el=big?mk("textarea"):mk("input");if(!big)el.type="text";el.value=pg[key]||"";
+        el.addEventListener("input",function(){if(!S.pages)S.pages={};if(!S.pages[pk])S.pages[pk]={};S.pages[pk][key]=el.value;autoSave();});parent.appendChild(el);}
+      var r1=h("div","field-row");sec.appendChild(r1);
+      var fk=fgp("Kicker");r1.appendChild(fk);addB(fk,"kicker");
+      var fkm=fgp("Kicker muted");r1.appendChild(fkm);addB(fkm,"kickerMuted");
+      var ft=fgp("Title (HTML)");sec.appendChild(ft);addB(ft,"titleHtml");
+      var fd=fgp("Dek");sec.appendChild(fd);addB(fd,"dek",true);
+      var r2=h("div","field-row");sec.appendChild(r2);
+      var fsb=fgp("Side stat number");r2.appendChild(fsb);addB(fsb,"sideBig");
+      var fsl=fgp("Side label (HTML)");r2.appendChild(fsl);addB(fsl,"sideLabelHtml");
+      host.appendChild(sec);
+    });
+  }
+
+  /* ---- Ticker ---------------------------------------------------- */
+  function renderTicker(){
+    var host=document.getElementById("tickerItems");host.innerHTML="";
+    (S.site.ticker||[]).forEach(function(item,i){
+      var row=h("div","ticker-row");
+      var inp=mk("input");inp.type="text";inp.value=item.text||"";
+      inp.addEventListener("input",function(){item.text=inp.value;autoSave();});
+      var starCk=h("span","ticker-chk");var scb=mk("input");scb.type="checkbox";scb.checked=!!item.star;
+      scb.addEventListener("change",function(){item.star=scb.checked;autoSave();});
+      starCk.appendChild(scb);starCk.appendChild(h("label","","✦"));
+      var hotCk=h("span","ticker-chk");var hcb=mk("input");hcb.type="checkbox";hcb.checked=!!item.hot;
+      hcb.addEventListener("change",function(){item.hot=hcb.checked;autoSave();});
+      hotCk.appendChild(hcb);hotCk.appendChild(h("label","","Hot"));
+      var del=h("button","btn-sm del","×");del.style="height:22px;padding:0 8px;";
+      del.addEventListener("click",function(){S.site.ticker.splice(i,1);autoSave();renderTicker();});
+      row.appendChild(inp);row.appendChild(starCk);row.appendChild(hotCk);row.appendChild(del);
+      host.appendChild(row);
+    });
+  }
+  document.getElementById("addTicker").addEventListener("click",function(){
+    if(!S.site.ticker)S.site.ticker=[];
+    S.site.ticker.push({text:"New ticker item",star:false,hot:false});autoSave();renderTicker();
+  });
+
+  /* ---- Footer cols ----------------------------------------------- */
+  function renderFooterCols(){
+    var host=document.getElementById("footerCols");host.innerHTML="";
+    var cols=(S.site.footer&&S.site.footer.columns)||[];
+    cols.forEach(function(col,ci){
+      var colDiv=h("div");
+      var tf=h("div","field-group","<label>Column title</label>");
+      var ti=mk("input");ti.type="text";ti.value=col.title||"";ti.addEventListener("input",function(){col.title=ti.value;autoSave();});
+      tf.appendChild(ti);colDiv.appendChild(tf);
+      var ld=h("div");
+      (col.links||[]).forEach(function(lnk){
+        var row=h("div","footer-link-row");
+        var li=mk("input");li.type="text";li.placeholder="Label";li.value=lnk.label||"";li.addEventListener("input",function(){lnk.label=li.value;autoSave();});
+        var hi=mk("input");hi.type="text";hi.placeholder="URL";hi.value=lnk.href||"";hi.addEventListener("input",function(){lnk.href=hi.value;autoSave();});
+        row.appendChild(li);row.appendChild(hi);ld.appendChild(row);
+      });
+      colDiv.appendChild(ld);host.appendChild(colDiv);
+    });
+  }
+
+  /* ---- RSS Import ------------------------------------------------ */
+  var RSS_API = "https://api.rss2json.com/v1/api.json?rss_url="+encodeURIComponent("https://thinkersdilemma.substack.com/feed");
+  var ALLORG  = "https://api.allorigins.win/get?url="+encodeURIComponent("https://thinkersdilemma.substack.com/feed");
+  var RSS_CACHE_KEY = "td-rss-cache";
+
+  document.getElementById("btnFetchRSS").addEventListener("click", fetchRSS);
+  document.getElementById("btnClearCache").addEventListener("click",function(){
+    try{localStorage.removeItem(RSS_CACHE_KEY);}catch(e){}
+    document.getElementById("rssStatus").textContent="Cache cleared.";
+    document.getElementById("rssResults").innerHTML='<div class="rss-empty">Cache cleared — press Fetch to reload.</div>';
+  });
+
+  function fetchRSS(){
+    var status=document.getElementById("rssStatus");
+    var btn=document.getElementById("btnFetchRSS");
+    btn.disabled=true;btn.textContent="Fetching…";status.textContent="";
+    var xhr=new XMLHttpRequest();xhr.open("GET",RSS_API,true);xhr.timeout=9000;
+    xhr.onload=function(){
+      btn.disabled=false;btn.textContent="↓ Fetch from Substack";
+      if(xhr.status!==200){tryFallback();return;}
+      try{
+        var d=JSON.parse(xhr.responseText);
+        if(d.status==="ok"&&d.items&&d.items.length){cacheAndRender(d.items);return;}
+      }catch(e){}
+      tryFallback();
+    };
+    xhr.onerror=xhr.ontimeout=function(){btn.disabled=false;btn.textContent="↓ Fetch from Substack";tryFallback();};
+    xhr.send();
+  }
+
+  function tryFallback(){
+    var status=document.getElementById("rssStatus");
+    status.textContent="Primary failed, trying fallback…";
+    var xhr=new XMLHttpRequest();xhr.open("GET",ALLORG,true);xhr.timeout=9000;
+    xhr.onload=function(){
+      if(xhr.status!==200){status.textContent="Both sources failed. Check your connection.";return;}
+      try{
+        var wrap=JSON.parse(xhr.responseText);
+        var doc=new DOMParser().parseFromString(wrap.contents||"","text/xml");
+        var raw=Array.prototype.slice.call(doc.querySelectorAll("item")).map(function(el){
+          function t(tag){var n=el.querySelector(tag);return n?n.textContent:"";}
+          var cats=Array.prototype.slice.call(el.querySelectorAll("category")).map(function(c){return c.textContent;});
+          var ns=el.getElementsByTagName("content:encoded");
+          return{title:t("title"),link:t("link")||t("guid"),pubDate:t("pubDate"),
+            description:t("description"),content:ns.length?ns[0].textContent:t("description"),categories:cats};
+        });
+        if(raw.length){cacheAndRender(raw);return;}
+      }catch(e){}
+      status.textContent="Could not parse RSS feed.";
+    };
+    xhr.onerror=xhr.ontimeout=function(){status.textContent="Connection failed.";};
+    xhr.send();
+  }
+
+  function cacheAndRender(items){
+    try{localStorage.setItem(RSS_CACHE_KEY,JSON.stringify({ts:Date.now(),items:items}));}catch(e){}
+    renderRSSItems(items);
+  }
+
+  function renderRSSItems(items){
+    var status=document.getElementById("rssStatus");
+    var results=document.getElementById("rssResults");
+    status.textContent=items.length+" posts in feed";
+    results.innerHTML="";
+    var existingHrefs=(S.essays||[]).map(function(e){return e.href;});
+    items.forEach(function(item){
+      var isIn=existingHrefs.indexOf(item.link)!==-1;
+      var div=h("div","rss-item");
+      var title=h("span","rss-item-title",esc(strip(item.title||"")));
+      var date=h("span","rss-item-date");
+      date.textContent=item.pubDate?new Date(item.pubDate).toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"";
+      div.appendChild(title);div.appendChild(date);
+      if(isIn){
+        div.appendChild(h("span","rss-imported","Already imported"));
+      } else {
+        var btn=h("button","btn primary");btn.style="height:28px;padding:0 14px;font-size:10px;flex-shrink:0;";
+        btn.textContent="Import";
+        btn.addEventListener("click",function(){
+          importItem(item);
+          btn.textContent="Imported ✓";btn.disabled=true;
+          btn.style.background="var(--ink-3)";btn.style.borderColor="var(--ink-3)";
+          existingHrefs.push(item.link);
+          toast("Imported: "+strip(item.title));
+        });
+        div.appendChild(btn);
+      }
+      results.appendChild(div);
+    });
+  }
+
+  function importItem(item){
+    var maxNo=(S.essays||[]).reduce(function(m,e){return Math.max(m,parseInt(e.no,10)||0);},0);
+    var no=maxNo+1;
+    var dt=parseDate(item.pubDate||"");
+    var cat=mapCat(item.categories||[],item.title||"");
+    var cap=cat.charAt(0).toUpperCase()+cat.slice(1);
+    var body=item.content||item.description||"";
+    S.essays=[{
+      no:pad(no),cat:cat,catLabel:cap,
+      titleHtml:strip(item.title||""),
+      dek:truncate(strip(body),240),
+      meta:"By Taz Punjabi · "+dt.full,
+      readMin:readMin(body),
+      date:dt.full,dateShort:dt.short,year:dt.year,
+      type:"Essay",href:item.link||"",localHref:null
+    }].concat(S.essays||[]);
+    autoSave();renderEssays();
+  }
+
+  /* ---- Export ---------------------------------------------------- */
+  document.getElementById("btnExport").addEventListener("click",function(){
+    var header=[
+      "/* =====================================================================",
+      "   THINKERS DILEMMA \u2014 SUBSTACK CONTENT",
+      "   Generated by Studio on "+new Date().toISOString().split("T")[0],
+      "   Upload this file to dist/content-substack.js to publish.",
+      "   ===================================================================== */",""
+    ].join("\n");
+    var js=header+"window.TD_CONTENT = "+JSON.stringify(S,null,2)+";\n";
+    var blob=new Blob([js],{type:"text/javascript"});
+    var url=URL.createObjectURL(blob);
+    var a=mk("a");a.href=url;a.download="content-substack.js";a.click();
+    URL.revokeObjectURL(url);
+    toast("content-substack.js downloaded — upload to dist/ to publish.");
+  });
+
+  document.getElementById("btnPreview").addEventListener("click",function(){
+    autoSave();window.open("index-substack.html?tdpreview=1","_blank");
+  });
+
+  /* ---- Init ------------------------------------------------------ */
+  bindInputs();
+  renderEssays();renderEpisodes();renderNotes();
+  renderPageIntros();renderTicker();renderFooterCols();
+  toast("Studio ready — "+(S.essays||[]).length+" essays loaded · Use RSS Import to pull new posts");
+
+})();
+</script>
+</body>
+</html>

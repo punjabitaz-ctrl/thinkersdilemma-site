@@ -1,0 +1,44 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Paper grain + shadow</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 22px 32px; background: var(--paper); }
+  .head { font: var(--kicker); letter-spacing: 0.2em; color: var(--ink-3); text-transform: uppercase; margin-bottom: 16px; }
+  .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .cell { padding: 18px; display: flex; flex-direction: column; gap: 8px; min-height: 130px; background: var(--paper-hi); border: 1px solid var(--rule); }
+  .cell.grain { /* paper-grain effect */ position: relative; overflow: hidden; }
+  .cell.grain::before {
+    content:""; position:absolute; inset:0; pointer-events:none; mix-blend-mode: multiply; opacity: 0.9;
+    background-image:
+      radial-gradient(circle at 23% 19%, rgba(20,17,14,0.03) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 71% 63%, rgba(20,17,14,0.025) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 47% 88%, rgba(20,17,14,0.022) 0 1px, transparent 1.5px),
+      radial-gradient(circle at 88% 32%, rgba(20,17,14,0.028) 0 1px, transparent 1.5px);
+    background-size: 13px 13px, 19px 19px, 23px 23px, 17px 17px;
+  }
+  .cell.lift1 { box-shadow: var(--shadow-1); }
+  .cell.lift2 { box-shadow: var(--shadow-2); }
+  .cell.lift3 { box-shadow: var(--shadow-3); }
+  .label { font: 500 11px/1 var(--mono); letter-spacing: 0.2em; color: var(--signal); text-transform: uppercase; }
+  .name  { font: 500 italic 22px/1 var(--serif); color: var(--ink); }
+  .meta  { font: 400 12px/1.4 var(--mono); color: var(--ink-3); margin-top: auto; }
+</style></head>
+<body>
+  <div class="head">Surfaces · paper grain & ink shadows</div>
+  <div class="row">
+    <div class="cell grain lift1">
+      <span class="label">Texture</span>
+      <span class="name">Paper grain</span>
+      <span class="meta">Subtle multiply dots · always on cards</span>
+    </div>
+    <div class="cell lift2">
+      <span class="label">Elevation</span>
+      <span class="name">Shadow-2</span>
+      <span class="meta">Default card lift · 0 2 0 + 0 6 16</span>
+    </div>
+    <div class="cell lift3">
+      <span class="label">Elevation</span>
+      <span class="name">Shadow-3</span>
+      <span class="meta">Modal / focused · ink-tinted, never glassy</span>
+    </div>
+  </div>
+</body></html>

@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Studio pages — accessible but not indexed
+Disallow: /studio-substack.html
+Disallow: /studio-distribute.html
+
+# Sitemap (Substack manages the canonical content sitemap)
+Sitemap: https://thinkersdilemma.substack.com/sitemap.xml

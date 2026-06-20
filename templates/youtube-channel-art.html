@@ -1,0 +1,104 @@
+<!doctype html><html><head><meta charset="utf-8"><title>YouTube channel art</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; background:#2a2522; display:grid; place-items:center; min-height:100vh; }
+  /* YouTube banner: 2560×1440 full, safe area ~1546×423 centered */
+  .frame { width: 2560px; height: 1440px; background: var(--paper); position: relative; overflow: hidden;
+           font-family: var(--sans); transform-origin: top left; }
+  .frame::before {
+    content:""; position:absolute; inset:0; pointer-events:none; mix-blend-mode: multiply; opacity: 0.85;
+    background-image:
+      radial-gradient(circle at 23% 19%, rgba(20,17,14,0.025) 0 1.4px, transparent 2.2px),
+      radial-gradient(circle at 71% 63%, rgba(20,17,14,0.022) 0 1.2px, transparent 2.2px),
+      radial-gradient(circle at 47% 88%, rgba(20,17,14,0.02) 0 1.2px, transparent 2.2px),
+      radial-gradient(circle at 88% 32%, rgba(20,17,14,0.025) 0 1.4px, transparent 2.2px);
+    background-size: 24px 24px, 30px 30px, 38px 38px, 28px 28px;
+  }
+
+  /* Safe area outline (visible guide, ~1546x423 centered at ~507,508) */
+  .safe-area {
+    position: absolute; left: 507px; top: 508px; width: 1546px; height: 423px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; z-index: 2;
+  }
+
+  .left { display: flex; flex-direction: column; gap: 18px; }
+  .kicker { display: flex; gap: 16px; align-items: center; }
+  .kicker .no { font: 500 16px/1 var(--mono); letter-spacing: 0.28em; color: var(--signal); text-transform: uppercase; }
+  .kicker .dash { width: 32px; height: 1px; background: var(--ink); }
+  .kicker .cat { font: 500 16px/1 var(--mono); letter-spacing: 0.22em; color: var(--ink-2); text-transform: uppercase; }
+
+  .name { font: 500 italic 140px/0.95 var(--serif); color: var(--ink); letter-spacing: -0.025em; }
+  .tag  { font: 400 italic 36px/1.2 var(--serif); color: var(--ink-2); max-width: 640px; }
+
+  .right { display: flex; flex-direction: column; align-items: stretch; gap: 16px; }
+  .promise { background: var(--ink); color: var(--paper); padding: 36px 40px; }
+  .promise .label { font: 500 14px/1 var(--mono); letter-spacing: 0.32em; text-transform: uppercase; color: rgba(242,235,221,0.5); }
+  .promise .text  { font: 400 italic 56px/1.05 var(--serif); margin-top: 18px; }
+  .promise .text em { color: var(--signal); font-style: italic; }
+
+  .schedule { display: flex; gap: 32px; padding-top: 16px; border-top: 2px solid var(--ink); }
+  .schedule .item .k { font: 500 12px/1 var(--mono); letter-spacing: 0.28em; color: var(--ink-3); text-transform: uppercase; }
+  .schedule .item .v { font: 500 italic 28px/1 var(--serif); color: var(--ink); margin-top: 6px; }
+
+  /* Off-safe decorative crosshair (won't show on mobile) */
+  .crosshair-l { position:absolute; left: 60px; top: 60px; opacity: 0.06; color: var(--ink); z-index: 0; }
+  .crosshair-l svg { width: 380px; height: 380px; }
+  .crosshair-r { position:absolute; right: 60px; bottom: 60px; opacity: 0.06; color: var(--ink); z-index: 0; }
+  .crosshair-r svg { width: 380px; height: 380px; }
+
+  /* Off-safe full-width mast for desktop viewers */
+  .desktop-mast { position:absolute; top: 0; left: 0; right: 0; height: 80px; background: var(--ink);
+                  display: flex; align-items: center; justify-content: space-between; padding: 0 120px;
+                  color: var(--paper); z-index: 2; }
+  .desktop-mast .pub { font: 500 italic 38px/1 var(--serif); }
+  .desktop-mast .meta { font: 500 14px/1 var(--mono); letter-spacing: 0.28em; text-transform: uppercase; opacity: 0.7; }
+</style></head>
+<body>
+  <div class="frame">
+    <div class="desktop-mast">
+      <span class="pub">Thinkers Dilemma</span>
+      <span class="meta">A work of inquiry · Substack · YouTube · TikTok</span>
+    </div>
+
+    <div class="crosshair-l">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="50" cy="50" r="36" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="50" cy="50" r="22" stroke="currentColor" stroke-width="0.5"/>
+        <line x1="0" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="0.4"/>
+        <line x1="50" y1="0" x2="50" y2="100" stroke="currentColor" stroke-width="0.4"/>
+      </svg>
+    </div>
+    <div class="crosshair-r">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="0.5"/>
+        <circle cx="50" cy="50" r="36" stroke="currentColor" stroke-width="0.5"/>
+        <line x1="0" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="0.4"/>
+        <line x1="50" y1="0" x2="50" y2="100" stroke="currentColor" stroke-width="0.4"/>
+      </svg>
+    </div>
+
+    <div class="safe-area">
+      <div class="left">
+        <div class="kicker">
+          <span class="no">Established MMXXVI</span>
+          <span class="dash"></span>
+          <span class="cat">A work of inquiry</span>
+        </div>
+        <div class="name">Thinkers<br>Dilemma.</div>
+        <div class="tag">Society through a critical lens — asking the tough questions, in good faith and at unhurried length.</div>
+      </div>
+      <div class="right">
+        <div class="promise">
+          <div class="label">The standing question</div>
+          <div class="text">Who <em>benefits?</em><br>Who <em>pays?</em></div>
+        </div>
+        <div class="schedule">
+          <div class="item"><div class="k">Tuesday</div><div class="v">Essay — Substack</div></div>
+          <div class="item"><div class="k">Friday</div><div class="v">Episode — YouTube</div></div>
+          <div class="item"><div class="k">Daily</div><div class="v">Field note — TikTok</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body></html>

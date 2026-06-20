@@ -1,0 +1,51 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Logo — variants</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 28px 32px; background: var(--paper); }
+  .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; align-items: end; }
+  .cell { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .swatch { width: 100%; aspect-ratio: 1; display: grid; place-items: center;
+            border: 1px solid var(--rule); background: var(--paper-hi); }
+  .swatch.dark { background: var(--ink); }
+  .swatch.signal { background: var(--signal); }
+  .swatch.cream { background: var(--paper-hi); }
+  .swatch.deep  { background: var(--paper-deep); }
+  .mark { width: 64%; }
+  .label { font: var(--kicker); letter-spacing: 0.18em; color: var(--ink-3); text-transform: uppercase; }
+  .ink   { color: var(--ink); }
+  .paper { color: var(--paper); }
+  .red   { color: var(--signal); }
+  .stamp text { font-family: 'Newsreader', serif; }
+</style></head>
+<body>
+  <div class="grid">
+    <div class="cell">
+      <div class="swatch cream"><svg class="mark ink" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="3"/><line x1="50" y1="4" x2="50" y2="96" stroke="currentColor" stroke-width="3"/><path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/><circle cx="68" cy="50" r="3.5" fill="currentColor"/></svg></div>
+      <span class="label">Ink on cream</span>
+    </div>
+    <div class="cell">
+      <div class="swatch dark"><svg class="mark paper" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="3"/><line x1="50" y1="4" x2="50" y2="96" stroke="currentColor" stroke-width="3"/><path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/><circle cx="68" cy="50" r="3.5" fill="currentColor"/></svg></div>
+      <span class="label">Paper on ink</span>
+    </div>
+    <div class="cell">
+      <div class="swatch signal"><svg class="mark paper" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="3"/><line x1="50" y1="4" x2="50" y2="96" stroke="currentColor" stroke-width="3"/><path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/><circle cx="68" cy="50" r="3.5" fill="currentColor"/></svg></div>
+      <span class="label">Reversed on signal</span>
+    </div>
+    <div class="cell">
+      <div class="swatch cream stamp">
+        <svg viewBox="0 0 100 100" fill="none" style="width:78%;color:var(--signal)">
+          <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="1.5"/>
+          <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="1"/>
+          <text x="50" y="58" text-anchor="middle" font-size="30" font-weight="600" font-style="italic" letter-spacing="-0.04em" fill="currentColor">TD</text>
+          <circle cx="22" cy="50" r="1.4" fill="currentColor"/>
+          <circle cx="78" cy="50" r="1.4" fill="currentColor"/>
+          <defs><path id="t" d="M 12 50 A 38 38 0 0 1 88 50"/></defs>
+          <text font-family="IBM Plex Mono, monospace" font-size="7" font-weight="500" letter-spacing="0.32em" fill="currentColor">
+            <textPath href="#t" startOffset="50%" text-anchor="middle">THINKERS · DILEMMA</textPath>
+          </text>
+        </svg>
+      </div>
+      <span class="label">Stamp / seal</span>
+    </div>
+  </div>
+</body></html>

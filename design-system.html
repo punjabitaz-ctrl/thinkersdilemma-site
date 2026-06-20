@@ -1,0 +1,215 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Thinkers Dilemma — Design System</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<style>
+  body { background: var(--paper); padding: 0; }
+  .page { max-width: 1240px; margin: 0 auto; padding: 64px 56px 96px; }
+
+  /* Masthead */
+  .masthead { border-top: 8px solid var(--ink); border-bottom: 1px solid var(--ink);
+              padding: 18px 0; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
+  .masthead .left, .masthead .right { display: flex; gap: 16px; align-items: center; }
+  .masthead .right { justify-content: flex-end; }
+  .masthead .meta { font: 500 11px/1 var(--mono); letter-spacing: 0.22em; color: var(--ink-2); text-transform: uppercase; }
+  .masthead .center { text-align: center; }
+  .masthead .name { font: 500 italic 42px/1 var(--serif); color: var(--ink); letter-spacing: -0.01em; }
+  .masthead .tag  { font: 500 10px/1 var(--mono); letter-spacing: 0.32em; color: var(--signal); text-transform: uppercase; margin-top: 6px; }
+
+  .strap { display:flex; justify-content: space-between; padding-top: 12px; padding-bottom: 32px; border-bottom: 1px solid var(--rule-soft); }
+  .strap .item { font: 500 11px/1 var(--mono); letter-spacing: 0.18em; color: var(--ink-3); text-transform: uppercase; }
+  .strap .item b { color: var(--signal); font-weight: 500; }
+
+  /* Hero */
+  .hero { padding: 72px 0 56px; display: grid; grid-template-columns: 1.4fr 1fr; gap: 56px; align-items: end; border-bottom: 1px solid var(--ink); }
+  .kicker { display: flex; gap: 14px; align-items: center; margin-bottom: 18px; }
+  .kicker .no { font: 500 12px/1 var(--mono); letter-spacing: 0.28em; color: var(--signal); text-transform: uppercase; }
+  .kicker .dash { width: 28px; height: 1px; background: var(--ink); }
+  .kicker .cat { font: 500 12px/1 var(--mono); letter-spacing: 0.22em; color: var(--ink-2); text-transform: uppercase; }
+  .hl  { font: 500 italic 96px/0.92 var(--serif); color: var(--ink); letter-spacing: -0.022em; }
+  .hl em { color: var(--signal); font-style: italic; }
+  .dek { font: 400 20px/1.45 var(--sans); color: var(--ink-2); max-width: 520px; }
+  .dek + .dek { margin-top: 14px; }
+
+  /* Section heads */
+  .section { padding: 56px 0 24px; }
+  .section-head { display: grid; grid-template-columns: 60px 1fr auto; align-items: baseline; gap: 16px;
+                  border-top: 2px solid var(--ink); padding-top: 14px; margin-bottom: 28px; }
+  .section-head .num { font: 500 11px/1 var(--mono); letter-spacing: 0.28em; color: var(--signal); text-transform: uppercase; }
+  .section-head .title { font: 500 italic 32px/1 var(--serif); color: var(--ink); letter-spacing: -0.01em; }
+  .section-head .note  { font: 500 11px/1 var(--mono); letter-spacing: 0.22em; color: var(--ink-3); text-transform: uppercase; }
+
+  /* Cards row */
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .cards.two { grid-template-columns: repeat(2, 1fr); }
+  .card { display: flex; flex-direction: column; gap: 12px; }
+  .card .frame { border: 1px solid var(--rule); background: var(--paper-hi); aspect-ratio: 4/3; overflow: hidden; position: relative; box-shadow: var(--shadow-1); }
+  .card .frame.square { aspect-ratio: 1; }
+  .card .frame.portrait { aspect-ratio: 9/16; }
+  .card .frame.wide { aspect-ratio: 16/9; }
+  .card .frame iframe { border: 0; width: 100%; height: 100%; pointer-events: none; }
+  .card .frame.scale-7 iframe { transform: scale(0.27); transform-origin: top left; width: 370%; height: 370%; }
+  .card .frame.scale-yt iframe { transform: scale(0.34); transform-origin: top left; width: 295%; height: 295%; }
+  .card .frame.scale-yt-banner iframe { transform: scale(0.17); transform-origin: top left; width: 590%; height: 590%; }
+  .card .frame.scale-tt iframe { transform: scale(0.20); transform-origin: top left; width: 500%; height: 500%; }
+  .card .frame.scale-ep iframe { transform: scale(0.30); transform-origin: top left; width: 333%; height: 333%; }
+  .card .frame.scale-q  iframe { transform: scale(0.38); transform-origin: top left; width: 264%; height: 264%; }
+  .card .frame.scale-sub iframe { transform: scale(0.28); transform-origin: top left; width: 358%; height: 358%; }
+
+  .card .label { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .card .label .name { font: 500 italic 22px/1.1 var(--serif); color: var(--ink); }
+  .card .label .dim  { font: 500 11px/1 var(--mono); letter-spacing: 0.18em; color: var(--ink-3); text-transform: uppercase; font-feature-settings: "tnum"; }
+  .card .desc { font: 400 14px/1.45 var(--sans); color: var(--ink-2); }
+  .card a.open { font: 500 11px/1 var(--mono); letter-spacing: 0.22em; color: var(--signal); text-transform: uppercase; text-decoration: none; align-self: flex-start; margin-top: 4px; }
+  .card a.open::after { content: " →"; }
+  .card a.open:hover { color: var(--signal-deep); }
+
+  /* Foundations grid */
+  .found { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  .found .item { padding: 22px 24px; border: 1px solid var(--rule); background: var(--paper-hi); display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow-1); }
+  .found .item h4 { font: 500 italic 24px/1 var(--serif); color: var(--ink); }
+  .found .item p { font: 400 14px/1.5 var(--sans); color: var(--ink-2); }
+  .found .swatches { display: flex; gap: 8px; }
+  .found .sw { flex: 1; height: 56px; display: flex; flex-direction: column; justify-content: flex-end; padding: 6px 8px; }
+  .found .sw .h { font: 500 10px/1 var(--mono); letter-spacing: 0.14em; font-feature-settings: "tnum"; }
+  .found .typeline { font: 400 italic 36px/1 var(--serif); color: var(--ink); }
+  .found .typeline .s { font: 400 16px/1.4 var(--sans); color: var(--ink-2); font-style: normal; }
+  .found .typeline .m { font: 500 11px/1 var(--mono); letter-spacing: 0.22em; color: var(--signal); text-transform: uppercase; font-style: normal; margin-top: 6px; display: block; }
+
+  /* Colophon */
+  .colophon { margin-top: 64px; padding-top: 24px; border-top: 2px solid var(--ink); display: flex; justify-content: space-between; align-items: baseline; }
+  .colophon .l { font: 500 italic 22px/1 var(--serif); color: var(--ink); }
+  .colophon .r { font: 500 11px/1 var(--mono); letter-spacing: 0.22em; color: var(--ink-3); text-transform: uppercase; }
+</style></head>
+<body>
+<div class="page">
+
+  <div class="masthead">
+    <div class="left"><span class="meta">Volume 01 · The System</span></div>
+    <div class="center">
+      <div class="name">Thinkers Dilemma</div>
+      <div class="tag">A work of inquiry</div>
+    </div>
+    <div class="right"><span class="meta">Design System · MMXXVI</span></div>
+  </div>
+  <div class="strap">
+    <span class="item">Substack <b>·</b> Essays</span>
+    <span class="item">YouTube <b>·</b> Episodes</span>
+    <span class="item">TikTok <b>·</b> Field notes</span>
+    <span class="item">Quote cards <b>·</b> Cross-platform</span>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="kicker"><span class="no">The brief</span><span class="dash"></span><span class="cat">One system, three platforms</span></div>
+      <div class="hl">Asking the<br>tough questions,<br><em>in good faith.</em></div>
+    </div>
+    <div>
+      <div class="dek">A single visual identity that holds together across long-form essay, mid-form video, and short-form vertical — without losing its voice on any of them.</div>
+      <div class="dek">Warm cream paper. Warm ink. One vermilion accent. Editorial serif italics for the headline voice, technical sans for the body, monospace for evidence.</div>
+    </div>
+  </div>
+
+  <!-- FOUNDATIONS -->
+  <div class="section">
+    <div class="section-head">
+      <span class="num">№ 01</span>
+      <span class="title">Foundations</span>
+      <span class="note">Color · type · texture</span>
+    </div>
+    <div class="found">
+      <div class="item">
+        <h4>Color</h4>
+        <p>One bold accent on warm cream. Never dark-on-dark. Never bright white.</p>
+        <div class="swatches">
+          <div class="sw" style="background:var(--signal);color:#fff"><span class="h">Signal · D9351F</span></div>
+          <div class="sw" style="background:var(--ink);color:var(--paper)"><span class="h">Ink · 14110E</span></div>
+          <div class="sw" style="background:var(--paper);color:var(--ink);border:1px solid var(--rule)"><span class="h">Paper · F2EBDD</span></div>
+        </div>
+      </div>
+      <div class="item">
+        <h4>Type</h4>
+        <p>Newsreader italic carries the voice. IBM Plex Sans reads. IBM Plex Mono labels.</p>
+        <div class="typeline">Who benefits?
+          <div class="s">Plex Sans handles the reading text and the UI.</div>
+          <span class="m">№ 014 · Surveillance</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TEMPLATES -->
+  <div class="section">
+    <div class="section-head">
+      <span class="num">№ 02</span>
+      <span class="title">Content templates</span>
+      <span class="note">Substack · YouTube · TikTok · Cross-platform</span>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="frame wide scale-sub"><iframe src="templates/substack-header.html"></iframe></div>
+        <div class="label"><span class="name">Substack header</span><span class="dim">1456 × 816</span></div>
+        <div class="desc">Post cover with masthead, kicker, headline, dek, and the issue plate. Drop into any new essay.</div>
+        <a class="open" href="templates/substack-header.html" target="_blank">Open template</a>
+      </div>
+      <div class="card">
+        <div class="frame wide scale-yt"><iframe src="templates/youtube-thumbnail.html"></iframe></div>
+        <div class="label"><span class="name">YouTube thumbnail</span><span class="dim">1280 × 720</span></div>
+        <div class="desc">Big italic question, signal underline, stamp lockup, episode strip at the bottom.</div>
+        <a class="open" href="templates/youtube-thumbnail.html" target="_blank">Open template</a>
+      </div>
+      <div class="card">
+        <div class="frame wide scale-yt-banner"><iframe src="templates/youtube-channel-art.html"></iframe></div>
+        <div class="label"><span class="name">YouTube channel art</span><span class="dim">2560 × 1440</span></div>
+        <div class="desc">Banner with safe-area lockup, schedule strap, and the standing-question slab.</div>
+        <a class="open" href="templates/youtube-channel-art.html" target="_blank">Open template</a>
+      </div>
+      <div class="card">
+        <div class="frame portrait scale-tt"><iframe src="templates/tiktok-cover.html"></iframe></div>
+        <div class="label"><span class="name">TikTok cover</span><span class="dim">1080 × 1920</span></div>
+        <div class="desc">Vertical title card sized for the TikTok safe zone — readable past the caption bar.</div>
+        <a class="open" href="templates/tiktok-cover.html" target="_blank">Open template</a>
+      </div>
+      <div class="card">
+        <div class="frame square scale-ep"><iframe src="templates/episode-cover.html"></iframe></div>
+        <div class="label"><span class="name">Episode cover</span><span class="dim">1400 × 1400</span></div>
+        <div class="desc">Magazine-style cover for series art, podcast tiles, episode hubs.</div>
+        <a class="open" href="templates/episode-cover.html" target="_blank">Open template</a>
+      </div>
+      <div class="card">
+        <div class="frame square scale-q"><iframe src="templates/quote-card.html"></iframe></div>
+        <div class="label"><span class="name">Quote card</span><span class="dim">1080 × 1080</span></div>
+        <div class="desc">Cross-platform pull-quote — IG square, Substack inline, Notes app screenshots.</div>
+        <a class="open" href="templates/quote-card.html" target="_blank">Open template</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- VOICE -->
+  <div class="section">
+    <div class="section-head">
+      <span class="num">№ 03</span>
+      <span class="title">Voice</span>
+      <span class="note">Yes · No · always</span>
+    </div>
+    <div class="cards two">
+      <div class="card">
+        <div class="frame wide"><iframe src="preview/17-voice.html" style="transform:scale(0.62);transform-origin:top left;width:161%;height:161%"></iframe></div>
+        <div class="label"><span class="name">Headline voice</span><span class="dim">Yes / No</span></div>
+        <div class="desc">Questions over claims. Curiosity, not adrenaline. No emoji. No exclamations. Sentence case headlines, tracked all-caps in mono for labels.</div>
+      </div>
+      <div class="card">
+        <div class="frame wide"><iframe src="preview/15-masthead.html" style="transform:scale(0.62);transform-origin:top left;width:161%;height:161%"></iframe></div>
+        <div class="label"><span class="name">Masthead structure</span><span class="dim">Component</span></div>
+        <div class="desc">Heavy ink rule top, hairline rule bottom, wordmark center, tracked mono metadata flanking. Repeats across every long-form piece.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="colophon">
+    <span class="l">Thinkers Dilemma · A work of inquiry.</span>
+    <span class="r">Design system · Volume 01 · 2026</span>
+  </div>
+
+</div>
+</body></html>

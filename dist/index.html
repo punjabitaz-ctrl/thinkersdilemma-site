@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thinkers Dilemma — A work of inquiry</title>
+<meta name="description" content="Thinkers Dilemma — a work of inquiry. Society through a critical lens, asking the tough questions in good faith: who benefits, who pays, who decides.">
+<meta name="theme-color" content="#F2EBDD">
+<meta property="og:title" content="Thinkers Dilemma">
+<meta property="og:description" content="Thinkers Dilemma — a work of inquiry. Society through a critical lens, asking the tough questions in good faith: who benefits, who pays, who decides.">
+<meta property="og:type" content="website">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>(function(){try{var s=localStorage.getItem("td-theme");var n=s?s==="night":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(n)document.documentElement.setAttribute("data-theme","night");}catch(e){}})();</script>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="site.css">
+</head>
+<body class="paper-grain" data-page="home">
+
+<!-- UTILITY BAR -->
+<div class="utility">
+  <div class="wrap">
+    <div class="group">
+      <span data-bind="site.dateLine">Friday · May 30 · 2026</span>
+      <span class="dot">·</span>
+      <span>Issue № <span data-bind="site.issueNo">014</span></span>
+    </div>
+    <div class="group">
+      <span data-render="social" style="display:contents"></span>
+      <span class="dot">·</span>
+      <span class="live" data-bind="site.liveLabel">New episode Friday</span>
+    </div>
+  </div>
+</div>
+
+<!-- TRANSMISSION TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="track" data-render="ticker"></div>
+</div>
+
+<!-- MASTHEAD -->
+<div class="masthead-top">
+  <div class="observatory" aria-hidden="true" data-parallax="-0.06">
+    <svg viewBox="0 0 760 600" fill="none" stroke="currentColor">
+      <g class="tick-grid" stroke-width="1">
+        <circle cx="380" cy="300" r="284"/>
+        <circle cx="380" cy="300" r="212"/>
+        <line x1="380" y1="0" x2="380" y2="600"/>
+        <line x1="60" y1="300" x2="700" y2="300"/>
+        <line x1="154" y1="74" x2="606" y2="526"/>
+        <line x1="606" y1="74" x2="154" y2="526"/>
+      </g>
+      <g class="ring-rot" stroke-width="2">
+        <circle cx="380" cy="300" r="150" stroke-dasharray="3 12"/>
+      </g>
+      <g class="ring-rot rev" stroke-width="2">
+        <circle cx="380" cy="300" r="104" stroke-dasharray="2 16"/>
+      </g>
+      <g class="orbit-dot a"><circle cx="664" cy="300" r="6" fill="currentColor" stroke="none"/></g>
+      <g class="orbit-dot b"><circle cx="592" cy="300" r="4" fill="currentColor" stroke="none"/></g>
+      <g class="orbit-dot c"><circle cx="530" cy="300" r="3" fill="currentColor" stroke="none"/></g>
+    </svg>
+  </div>
+  <div class="wrap">
+    <header class="masthead" data-screen-label="Masthead">
+      <div class="ghost-num" data-parallax="0.12" data-bind="site.issueNo">014</div>
+      <div class="est" data-parallax="0.04">Established <span data-bind="site.established">MMXXVI</span> · A work of inquiry</div>
+      <h1 class="wordmark" data-parallax="0.09" data-bind="site.brand">Thinkers Dilemma</h1>
+      <div class="tagline" data-parallax="0.05" data-bind="site.questions">Who benefits? · Who pays? · Who decides?</div>
+    </header>
+    <div class="dateline">
+      <span data-bind="site.volume">Vol. I · No. 014</span>
+      <span class="center" data-bind-html="site.datelineCenter">Society, through a critical lens — <b>in good faith</b></span>
+      <span><span data-readers data-count-to="21402">21,402</span> readers</span>
+    </div>
+  </div>
+</div>
+
+<!-- PRIMARY NAV -->
+<nav class="mainnav">
+  <div class="wrap">
+    <span class="mini-mark">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="5"/>
+        <line x1="50" y1="4" x2="50" y2="96" stroke="currentColor" stroke-width="5"/>
+        <path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/>
+        <circle cx="68" cy="50" r="4" fill="currentColor"/>
+      </svg>
+    </span>
+    <a href="index.html" class="active">Front Page</a>
+    <a href="essays.html">Essays</a>
+    <a href="episodes.html">Episodes</a>
+    <a href="notes.html">Field Notes</a>
+    <a href="archive.html">Archive</a>
+    <a href="about.html">About</a>
+    <a href="#subscribe">Subscribe</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- LEAD STORY -->
+  <article class="lead" data-screen-label="Lead story">
+    <div class="head-col" data-reveal>
+      <div class="kicker-row">
+        <span class="kicker-tag" data-bind="home.lead.kickerTag">The lead · Surveillance</span>
+        <span class="kicker-dot"></span>
+        <span class="kicker-cat" data-bind="home.lead.kickerCat">Six-part inquiry</span>
+      </div>
+      <a href="article.html"><h2 class="hl" data-bind-html="home.lead.titleHtml">Who watches<br>the <em>watchers?</em></h2></a>
+      <p class="dek" data-bind="home.lead.dek">Ambient surveillance was sold to us as convenience.</p>
+      <div class="byline" data-bind-html="home.lead.byline">By <b>The Editor</b> &nbsp;·&nbsp; 9 min read &nbsp;·&nbsp; 3,412 words</div>
+    </div>
+    <aside class="plate" data-reveal data-reveal-delay="1">
+      <span class="scan" aria-hidden="true"></span>
+      <div>
+        <div class="label" data-bind="home.lead.plateLabel">Issue</div>
+        <div class="num" data-bind="home.lead.plateNum">014</div>
+        <div class="accent"></div>
+        <div class="name" data-bind="home.lead.plateName">The Watchers</div>
+      </div>
+      <div class="sub" data-bind-html="home.lead.plateSub">Part i of vi<br>Filed 05 · 30 · 2026</div>
+    </aside>
+  </article>
+
+  <!-- RUNNING TEXT EXCERPT -->
+  <section style="padding: 36px 0; border-bottom: 2px solid var(--ink);" data-reveal>
+    <div class="runtext threecol" data-render="home-excerpt"></div>
+  </section>
+
+  <!-- SECONDARY STORIES -->
+  <section style="padding: 40px 0;">
+    <div class="sec-head" data-reveal>
+      <span class="num">№ 02</span>
+      <span class="title">Also in this issue</span>
+      <span class="note">Four dispatches</span>
+    </div>
+    <div class="story-grid" data-render="home-secondary"></div>
+  </section>
+
+  <!-- EPISODES -->
+  <section id="episodes" style="padding: 40px 0;">
+    <div class="sec-head" data-reveal>
+      <span class="num">№ 03</span>
+      <span class="title">On screen</span>
+      <span class="note"><a href="episodes.html">All episodes →</a></span>
+    </div>
+    <div class="episodes" data-render="home-episodes"></div>
+  </section>
+
+  <!-- QUOTE BAND -->
+</main>
+
+<section class="quote-band">
+  <div class="wrap">
+    <div class="glyph" data-parallax="0.1">“</div>
+    <div>
+      <div class="q" data-bind-html="home.quote.textHtml">If the question is <span class="hi">who benefits</span>, the answer is almost never the one being asked.</div>
+      <div class="attr">
+        <span class="line"></span>
+        <span class="src" data-bind="home.quote.src">The Watchers,</span>
+        <span class="meta" data-bind="home.quote.meta">Issue № 014</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="wrap">
+
+  <!-- FIELD NOTES -->
+  <section id="notes" style="padding: 16px 0 40px;">
+    <div class="sec-head" data-reveal>
+      <span class="num">№ 04</span>
+      <span class="title">Field notes</span>
+      <span class="note"><a href="notes.html">All notes →</a></span>
+    </div>
+    <div class="notes" data-render="home-notes"></div>
+  </section>
+
+  <!-- SUBSCRIBE -->
+  <section id="subscribe" class="subscribe" data-reveal>
+    <span class="corner-mark">Free · weekly</span>
+    <div>
+      <h3 data-bind-html="home.subscribe.headingHtml">Read it. Sit with it.<br><em>Disagree, openly.</em></h3>
+      <p data-bind="home.subscribe.body">One essay on Tuesday, one episode on Friday, field notes in between.</p>
+    </div>
+    <div class="form" data-subscribe>
+      <div class="field">
+        <input type="email" placeholder="you@example.com" aria-label="Email address">
+        <button type="button" data-magnetic>Subscribe</button>
+      </div>
+      <span class="fine"><span data-readers data-count-to="21402">21,402</span> readers · Unsubscribe anytime · No spam, ever</span>
+    </div>
+  </section>
+
+  <!-- ARCHIVE -->
+  <section id="archive" style="padding: 24px 0 40px;">
+    <div class="sec-head" data-reveal>
+      <span class="num">№ 05</span>
+      <span class="title">The archive</span>
+      <span class="note"><a href="archive.html">Full archive →</a></span>
+    </div>
+    <div class="archive" data-render="home-archive" data-reveal data-reveal-delay="1"></div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="wm" data-bind="site.brand">Thinkers Dilemma</div>
+        <div class="tag" data-bind="site.tagline">A work of inquiry</div>
+        <p data-bind="site.footer.blurb">Society through a critical lens — asking the tough questions, in good faith and at unhurried length.</p>
+      </div>
+      <span data-render="footer-cols" style="display:contents"></span>
+    </div>
+    <div class="bottom">
+      <span data-bind="site.footer.copyright">© MMXXVI Thinkers Dilemma</span>
+      <span data-bind="site.questions">Who benefits? · Who pays? · Who decides?</span>
+    </div>
+  </div>
+</footer>
+
+<script src="content.js"></script>
+<script src="render.js"></script>
+<script src="site.js"></script>
+</body>
+</html>

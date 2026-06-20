@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Page not found — Thinkers Dilemma</title>
+<meta name="theme-color" content="#F2EBDD">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>(function(){try{var s=localStorage.getItem("td-theme");var n=s?s==="night":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(n)document.documentElement.setAttribute("data-theme","night");}catch(e){}})();</script>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="site.css">
+<style>
+  :root{--signal:#C54430;--signal-deep:#A03323;}
+  html[data-theme="night"]{--signal:#D9553F;}
+  .not-found{min-height:calc(100vh - 140px);display:grid;place-items:center;padding:60px 40px;text-align:center;}
+  .not-found .num{font:500 120px/0.85 var(--mono);color:var(--signal);opacity:.15;letter-spacing:-.04em;font-feature-settings:"tnum";display:block;margin-bottom:24px;}
+  .not-found .msg{font:500 italic clamp(28px,4vw,48px)/1.05 var(--serif);letter-spacing:-.02em;margin-bottom:16px;}
+  .not-found .sub{font:400 17px/1.5 var(--sans);color:var(--ink-2);max-width:480px;margin:0 auto 32px;}
+  .not-found .home{display:inline-flex;align-items:center;gap:8px;background:var(--signal);color:#fff;font:600 12px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;padding:14px 24px;text-decoration:none;transition:background .15s;}
+  .not-found .home:hover{background:var(--signal-deep);}
+</style>
+</head>
+<body class="paper-grain">
+
+<nav class="mainnav">
+  <div class="wrap">
+    <a href="index-substack.html" class="mini-mark" aria-label="Thinkers Dilemma — front page">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="5"/>
+        <line x1="50" y1="4" x2="50" y2="96" stroke="currentColor" stroke-width="5"/>
+        <path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/>
+        <circle cx="68" cy="50" r="4" fill="currentColor"/>
+      </svg>
+    </a>
+    <a href="index-substack.html">Front Page</a>
+    <a href="essays-substack.html">Essays</a>
+    <a href="archive-substack.html">Archive</a>
+    <a href="about-substack.html">About</a>
+  </div>
+</nav>
+
+<div class="not-found">
+  <span class="num">404</span>
+  <p class="msg">This page doesn't exist.</p>
+  <p class="sub">The essay may have moved, or the link may be wrong. The full archive is always available on the front page.</p>
+  <a href="index-substack.html" class="home">← Back to Front Page</a>
+</div>
+
+<footer class="foot" style="margin-top:0;">
+  <div class="wrap">
+    <div class="bottom">
+      <span>© MMXXVI Taz Punjabi · Thinkers Dilemma</span>
+      <span>Who benefits? · Who pays? · Who decides?</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

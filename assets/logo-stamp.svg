@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="none">
+  
+  <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="1.5"></circle>
+  <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="1"></circle>
+  
+  <text x="50" y="58" text-anchor="middle" font-family="Newsreader, &#39;Source Serif Pro&#39;, Georgia, serif" font-size="32" font-weight="600" font-style="italic" letter-spacing="-0.04em" fill="currentColor">TD</text>
+  
+  <circle cx="22" cy="50" r="1.4" fill="currentColor"></circle>
+  <circle cx="78" cy="50" r="1.4" fill="currentColor"></circle>
+  
+  <defs>
+    <path id="topArc" d="M 12 50 A 38 38 0 0 1 88 50"></path>
+    <path id="botArc" d="M 12 52 A 38 38 0 0 0 88 52"></path>
+  </defs>
+  <text font-family="IBM Plex Mono, monospace" font-size="7" font-weight="500" letter-spacing="0.32em" fill="currentColor">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">THINKERS · DILEMMA</textPath>
+  </text>
+  <text font-family="IBM Plex Mono, monospace" font-size="6" font-weight="500" letter-spacing="0.28em" fill="currentColor">
+    <textPath href="#botArc" startOffset="50%" text-anchor="middle">EST · MMXXVI</textPath>
+  </text>
+</svg>

@@ -1,0 +1,101 @@
+<!doctype html><html><head><meta charset="utf-8"><title>YouTube thumbnail</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { margin:0; background:#2a2522; display:grid; place-items:center; min-height:100vh; }
+  .frame { width: 1280px; height: 720px; background: var(--paper); position: relative; overflow: hidden;
+           font-family: var(--sans); }
+  /* paper grain */
+  .frame::before {
+    content:""; position:absolute; inset:0; pointer-events:none; mix-blend-mode: multiply; opacity: 0.9;
+    background-image:
+      radial-gradient(circle at 23% 19%, rgba(20,17,14,0.028) 0 1.4px, transparent 2px),
+      radial-gradient(circle at 71% 63%, rgba(20,17,14,0.025) 0 1.2px, transparent 2px),
+      radial-gradient(circle at 47% 88%, rgba(20,17,14,0.022) 0 1.2px, transparent 2px),
+      radial-gradient(circle at 88% 32%, rgba(20,17,14,0.028) 0 1.4px, transparent 2px);
+    background-size: 16px 16px, 22px 22px, 26px 26px, 19px 19px;
+  }
+
+  /* Top strip */
+  .strip { position:absolute; top:0; left:0; right:0; height: 38px; background: var(--ink); z-index: 3;
+            display:flex; align-items:center; justify-content: space-between; padding: 0 40px; color: var(--paper); }
+  .strip .pub { font: 500 italic 22px/1 var(--serif); }
+  .strip .meta { font: 500 11px/1 var(--mono); letter-spacing: 0.28em; text-transform: uppercase; opacity: 0.75; }
+
+  /* Bottom strip */
+  .botstrip { position:absolute; bottom:0; left:0; right:0; height: 64px; background: var(--ink); z-index: 3;
+              display:flex; align-items:center; justify-content: space-between; padding: 0 40px; color: var(--paper); }
+  .botstrip .left { display:flex; gap: 18px; align-items:center; }
+  .botstrip .no   { font: 500 14px/1 var(--mono); letter-spacing: 0.28em; color: var(--signal); text-transform: uppercase; }
+  .botstrip .dash { width: 28px; height: 1px; background: var(--paper); opacity: 0.6; }
+  .botstrip .cat  { font: 500 14px/1 var(--mono); letter-spacing: 0.22em; color: var(--paper); text-transform: uppercase; }
+  .botstrip .runtime { font: 500 18px/1 var(--mono); color: var(--paper); font-feature-settings:"tnum"; letter-spacing: 0.06em; }
+
+  /* Hero question */
+  .hero { position:absolute; inset: 80px 56px 110px 56px; display: grid; grid-template-columns: 1fr 320px; gap: 40px; align-items: center; z-index: 1; }
+  .hl { font: 500 italic 168px/0.88 var(--serif); color: var(--ink); letter-spacing: -0.03em; }
+  .hl em { color: var(--signal); font-style: italic; }
+  .hl .underline { display:inline-block; border-bottom: 6px solid var(--signal); padding-bottom: 4px; }
+
+  /* Right block — stamp + crosshair on the question */
+  .right { display:flex; flex-direction: column; gap: 28px; align-items: flex-end; }
+  .stamp svg { width: 280px; height: 280px; color: var(--signal); }
+
+  .annot { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; text-align: right; }
+  .annot .pin { font: 500 13px/1 var(--mono); letter-spacing: 0.28em; color: var(--ink); text-transform: uppercase; }
+  .annot .pin b { color: var(--signal); font-weight: 500; }
+  .annot .scribble { font: 500 italic 26px/1.15 var(--serif); color: var(--ink-2); max-width: 280px; }
+
+  /* Question mark crosshair element behind */
+  .crosshair { position:absolute; right: 80px; top: 150px; z-index: 0; opacity: 0.08; color: var(--ink); pointer-events:none; }
+  .crosshair svg { width: 480px; height: 480px; }
+</style></head>
+<body>
+  <div class="frame">
+    <div class="strip">
+      <span class="pub">Thinkers Dilemma</span>
+      <span class="meta">YouTube · Episode 014</span>
+    </div>
+
+    <div class="crosshair">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="0.6"/>
+        <circle cx="50" cy="50" r="36" stroke="currentColor" stroke-width="0.6"/>
+        <circle cx="50" cy="50" r="22" stroke="currentColor" stroke-width="0.6"/>
+        <line x1="0" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="0.4"/>
+        <line x1="50" y1="0" x2="50" y2="100" stroke="currentColor" stroke-width="0.4"/>
+      </svg>
+    </div>
+
+    <div class="hero">
+      <div class="hl">Who<br>watches the<br><em><span class="underline">watchers?</span></em></div>
+      <div class="right">
+        <div class="annot">
+          <span class="pin"><b>↘</b> A standing question</span>
+          <span class="scribble">asked, again, in good faith.</span>
+        </div>
+        <div class="stamp">
+          <svg viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="48" stroke="currentColor" stroke-width="1.5"/>
+            <circle cx="50" cy="50" r="42" stroke="currentColor" stroke-width="1"/>
+            <text x="50" y="58" text-anchor="middle" font-family="Newsreader, serif" font-size="30" font-weight="600" font-style="italic" letter-spacing="-0.04em" fill="currentColor">TD</text>
+            <circle cx="22" cy="50" r="1.4" fill="currentColor"/>
+            <circle cx="78" cy="50" r="1.4" fill="currentColor"/>
+            <defs><path id="topArcY" d="M 12 50 A 38 38 0 0 1 88 50"/></defs>
+            <text font-family="IBM Plex Mono, monospace" font-size="7" font-weight="500" letter-spacing="0.32em" fill="currentColor">
+              <textPath href="#topArcY" startOffset="50%" text-anchor="middle">THINKERS · DILEMMA</textPath>
+            </text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="botstrip">
+      <div class="left">
+        <span class="no">№ 014</span>
+        <span class="dash"></span>
+        <span class="cat">Surveillance</span>
+      </div>
+      <span class="runtime">09:42</span>
+    </div>
+  </div>
+</body></html>
