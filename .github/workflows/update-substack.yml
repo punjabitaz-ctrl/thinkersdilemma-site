@@ -1,29 +1,3 @@
-name: Update Substack Feed
-
-on:
-  schedule:
-    - cron: '0 */3 * * *'
-  workflow_dispatch:
-
-jobs:
-  fetch:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
-      - name: Fetch Substack Feed
-        uses: Promptly-Technologies-LLC/rss-fetch-action@v2
-        with:
-          feed_url: https://thinkersdilemma.substack.com/feed
-          file_path: ./articles.json
-          
-      - name: Commit and push changes
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add articles.json
-          git commit -m "Auto-update Substack articles" || exit 0
-          git push
+- name: Fetch Feed
+      run: |
+        curl "https://api.rss2json.com/v1/api.json?rss_url=https://thinkersdilemma.substack.com/feed" > articles.json
