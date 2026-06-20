@@ -352,7 +352,7 @@ var STUDIO_ALLOWED_EMAILS = [
 // 2. Read the Client ID from the data attribute (edit it in the HTML above).
 var GOOGLE_CLIENT_ID = (document.getElementById('g_id_onload') || {}).getAttribute
   ? document.getElementById('g_id_onload').getAttribute('data-client_id') : '';
-var DEV_MODE = !GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === 'YOUR_CLIENT_ID_HERE';
+var DEV_MODE = !GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === '801540221289-v7r322k1h9kafljg52hb7u0vqb498pjc.apps.googleusercontent.com';
 
 // Called by Google GIS after the user picks an account
 function handleGoogleAuth(response) {
