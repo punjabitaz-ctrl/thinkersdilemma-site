@@ -51,13 +51,13 @@ window.TD_CONTENT = {
           { label: "Archive", href: "archive.html" }
         ]},
         { title: "Topics", links: [
-          { label: "Diaspora & identity", href: "#" },
-          { label: "Power & systems", href: "#" },
-          { label: "Tech ethics", href: "#" },
-          { label: "Housing & policy", href: "#" }
+          { label: "Diaspora & identity", href: "essays.html?cat=diaspora" },
+          { label: "Power & systems", href: "essays.html?cat=power" },
+          { label: "Tech ethics", href: "essays.html?cat=technology" },
+          { label: "Economy & markets", href: "essays.html?cat=economy" }
         ]},
         { title: "Connect", links: [
-          { label: "About", href: "#" },
+          { label: "About", href: "about.html" },
           { label: "Substack", href: "https://thinkersdilemma.substack.com" },
           { label: "Podcast", href: "#" },
           { label: "Contact", href: "#" }

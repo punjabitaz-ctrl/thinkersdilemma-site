@@ -12,7 +12,7 @@
     if (!list) return;
 
     var items = Array.prototype.slice.call(list.querySelectorAll("[data-cat]"));
-    var chips = Array.prototype.slice.call(document.querySelectorAll(".chip"));
+    var chipBox = document.querySelector(".chips");
     var search = document.querySelector("[data-search]");
     var countEl = document.querySelector("[data-count]");
     var empty = document.querySelector("[data-empty]");
@@ -20,6 +20,27 @@
     var activeCat = "all";
 
     function norm(s) { return (s || "").toLowerCase().trim(); }
+    function cap(s) { return s ? s.charAt(0).toUpperCase() + s.slice(1) : s; }
+
+    // Build category chips from the items actually present, so the filter always
+    // matches real content. Opt-in via data-chips-auto on the .chips container
+    // (Essays page) — other pages keep their existing static chips untouched.
+    if (chipBox && chipBox.hasAttribute("data-chips-auto")) {
+      var cats = [];
+      items.forEach(function (it) {
+        norm(it.getAttribute("data-cat")).split(/\s+/).forEach(function (c) {
+          if (c && cats.indexOf(c) === -1) cats.push(c);
+        });
+      });
+      cats.sort();
+      var html = '<button class="chip active" data-cat="all">All</button>';
+      cats.forEach(function (c) {
+        html += '<button class="chip" data-cat="' + c + '">' + cap(c) + "</button>";
+      });
+      chipBox.innerHTML = html;
+    }
+
+    var chips = Array.prototype.slice.call(document.querySelectorAll(".chip"));
 
     function apply() {
       var q = norm(search && search.value);
@@ -45,13 +66,16 @@
       if (empty) empty.classList.toggle("is-hidden", shown > 0);
     }
 
-    chips.forEach(function (c) {
-      c.addEventListener("click", function () {
-        chips.forEach(function (x) { x.classList.remove("active"); });
-        c.classList.add("active");
-        activeCat = norm(c.getAttribute("data-cat")) || "all";
-        apply();
+    function setActive(cat) {
+      activeCat = norm(cat) || "all";
+      chips.forEach(function (x) {
+        x.classList.toggle("active", norm(x.getAttribute("data-cat")) === activeCat);
       });
+      apply();
+    }
+
+    chips.forEach(function (c) {
+      c.addEventListener("click", function () { setActive(c.getAttribute("data-cat")); });
     });
 
     if (search) {
@@ -62,7 +86,23 @@
       });
     }
 
-    apply();
+    // Deep-link: e.g. essays.html?cat=power pre-selects that category.
+    var urlCat = "";
+    try { urlCat = new URLSearchParams(location.search).get("cat") || ""; } catch (e) {}
+    var hasMatch = chips.some(function (c) { return norm(c.getAttribute("data-cat")) === norm(urlCat); });
+    if (urlCat && hasMatch) setActive(urlCat);
+    else apply();
+  }
+
+  /* ---------- Local date in the masthead utility bar ------------- */
+  function initDate() {
+    var els = document.querySelectorAll('[data-bind="site.dateLine"]');
+    if (!els.length) return;
+    var days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    var d = new Date(); // reader's local timezone
+    var s = days[d.getDay()] + " · " + months[d.getMonth()] + " " + d.getDate() + " · " + d.getFullYear();
+    Array.prototype.forEach.call(els, function (el) { el.textContent = s; });
   }
 
   /* ---------- Newsletter form states ----------------------------- */
@@ -335,6 +375,7 @@
   }
 
   function init() {
+    initDate();
     initFilter();
     initSubscribe();
     initProgress();
