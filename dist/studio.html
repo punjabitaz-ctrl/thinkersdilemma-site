@@ -6,6 +6,8 @@
 <title>Thinkers Dilemma — Studio</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="colors_and_type.css">
+<!-- Google Identity Services -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <style>
 /* =====================================================================
    STUDIO — content editor
@@ -228,6 +230,27 @@ select { cursor: pointer; }
 </head>
 <body>
 
+<!-- ═══ AUTH OVERLAY ═══════════════════════════════════════════════════
+     SETUP: 1) Go to console.cloud.google.com → APIs & Services → Credentials
+            2) Create OAuth 2.0 Client ID (Web application)
+            3) Add your site's origin to Authorized JS Origins
+            4) Replace YOUR_CLIENT_ID_HERE in data-client_id below
+     Until configured, the studio runs in dev-bypass mode.
+     ══════════════════════════════════════════════════════════════════════ -->
+<div id="authOverlay" style="position:fixed;inset:0;z-index:9999;background:var(--paper);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:40px;">
+  <div style="text-align:center;max-width:360px;">
+    <svg viewBox="0 0 100 100" fill="none" style="width:44px;height:44px;margin:0 auto 18px;display:block;"><circle cx="50" cy="50" r="46" stroke="var(--signal)" stroke-width="7"/><path d="M50 4 A46 46 0 0 0 50 96 Z" fill="var(--signal)"/><circle cx="68" cy="50" r="5" fill="var(--signal)"/></svg>
+    <div style="font:600 11px/1 var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--signal);margin-bottom:12px;">Thinkers Dilemma</div>
+    <div style="font:500 italic 32px/1.05 var(--serif);color:var(--ink);margin-bottom:10px;">Content Studio</div>
+    <div style="font:400 14px/1.55 var(--sans);color:var(--ink-2);">Sign in with your authorized Google account to access the studio.</div>
+  </div>
+  <div id="g_id_onload" data-client_id="YOUR_CLIENT_ID_HERE" data-callback="handleGoogleAuth" data-auto_prompt="false"></div>
+  <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline" data-text="sign_in_with" data-shape="rectangular"></div>
+  <div id="authError" style="font:400 13px/1.4 var(--sans);color:#d03a20;display:none;padding:10px 16px;border:1px solid #d03a20;border-radius:2px;max-width:320px;text-align:center;"></div>
+  <div style="font:400 11px/1.5 var(--sans);color:var(--ink-4);max-width:300px;text-align:center;border-top:1px solid var(--rule);padding-top:18px;">Access restricted to authorized accounts only.</div>
+</div>
+<div id="authDevNotice" style="display:none;position:fixed;top:56px;left:50%;transform:translateX(-50%);z-index:200;background:var(--ink);color:var(--paper);font:500 10px/1 var(--mono);letter-spacing:.16em;text-transform:uppercase;padding:9px 18px;border-left:3px solid var(--signal);white-space:nowrap;">⚠ Auth not configured — running in dev mode &nbsp;·&nbsp; Add Client ID to enable login</div>
+
 <!-- TOP BAR -->
 <header class="bar">
   <div class="bar-brand">
@@ -249,6 +272,8 @@ select { cursor: pointer; }
     <button class="bar-tab" data-panel="footer">Footer</button>
   </div>
   <div class="bar-actions">
+    <span id="authUserBadge" style="display:none;font:500 11px/1 var(--mono);letter-spacing:.12em;color:rgba(242,235,221,0.5);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+    <button id="btnSignOut" class="btn ghost" style="display:none;" onclick="signOut()">Sign out</button>
     <span class="saved-msg" id="savedMsg">Saved</span>
     <button class="btn ghost" id="btnPreview">Preview ↗</button>
     <button class="btn primary" id="btnExport">Export content.js</button>
@@ -403,6 +428,75 @@ select { cursor: pointer; }
 </div>
 
 <div class="toast" id="toast"></div>
+
+<script>
+/* =====================================================================
+   STUDIO — Google Authentication
+   Configure the two values below, then refresh.
+   ===================================================================== */
+
+// Authorized Gmail addresses — only these accounts can access the studio
+var STUDIO_ALLOWED_EMAILS = [
+  'punjabitaz@gmail.com',
+  'thinkersdilemma@gmail.com'
+];
+
+var GOOGLE_CLIENT_ID = (document.getElementById('g_id_onload') || {}).getAttribute
+  ? document.getElementById('g_id_onload').getAttribute('data-client_id') : '';
+var DEV_MODE = !GOOGLE_CLIENT_ID || GOOGLE_CLIENT_ID === 'YOUR_CLIENT_ID_HERE';
+
+// Called by Google GIS after the user picks an account
+function handleGoogleAuth(response) {
+  try {
+    var b64 = response.credential.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+    while (b64.length % 4) b64 += '=';
+    var payload = JSON.parse(atob(b64));
+    var email = payload.email || '';
+    var ok = STUDIO_ALLOWED_EMAILS.length === 0 || STUDIO_ALLOWED_EMAILS.indexOf(email) !== -1;
+    if (ok) {
+      sessionStorage.setItem('td-studio-session', email);
+      showStudio(email);
+    } else {
+      var errEl = document.getElementById('authError');
+      errEl.textContent = '"' + email + '" is not authorized to access this studio.';
+      errEl.style.display = 'block';
+    }
+  } catch(err) {
+    var errEl2 = document.getElementById('authError');
+    if (errEl2) { errEl2.textContent = 'Authentication error — please try again.'; errEl2.style.display = 'block'; }
+  }
+}
+
+function showStudio(email) {
+  var ov = document.getElementById('authOverlay');
+  if (ov) ov.style.display = 'none';
+  var b = document.getElementById('authUserBadge');
+  if (b) { b.textContent = email; b.style.display = 'inline'; }
+  var so = document.getElementById('btnSignOut');
+  if (so) so.style.display = 'inline-flex';
+}
+
+function signOut() {
+  sessionStorage.removeItem('td-studio-session');
+  location.reload();
+}
+
+(function initAuth() {
+  if (DEV_MODE) {
+    var ov = document.getElementById('authOverlay');
+    if (ov) ov.style.display = 'none';
+    var nd = document.getElementById('authDevNotice');
+    if (nd) nd.style.display = 'flex';
+    return;
+  }
+  var session = sessionStorage.getItem('td-studio-session');
+  if (session) {
+    var ok = STUDIO_ALLOWED_EMAILS.length === 0 || STUDIO_ALLOWED_EMAILS.indexOf(session) !== -1;
+    if (ok) { showStudio(session); return; }
+  }
+  // Overlay stays visible; GIS renders the sign-in button
+})();
+</script>
 
 <script src="content.js"></script>
 <script>
