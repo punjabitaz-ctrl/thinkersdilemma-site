@@ -135,6 +135,34 @@
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", init);
   } else {
+     /* ---------- Auto-update archive from Substack JSON ---------- */
+  function initArchive() {
+    var container = document.querySelector('[data-render="home-archive"]');
+    if (!container) return;
+
+    fetch('articles.json')
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        container.innerHTML = data.slice(0, 6).map(function(item) {
+          return '<div class="essay-card">' +
+                 '  <a href="' + item.link + '">' +
+                 '    <h3>' + item.title + '</h3>' +
+                 '    <p>' + (item.contentSnippet || '') + '</p>' +
+                 '  </a>' +
+                 '</div>';
+        }).join('');
+      })
+      .catch(function(err) { console.warn("Archive fetch failed", err); });
+  }
+
+  // Add initArchive() to your existing init() function:
+  function init() {
+    initFilter();
+    initSubscribe();
+    initProgress();
+    initPlaceholderLinks();
+    initArchive(); // Add this line
+  }
     init();
   }
 })();
