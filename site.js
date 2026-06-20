@@ -12,7 +12,7 @@
     fetch('articles.json')
       .then(function(res) { return res.json(); })
       .then(function(data) {
-        // Handle rss2json structure
+        // rss2json returns data with an 'items' property
         var posts = data.items || [];
         var html = posts.slice(0, 6).map(function(item) {
           return '<div class="essay-card">' +
@@ -23,31 +23,12 @@
                  '</div>';
         }).join('');
         
-        containers.forEach(function(c) { 
-            c.innerHTML = html; 
-            // Trigger your reveal animation if it exists
-            if (c.hasAttribute('data-reveal')) {
-                c.style.opacity = '1';
-                c.style.transform = 'none';
-            }
-        });
+        containers.forEach(function(c) { c.innerHTML = html; });
       })
       .catch(function(err) { console.warn("Archive fetch failed:", err); });
   }
 
-  /* ---------- Existing Functions --------------------------------- */
-  function initFilter() { /* ... your existing code ... */ }
-  function initSubscribe() { /* ... your existing code ... */ }
-  function initProgress() { /* ... your existing code ... */ }
-  function initPlaceholderLinks() { /* ... your existing code ... */ }
-  function initTheme() { /* ... your existing code ... */ }
-  function initReveal() { /* ... your existing code ... */ }
-  function initParallax() { /* ... your existing code ... */ }
-  function initCounters() { /* ... your existing code ... */ }
-  function initPlateTilt() { /* ... your existing code ... */ }
-  function initMagnetic() { /* ... your existing code ... */ }
-
-  /* ---------- Initialization ------------------------------------- */
+  /* ---------- Initialize everything ---------- */
   function init() {
     initFilter();
     initSubscribe();
@@ -60,13 +41,9 @@
     initPlateTilt();
     initMagnetic();
     
-    // Call the new function
-    updateArchive(); 
+    // This is the line that was missing
+    updateArchive();
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
-  } else {
-    init();
-  }
+  /* ... (Keep your existing initFilter, initSubscribe, etc., functions below this line) ... */
 })();
