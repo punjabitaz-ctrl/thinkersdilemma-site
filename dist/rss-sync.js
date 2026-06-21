@@ -126,10 +126,12 @@
       var encoded = "";
       var ns = el.getElementsByTagName("content:encoded");
       if (ns.length) encoded = ns[0].textContent;
+      var enc = el.querySelector("enclosure");
       return {
         title: t("title"), link: t("link") || t("guid"),
         pubDate: t("pubDate"), description: t("description"),
-        content: encoded || t("description"), categories: cats
+        content: encoded || t("description"), categories: cats,
+        image: enc ? enc.getAttribute("url") : ""
       };
     });
   }
@@ -195,6 +197,41 @@
       '<h3 class="hl">' + esc(e.titleHtml) + '</h3>' +
       '<span class="meta">Essay · ' + e.readMin + ' min</span>' +
       '</a>';
+  }
+
+  /* ---- Cover images: pull each article's banner from the feed ------ */
+  function firstImg(html) {
+    var m = /<img[^>]+src=["']([^"']+)["']/i.exec(String(html || ""));
+    return m ? m[1] : "";
+  }
+  function itemImage(item) {
+    if (item.image) return item.image;                                   // xml path
+    if (item.enclosure && item.enclosure.link) return item.enclosure.link; // rss2json cover
+    if (item.thumbnail) return item.thumbnail;                           // rss2json thumb
+    return firstImg(item.content || item.description || "");             // first inline <img>
+  }
+  // Tolerant key: match by the Substack /p/<slug> so episode.href ↔ feed.link line up.
+  function slugKey(url) {
+    var m = /\/p\/([a-z0-9-]+)/i.exec(String(url || ""));
+    return m ? m[1].toLowerCase()
+             : String(url || "").replace(/[#?].*$/, "").replace(/\/+$/, "").toLowerCase();
+  }
+  function applyCovers(items) {
+    if (!items || !items.length) return;
+    var map = {};
+    items.forEach(function (it) {
+      var img = itemImage(it), link = it.link || it.guid || "";
+      if (img && link) map[slugKey(link)] = img;
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-feed-url]"), function (el) {
+      var img = map[slugKey(el.getAttribute("data-feed-url"))];
+      if (!img) return; // no image → leave the text-on-grain card as-is (fallback)
+      el.style.backgroundImage =
+        "linear-gradient(rgba(20,17,14,0.5), rgba(20,17,14,0.62)), url('" + img.replace(/'/g, "%27") + "')";
+      el.style.backgroundSize = "cover";
+      el.style.backgroundPosition = "center";
+      el.classList.add("has-cover");
+    });
   }
 
   /* ---- Inject into DOM -------------------------------------------- */
@@ -268,17 +305,19 @@
   function run() {
     var cached = cacheGet();
     if (cached) {
+      applyCovers(cached);
       var newFromCache = findNew(cached);
       if (newFromCache.length) inject(newFromCache);
       return;
     }
     // Primary: rss2json.com (clean JSON, CORS-safe)
     fetchRss2json(function (items) {
-      if (items) { cacheSet(items); inject(findNew(items)); return; }
+      if (items) { cacheSet(items); applyCovers(items); inject(findNew(items)); return; }
       // Fallback: allorigins.win (raw XML)
       fetchAllOrigins(function (items2) {
         if (!items2) return;
         cacheSet(items2);
+        applyCovers(items2);
         inject(findNew(items2));
       });
     });

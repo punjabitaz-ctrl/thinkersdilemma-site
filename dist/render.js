@@ -126,7 +126,7 @@
     host.innerHTML = list.map(function (ep, i) {
       var delay = i > 0 ? ' data-reveal-delay="' + i + '"' : "";
       return '<a href="' + (ep.localHref || '#') + '" class="episode" data-reveal' + delay + '>' +
-        '<div class="thumb"><span class="corner">№ ' + stripTags(ep.no) + "</span>" +
+        '<div class="thumb" data-feed-url="' + attr(ep.href || "") + '"><span class="corner">№ ' + stripTags(ep.no) + "</span>" +
         '<div class="big-q"><div class="q">' + ep.questionHtml + "</div></div>" +
         '<div class="play"><div class="ring"></div></div>' +
         '<span class="runtime">' + stripTags(ep.runtime) + "</span></div>" +
@@ -191,7 +191,7 @@
     var ep = (C.episodes || []).filter(function (e) { return e.featured; })[0] || (C.episodes || [])[0];
     if (!ep) return;
     host.innerHTML =
-      '<a href="' + (ep.localHref || '#') + '" class="thumb grain"><span class="corner">№ ' + stripTags(ep.no) + ' · Latest</span>' +
+      '<a href="' + (ep.localHref || '#') + '" class="thumb grain" data-feed-url="' + attr(ep.href || "") + '"><span class="corner">№ ' + stripTags(ep.no) + ' · Latest</span>' +
       '<div class="big-q"><div class="q">' + ep.questionHtml + "</div></div>" +
       '<div class="play"><div class="ring"></div></div>' +
       '<span class="runtime">' + stripTags(ep.runtime) + "</span></a>" +
@@ -209,7 +209,7 @@
     host.innerHTML = list.map(function (ep) {
       var search = (stripTags(ep.questionHtml) + " " + ep.title + " " + ep.cat).toLowerCase();
       return '<a href="' + (ep.localHref || '#') + '" class="episode" data-cat="' + attr(ep.cat) + '" data-title="' + attr(search) + '">' +
-        '<div class="thumb grain"><span class="corner">№ ' + stripTags(ep.no) + "</span>" +
+        '<div class="thumb grain" data-feed-url="' + attr(ep.href || "") + '"><span class="corner">№ ' + stripTags(ep.no) + "</span>" +
         '<div class="big-q"><div class="q">' + ep.questionHtml + "</div></div>" +
         '<div class="play"><div class="ring"></div></div>' +
         '<span class="runtime">' + stripTags(ep.runtime) + "</span></div>" +
