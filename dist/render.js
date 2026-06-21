@@ -92,6 +92,8 @@
     var cols = (C.site && C.site.footer && C.site.footer.columns) || [];
     host.innerHTML = cols.map(function (col) {
       var links = (col.links || []).map(function (l) {
+        // items without an href (or marked note) render as styled text, not a link
+        if (l.note || !l.href || l.href === "#") return '<span class="soon">' + stripTags(l.label) + "</span>";
         return '<a href="' + attr(l.href) + '">' + stripTags(l.label) + "</a>";
       }).join("");
       return '<div class="col"><h5>' + stripTags(col.title) + "</h5>" + links + "</div>";

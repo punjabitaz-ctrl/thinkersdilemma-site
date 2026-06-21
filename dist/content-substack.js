@@ -59,8 +59,8 @@ window.TD_CONTENT = {
         { title: "Connect", links: [
           { label: "About", href: "about.html" },
           { label: "Substack", href: "https://thinkersdilemma.substack.com" },
-          { label: "Podcast", href: "#" },
-          { label: "Contact", href: "#" }
+          { label: "Podcast Coming Soon", note: true },
+          { label: "Contact", href: "mailto:hello@thinkersdilemma.com" }
         ]}
       ],
       copyright: "© MMXXVI Taz Punjabi · Thinkers Dilemma"
@@ -85,7 +85,7 @@ window.TD_CONTENT = {
     excerpt: [
       "Sometime in the quiet transition between the political volatility of 2024 and the corporate realignment of 2025, a series of coordinated signals began to emerge across the Fortune 500. The subject lines were sanitized. The word <em>diversity</em> was systematically scrubbed from mission statements, replaced by <em>meritocracy</em> or simply omitted altogether.",
       "The dissolution of the DEI apparatus is not merely a political retreat — it is a structural revelation. It has exposed the gap between the performance of equity and the practice of equity. The companies that made the most significant progress were not those with the most colorful heritage month calendars; they were the companies that tied executive compensation to measurable, structural retention metrics.",
-      "The data proves that you cannot <em>train</em> your way into equity; you can only <em>systematize</em> your way there. The rollback has ended the theater. The real work — the slow, unglamorous, highly technical work of changing how humans are valued within an organization — is only just beginning. <span class=\"jump\">Read the full essay on Substack</span>"
+      "The data proves that you cannot <em>train</em> your way into equity; you can only <em>systematize</em> your way there. The rollback has ended the theater. The real work — the slow, unglamorous, highly technical work of changing how humans are valued within an organization — is only just beginning. <a class=\"jump\" href=\"essay-005.html\">Read the full essay</a>"
     ],
 
     quote: {

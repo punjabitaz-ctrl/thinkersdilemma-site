@@ -611,3 +611,31 @@ html[data-theme="night"] .paper-grain::before {
 html[data-theme="night"] .theme-toggle .ic::before { left: auto; right: -1px; }
 .theme-toggle .lbl { white-space: nowrap; }
 @media (max-width: 620px) { .theme-toggle .lbl { display: none; } }
+
+/* ── Footer "coming soon" note — headline serif, not a link ──────────── */
+.foot .col .soon { display: block; font: 400 italic 15px/1.2 var(--serif); color: var(--ink-3); padding: 7px 0; }
+
+/* ── Lead "Read the full essay" CTA is now a real link ───────────────── */
+a.jump { cursor: pointer; }
+a.jump:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ── Mobile: trim utility bar, scroll-strip nav, tighter gutters ─────── */
+@media (max-width: 768px) {
+  .wrap { padding: 0 20px; }
+
+  /* Utility bar: keep only date · issue № · day/night toggle */
+  .utility .group:last-child > *:not([data-theme-toggle]) { display: none !important; }
+  .utility { font-size: 10px; letter-spacing: 0.06em; }
+  .utility .group { gap: 10px; }
+
+  /* Primary nav: horizontal scroll instead of squishing/overflowing */
+  .mainnav .wrap {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mainnav .wrap::-webkit-scrollbar { display: none; }
+  .mainnav a { white-space: nowrap; }
+}
