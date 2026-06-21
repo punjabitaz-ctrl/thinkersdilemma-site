@@ -156,11 +156,17 @@
   function esc(s) {
     return String(s || "").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;");
   }
+  // Only allow http(s) or site-relative links from the (remote) feed — blocks
+  // javascript:/data: schemes that esc() alone wouldn't stop in an href.
+  function safeUrl(u) {
+    u = String(u || "");
+    return (/^https?:\/\//i.test(u) || u.charAt(0) === "/") ? esc(u) : "#";
+  }
   function newBadge() {
     return '<span class="kicker-tag" style="margin-left:8px;vertical-align:middle;font-size:9px;">New ↗</span>';
   }
   function essayCardHTML(e) {
-    return '<a href="' + esc(e.href) + '" class="essay-card"' +
+    return '<a href="' + safeUrl(e.href) + '" class="essay-card"' +
       ' data-cat="' + esc(e.cat) + '"' +
       ' data-title="' + esc((e.titleHtml + " " + e.dek + " " + e.cat).toLowerCase()) + '"' +
       ' target="_blank" rel="noopener">' +
@@ -173,7 +179,7 @@
       '</a>';
   }
   function archRowHTML(e) {
-    return '<a href="' + esc(e.href) + '" class="arch-row"' +
+    return '<a href="' + safeUrl(e.href) + '" class="arch-row"' +
       ' data-cat="' + esc(e.cat) + '"' +
       ' target="_blank" rel="noopener">' +
       '<span class="ano">№ ' + esc(e.no) + '</span>' +
@@ -184,7 +190,7 @@
       '</a>';
   }
   function homeStoryHTML(e) {
-    return '<a href="' + esc(e.href) + '" class="story" target="_blank" rel="noopener">' +
+    return '<a href="' + safeUrl(e.href) + '" class="story" target="_blank" rel="noopener">' +
       '<div class="kicker-row"><span class="kicker-tag">New · ' + esc(e.catLabel) + '</span></div>' +
       '<h3 class="hl">' + esc(e.titleHtml) + '</h3>' +
       '<span class="meta">Essay · ' + e.readMin + ' min</span>' +
