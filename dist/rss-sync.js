@@ -303,22 +303,19 @@
 
   /* ---- Entry point ------------------------------------------------ */
   function run() {
+    // NOTE: client-side essay MERGING is intentionally disabled. New essays are
+    // now added by the scheduled GitHub Actions build (scripts/build-from-substack.mjs,
+    // 8am ET Tue/Thu) which generates on-site reading pages — so posts never appear
+    // as Substack-linking cards. This file only fetches the feed to apply the
+    // On-screen episode COVER images (applyCovers).
     var cached = cacheGet();
-    if (cached) {
-      applyCovers(cached);
-      var newFromCache = findNew(cached);
-      if (newFromCache.length) inject(newFromCache);
-      return;
-    }
-    // Primary: rss2json.com (clean JSON, CORS-safe)
+    if (cached) { applyCovers(cached); return; }
     fetchRss2json(function (items) {
-      if (items) { cacheSet(items); applyCovers(items); inject(findNew(items)); return; }
-      // Fallback: allorigins.win (raw XML)
+      if (items) { cacheSet(items); applyCovers(items); return; }
       fetchAllOrigins(function (items2) {
         if (!items2) return;
         cacheSet(items2);
         applyCovers(items2);
-        inject(findNew(items2));
       });
     });
   }

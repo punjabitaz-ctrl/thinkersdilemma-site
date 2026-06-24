@@ -1,0 +1,67 @@
+name: Update from Substack
+
+# Pulls the Substack feed, generates on-site reading pages for any new essays,
+# sets the newest as the homepage featured lead, then deploys. Idempotent: if
+# there are no new posts it changes nothing.
+on:
+  schedule:
+    - cron: "0 12 * * 2,4"   # 12:00 UTC = 8am ET (EDT, summer) — Tue & Thu
+    - cron: "0 13 * * 2,4"   # 13:00 UTC = 8am ET (EST, winter) — Tue & Thu
+  workflow_dispatch:
+
+permissions:
+  contents: write   # commit generated pages + content
+  pages: write      # deploy to GitHub Pages
+  id-token: write   # OIDC for Pages
+
+# Share the Pages deploy lock with deploy-pages.yml so they never race.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Generate from Substack feed
+        run: node scripts/build-from-substack.mjs
+
+      - name: Commit new content (if any)
+        id: commit
+        run: |
+          git config user.name  "substack-sync[bot]"
+          git config user.email "substack-sync@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No new posts — nothing to deploy."
+          else
+            git commit -m "chore: sync new essay(s) from Substack"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # Deploy only when the build actually produced changes.
+      - name: Configure Pages
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/configure-pages@v4
+
+      - name: Upload dist/ artifact
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/deploy-pages@v4

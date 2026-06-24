@@ -69,24 +69,22 @@ window.TD_CONTENT = {
 
   /* ---- HOMEPAGE ---------------------------------------------------- */
   home: {
-    lead: {
-      kickerTag: "The lead · Power & systems",
-      kickerCat: "Corporate America",
-      titleHtml: "The DEI rollback and<br>the <em>illusion</em> it shattered.",
-      dek: "The dismantling of corporate diversity programs has exposed the gap between performing equity and practising it. When the rollback arrived, it revealed something that was always compliance theater — and the people who built their careers on those promises are now reckoning with what the contract was actually worth.",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; June 18, 2026",
-      plateLabel: "Essay",
-      plateNum: "005",
-      plateName: "The DEI Rollback",
-      plateSub: "Filed 06 · 18 · 2026",
-      href: "https://thinkersdilemma.substack.com/p/the-dei-rollback-and-the-illusion"
-    },
+    /* @gen:lead */ lead: {
+      kickerTag: "The lead · Technology",
+      kickerCat: "Technology",
+      titleHtml: "Who owns your Data when the Governments Asks?",
+      dek: "What are your actual digital rights vs. what we believe them to be",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; June 23, 2026",
+      plateLabel: "Essay", plateNum: "006", plateName: "Who owns your Data when th",
+      plateSub: "Filed 06 · 23 · 26",
+      href: "essay-006.html"
+    } /* @end:lead */,
 
-    excerpt: [
-      "Sometime in the quiet transition between the political volatility of 2024 and the corporate realignment of 2025, a series of coordinated signals began to emerge across the Fortune 500. The subject lines were sanitized. The word <em>diversity</em> was systematically scrubbed from mission statements, replaced by <em>meritocracy</em> or simply omitted altogether.",
-      "The dissolution of the DEI apparatus is not merely a political retreat — it is a structural revelation. It has exposed the gap between the performance of equity and the practice of equity. The companies that made the most significant progress were not those with the most colorful heritage month calendars; they were the companies that tied executive compensation to measurable, structural retention metrics.",
-      "The data proves that you cannot <em>train</em> your way into equity; you can only <em>systematize</em> your way there. The rollback has ended the theater. The real work — the slow, unglamorous, highly technical work of changing how humans are valued within an organization — is only just beginning. <a class=\"jump\" href=\"essay-005.html\">Read the full essay</a>"
-    ],
+    /* @gen:excerpt */ excerpt: [
+      "A Speculative Investigative Report on the Architecture of the Post-Friction State",
+      "There is a quiet conversation happening in immigration lawyers' offices, in family group chats, and in the corners of Silicon Valley that have always known exactly where the money comes from. The conversation is about a company most Americans still cannot pronounce, a set of executive orders most Americans have never read, and a structural change in how the United States government sees its own citizens. The conversation is not about whether the change is coming. It is already here. The conversation is about what, if anything, can be done.",
+      "To understand why this matters, you have to start with a feature of American government so old that almost no one thinks of it as a feature: for most of the country's history, the state did not have a single, unified picture of you. It had fragments. <a class=\"jump\" href=\"essay-006.html\">Read the full essay</a>"
+    ] /* @end:excerpt */,
 
     quote: {
       textHtml: "The rollback did not destroy something real. It revealed <span class=\"hi\">what was always compliance theater.</span>",
@@ -102,7 +100,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "005", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+    { no: "006", cat: "technology", catLabel: "The lead · Technology", lead: true,
+      titleHtml: "Who owns your Data when the Governments Asks?",
+      dek: "What are your actual digital rights vs. what we believe them to be",
+      readMin: 12, date: "June 23, 2026", dateShort: "06 · 23 · 26", year: "2026", type: "Essay",
+      localHref: "essay-006.html", href: "https://thinkersdilemma.substack.com/p/who-owns-your-data-when-the-governments" },
+
+    { no: "005", cat: "power",
       titleHtml: "The DEI rollback and the <em>illusion</em> it shattered.",
       dek: "The dismantling of corporate diversity programs has exposed the gap between the performance of equity and the practice of equity — and revealed that much of what was built was compliance theater.",
       meta: "By Taz Punjabi · June 18, 2026",
@@ -156,10 +160,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      kicker: "Written inquiry", kickerMuted: "Five essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "6 essays · 2026",
       titleHtml: "Essays",
-      dek: "Five essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "5", sideLabelHtml: "Essays published<br>since May 2026"
+      dek: "6 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "6", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
