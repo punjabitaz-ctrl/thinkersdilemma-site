@@ -201,28 +201,75 @@ function replaceRegion(src, key, replacement) {
   return src.replace(re, "/* @gen:" + key + " */ " + replacement + " /* @end:" + key + " */");
 }
 
-async function main() {
-  const res = await fetch(FEED, { headers: { "user-agent": "td-build" } });
-  if (!res.ok) throw new Error("feed fetch failed: " + res.status);
-  const xml = await res.text();
-  const blocks = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((m) => m[1]);
-  if (!blocks.length) throw new Error("no items in feed");
+/* Substack 403s datacenter IPs / non-browser UAs, so use a browser UA and
+   fall back to public read proxies (same approach as client rss-sync.js). */
+const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36";
+async function tryFetch(url) {
+  try {
+    const r = await fetch(url, { headers: { "user-agent": UA, "accept": "application/rss+xml, application/xml, text/xml, */*" } });
+    if (!r.ok) return null;
+    const t = await r.text();
+    return t && t.includes("<item") ? t : null;
+  } catch { return null; }
+}
+// Normalize XML <item>s and rss2json JSON into one raw shape (decode later).
+function parseXmlItems(xml) {
+  return [...xml.matchAll(/<item>([\s\S]*?)<\/item>/g)].map((m) => {
+    const b = m[1];
+    const enc = /<enclosure[^>]+url="([^"]+)"/i.exec(b);
+    return {
+      title: getTag(b, "title"),
+      link: strip(getTag(b, "link")) || strip(getTag(b, "guid")),
+      pubDate: strip(getTag(b, "pubDate")),
+      content: getTag(b, "content:encoded") || getTag(b, "description"),
+      description: getTag(b, "description"),
+      categories: [...b.matchAll(/<category>([\s\S]*?)<\/category>/g)].map((c) => strip(c[1])),
+      encUrl: enc ? enc[1] : "",
+    };
+  });
+}
+function parseRss2json(text) {
+  let o; try { o = JSON.parse(text); } catch { return []; }
+  if (o.status !== "ok" || !Array.isArray(o.items)) return [];
+  return o.items.map((it) => ({
+    title: it.title || "",
+    link: it.link || it.guid || "",
+    pubDate: it.pubDate || "",
+    content: it.content || it.description || "",
+    description: it.description || "",
+    categories: it.categories || [],
+    encUrl: (it.enclosure && it.enclosure.link) || it.thumbnail || "",
+  }));
+}
+async function fetchItems() {
+  const direct = await tryFetch(FEED);
+  if (direct) { console.log("[build] feed via direct"); return parseXmlItems(direct); }
+  const allo = await tryFetch("https://api.allorigins.win/raw?url=" + encodeURIComponent(FEED));
+  if (allo) { console.log("[build] feed via allorigins"); return parseXmlItems(allo); }
+  try {
+    const r = await fetch("https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(FEED), { headers: { "user-agent": UA } });
+    if (r.ok) { const items = parseRss2json(await r.text()); if (items.length) { console.log("[build] feed via rss2json"); return items; } }
+  } catch { /* fall through */ }
+  throw new Error("feed fetch failed from all sources");
+}
 
-  const feed = blocks.map((b) => {
-    const link = strip(getTag(b, "link")) || strip(getTag(b, "guid"));
-    const titlePlain = strip(getTag(b, "title"));
-    const content = decode(getTag(b, "content:encoded")) || decode(getTag(b, "description"));
-    const cats = [...b.matchAll(/<category>([\s\S]*?)<\/category>/g)].map((c) => strip(c[1]));
-    const d = fmtDates(strip(getTag(b, "pubDate")));
-    const encM = /<enclosure[^>]+url="([^"]+)"/i.exec(b);
-    const descDek = makeDek(getTag(b, "description"));
+async function main() {
+  const items = await fetchItems();
+  if (!items.length) throw new Error("no items in feed");
+
+  const feed = items.map((it) => {
+    const link = it.link;
+    const titlePlain = strip(it.title);
+    const content = decode(it.content);
+    const d = fmtDates(it.pubDate);
+    const descDek = makeDek(it.description);
     return {
       slug: slugOf(link), link, titlePlain,
-      cat: mapCat(cats, titlePlain),
+      cat: mapCat(it.categories, titlePlain),
       date: d.full, dateShort: d.short, year: d.year,
       dek: descDek || makeDek(content),
       readMin: readMin(content),
-      image: (encM ? encM[1] : "") || firstImg(content),
+      image: it.encUrl || firstImg(content),
       content,
     };
   });
