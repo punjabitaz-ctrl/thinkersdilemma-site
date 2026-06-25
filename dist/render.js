@@ -168,7 +168,7 @@
           "<div>" +
           '<div class="ec-title">' + e.titleHtml + "</div>" +
           '<p class="ec-dek">' + (e.dek || "") + "</p>" +
-          '<div class="ec-meta">' + (e.meta || "") + "</div>" +
+          '<div class="ec-meta">' + (e.meta || "") + '<span class="ec-cta">Continue Reading →</span></div>' +
           "</div></a>";
       }
       var tags = (e.tags || []).length
@@ -182,7 +182,7 @@
         '<div class="ec-title">' + e.titleHtml + "</div>" +
         '<p class="ec-dek">' + (e.dek || "") + "</p>" + tags +
         "</div>" +
-        '<div class="ec-meta"><span class="read">' + (e.readMin || 6) + " min read</span>" + (e.date || "") + "</div></a>";
+        '<div class="ec-meta"><span class="read">' + (e.readMin || 6) + " min read</span>" + (e.date || "") + '<span class="ec-cta">Continue Reading →</span></div></a>';
     }).join("");
   };
 
