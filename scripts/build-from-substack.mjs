@@ -342,6 +342,14 @@ async function main() {
     '      dek: "' + total + ' essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",\n' +
     '      sideBig: "' + total + '", sideLabelHtml: "Essays published<br>since May 2026"');
 
+  // SAFETY GUARD: never ship invalid JS. A syntax error here blanks the whole
+  // site (window.TD_CONTENT fails to load → render.js renders nothing). Compile
+  // the generated source first; if it throws, abort before writing so CI fails
+  // and nothing is committed/deployed.
+  try { new Function(src); } catch (e) {
+    throw new Error("ABORT: generated content-substack.js is invalid JS (" + e.message + ") — refusing to write. The live site is untouched.");
+  }
+
   writeFileSync(CONTENT, src);
   console.log("[build] new posts: " + newPosts.length + " → " + newPosts.map((p) => p.no + " " + p.slug).join(", ") +
     " | featured: " + top.titlePlain);
