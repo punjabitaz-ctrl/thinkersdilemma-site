@@ -70,20 +70,25 @@ window.TD_CONTENT = {
   /* ---- HOMEPAGE ---------------------------------------------------- */
   home: {
     /* @gen:lead */ lead: {
-      kickerTag: "The lead · Technology",
-      kickerCat: "Technology",
-      titleHtml: "Who owns your Data when the Governments Asks?",
-      dek: "What are your actual digital rights vs. what we believe them to be",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; June 23, 2026",
-      plateLabel: "Essay", plateNum: "006", plateName: "Who owns your Data when th",
-      plateSub: "Filed 06 · 23 · 26",
-      href: "essay-006.html"
+      kickerTag: "The lead · Power & systems",
+      kickerCat: "Power & systems",
+      titleHtml: "The Model Minority Myth was always A Cage.",
+      dek: "A lie built on the subjugation of minorities",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; June 25, 2026",
+      plateLabel: "Essay", plateNum: "007", plateName: "The Model Minority Myth wa",
+      plateSub: "Filed 06 · 25 · 26",
+      href: "essay-007.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "A Speculative Investigative Report on the Architecture of the Post-Friction State",
-      "There is a quiet conversation happening in immigration lawyers' offices, in family group chats, and in the corners of Silicon Valley that have always known exactly where the money comes from. The conversation is about a company most Americans still cannot pronounce, a set of executive orders most Americans have never read, and a structural change in how the United States government sees its own citizens. The conversation is not about whether the change is coming. It is already here. The conversation is about what, if anything, can be done.",
-      "To understand why this matters, you have to start with a feature of American government so old that almost no one thinks of it as a feature: for most of the country's history, the state did not have a single, unified picture of you. It had fragments. <a class=\"jump\" href=\"essay-006.html\">Read the full essay</a>"
+      "There is a compliment that lands like an instruction. <em><mark data-color=\"#ffe599\">“You people are so hardworking.”</mark></em> You hear it at the office, at the parent-teacher conference, in the op-ed that genuinely means well. It sounds like praise. It functions as a leash. The “model minority” myth was never a description of Asian Americans; it was a tool used on them and a cage built from conditional belonging and dressed up as admiration. And the fact that the cage is now visibly cracking open is not a loss to be mourned. It is a structure to finally walk out of.",
+      "<source type=\"image/webp\" srcset=\"https://substackcdn.com/image/fetch/$s_!GqaZ!,w_424,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb29d85e7-e043-4615-b86f-e8f24df76484_1408x768.png 424w, https://substackcdn.com/image/fetch/$s_!GqaZ!,w_848,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb29d85e7-e043-4615-b86f-e8f24df76484_1408x768.png 848w, https://substackcdn.com/image/fetch/$s_!GqaZ!,w_1272,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb29d85e7-e043-4615-b86f-e8f24df76484_1408x768.png 1272w, https://substackcdn.com/image/fetch/$s_!GqaZ!,w_1456,c_limit,f_webp,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb29d85e7-e043-4615-b86f-e8f24df76484_1408x768.png 1456w\" sizes=\"100vw\"><img src=\"https://substackcdn.com/image/fetch/%24s_!GqaZ!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb29d85e7-e043-4615-b86f-e8f24df76484_1408x768.png\" width=\"1408\" height=\"768\" data-attrs='{\"src\":\"https://substack-post-media.s3.amazonaws.com/public/images/b29d85e7-e043-4615-b86f-e8f24df76484_1408x768.png\",\"srcNoWatermark\":null,\"fullscreen\":null,\"imageSize\":null,\"height\":768,\"width\":1408,\"resizeWidth\":null,\"bytes\":2656990,\"alt\":null,\"title\":null,\"type\":\"image/png\",\"href\":null,\"belowTheFold\":false,\"topImage\":true,\"internalRedirect\":\"https://thinkersdilemma.substack.com/i/201931111?img=https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb29d85e7-e043-4615-b86f-e8f24df76484_1408x768.png\",\"isProcessing\":false,\"align\":null,\"offset\":false}' class=\"sizing-normal\" alt=\"\" srcset=\"https://substackcdn.com/image/fetch/$s_!GqaZ!,w_424,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb29d85e7-e043-4615-b86f-e8f24df76484_1408x768.png 424w, https://substackcdn.com/image/fetch/$s_!GqaZ!,w_848,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb29d85e7-e043-4615-b86f-e8f24df76484_1408x768.png 848w, https://substackcdn.com/image/fetch/$s_!GqaZ!,w_1272,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb29d85e7-e043-4615-b86f-e8f24df76484_1408x768.png 1272w, https://substackcdn.com/image/fetch/$s_!GqaZ!,w_1456,c_limit,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fb29d85e7-e043-4615-b86f-e8f24df76484_1408x768.png 1456w\" sizes=\"100vw\" fetchpriority=\"high\"></source></picture>
+<button tabindex=\"0\" type=\"button\" class=\"pencraft pc-reset pencraft icon-container restack-image\"><svg role=\"img\" width=\"20\" height=\"20\" viewbox=\"0 0 20 20\" fill=\"none\" stroke-width=\"1.5\" stroke=\"var(--color-fg-primary)\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><g><title></title>
+<path d=\"M2.53001 7.81595C3.49179 4.73911 6.43281 2.5 9.91173 2.5C13.1684 2.5 15.9537 4.46214 17.0852 7.23684L17.6179 8.67647M17.6179 8.67647L18.5002 4.26471M17.6179 8.67647L13.6473 6.91176M17.4995 12.1841C16.5378 15.2609 13.5967 17.5 10.1178 17.5C6.86118 17.5 4.07589 15.5379 2.94432 12.7632L2.41165 11.3235M2.41165 11.3235L1.5293 15.7353M2.41165 11.3235L6.38224 13.0882\"></path></g></svg></button><button tabindex=\"0\" type=\"button\" class=\"pencraft pc-reset pencraft icon-container view-image\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewbox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-maximize2 lucide-maximize-2\"><polyline points=\"15 3 21 3 21 9\"></polyline><polyline points=\"9 21 3 21 3 15\"></polyline><line x1=\"21\" x2=\"14\" y1=\"3\" y2=\"10\"></line><line x1=\"3\" x2=\"10\" y1=\"21\" y2=\"14\"></line></svg></button>
+
+
+<p>The argument of this essay is that the myth was always doing political work that had little to do with the people it claimed to celebrate. Its harms reached in every direction at once: it was used to undermine the struggle for Black civil rights, to erase the poverty of Southeast Asian refugees, and to justify the dismantling of affirmative action. Its recent destabilization through the courts, through a pandemic, and through shifting immigration politics is not a tragedy of lost status, but an invitation to a more authentic form of political existence.",
+      "<strong><mark data-color=\"#ffe599\">Walking out of the cage will cost something real. The cost is worth paying.</mark></strong> <a class=\"jump\" href=\"essay-007.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -100,7 +105,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "006", cat: "technology", catLabel: "The lead · Technology", lead: true,
+    { no: "007", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+      titleHtml: "The Model Minority Myth was always A Cage.",
+      dek: "A lie built on the subjugation of minorities",
+      readMin: 9, date: "June 25, 2026", dateShort: "06 · 25 · 26", year: "2026", type: "Essay",
+      localHref: "essay-007.html", href: "https://thinkersdilemma.substack.com/p/the-model-minority-was-always-a-cage" },
+
+    { no: "006", cat: "technology",
       titleHtml: "Who owns your Data when the Governments Asks?",
       dek: "What are your actual digital rights vs. what we believe them to be",
       readMin: 12, date: "June 23, 2026", dateShort: "06 · 23 · 26", year: "2026", type: "Essay",
@@ -160,10 +171,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "6 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "7 essays · 2026",
       titleHtml: "Essays",
-      dek: "6 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "6", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "7 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "7", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
