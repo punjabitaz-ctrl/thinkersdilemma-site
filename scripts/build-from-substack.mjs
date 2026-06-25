@@ -27,7 +27,12 @@ const decode = (s) =>
     .replace(/&#8220;|&#8221;|&ldquo;|&rdquo;/g, '"').replace(/&#8212;|&mdash;/g, "—");
 const strip = (h) => decode(h).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 const esc = (s) => String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-const jsstr = (s) => String(s || "").replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+// Escape for embedding inside a double-quoted JS string literal. Newlines and
+// other control chars MUST be neutralized — a literal newline makes the string
+// unterminated and breaks the whole file (and thus the site).
+const jsstr = (s) => String(s || "")
+  .replace(/\\/g, "\\\\").replace(/"/g, '\\"')
+  .replace(/[\s\S]/g, (c) => { const x = c.charCodeAt(0); return (x < 32 || x === 0x2028 || x === 0x2029) ? " " : c; });
 const getTag = (block, name) => {
   const m = new RegExp("<" + name + "[^>]*>([\\s\\S]*?)</" + name + ">", "i").exec(block);
   return m ? m[1] : "";
@@ -316,11 +321,16 @@ async function main() {
     '      plateSub: "Filed ' + top.dateShort + '",\n' +
     '      href: "' + top.localHref + '"\n    }');
 
-  const paras = leadParagraphs(top.content, 3);
+  // Excerpt = clean prose only. strip() removes any leaked image/button/svg/mark
+  // markup and decodes entities; esc() re-encodes so the homepage renders safely.
+  const paras = leadParagraphs(top.content, 6)
+    .map((p) => strip(p))
+    .filter((t) => t.length > 60)
+    .slice(0, 3);
   const excerpt = paras.map((p, idx) =>
     '      "' + jsstr(idx === paras.length - 1
-      ? p + ' <a class="jump" href="' + top.localHref + '">Read the full essay</a>'
-      : p) + '"'
+      ? esc(p) + ' <a class="jump" href="' + top.localHref + '">Read the full essay</a>'
+      : esc(p)) + '"'
   ).join(",\n");
   src = replaceRegion(src, "excerpt", "excerpt: [\n" + excerpt + "\n    ]");
 
