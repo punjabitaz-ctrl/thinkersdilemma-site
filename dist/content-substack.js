@@ -72,18 +72,18 @@ window.TD_CONTENT = {
     /* @gen:lead */ lead: {
       kickerTag: "The lead · Power & systems",
       kickerCat: "Power & systems",
-      titleHtml: "The Model Minority Myth was always A Cage.",
-      dek: "A lie built on the subjugation of minorities",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; June 25, 2026",
-      plateLabel: "Essay", plateNum: "007", plateName: "The Model Minority Myth wa",
-      plateSub: "Filed 06 · 25 · 26",
-      href: "essay-007.html"
+      titleHtml: "The Intelligence Trap: Why Smart People Stay Stuck",
+      dek: "The Cost of an Unlived Life and exploring why many smart people can get stuck. Whether it's analysis paralysis, failure to launch or something deeper, this is a perspective on the topic.",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; June 30, 2026",
+      plateLabel: "Essay", plateNum: "008", plateName: "The Intelligence Trap: Why",
+      plateSub: "Filed 06 · 30 · 26",
+      href: "essay-008.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "There is a compliment that lands like an instruction. &quot;You people are so hardworking.&quot; You hear it at the office, at the parent-teacher conference, in the op-ed that genuinely means well. It sounds like praise. It functions as a leash. The &quot;model minority&quot; myth was never a description of Asian Americans; it was a tool used on them and a cage built from conditional belonging and dressed up as admiration. And the fact that the cage is now visibly cracking open is not a loss to be mourned. It is a structure to finally walk out of.",
-      "The argument of this essay is that the myth was always doing political work that had little to do with the people it claimed to celebrate. Its harms reached in every direction at once: it was used to undermine the struggle for Black civil rights, to erase the poverty of Southeast Asian refugees, and to justify the dismantling of affirmative action. Its recent destabilization through the courts, through a pandemic, and through shifting immigration politics is not a tragedy of lost status, but an invitation to a more authentic form of political existence.",
-      "Walking out of the cage will cost something real. The cost is worth paying. <a class=\"jump\" href=\"essay-007.html\">Read the full essay</a>"
+      "You know this person. They are unmistakably bright—the kind of person who sees three moves ahead, who leaves every meeting having identified the problem no one else named. They have been about to launch something for two years. The plan has been revised eleven times; each revision made it better; each revision moved the launch further out. The website is almost ready. The audience isn't quite built yet. The framework isn't fully theorized. The timing isn't right.",
+      "That person is also, in some real and uncomfortable sense, you.",
+      "The thesis is simple but devastating: high intelligence enables specific patterns of paralysis that are more sophisticated than ordinary procrastination. The cure is not to be less smart. It is to understand the specific &quot;stuckness&quot; that high analytical capacity creates, and to build structures that route around it. <a class=\"jump\" href=\"essay-008.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -100,7 +100,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "007", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+    { no: "008", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+      titleHtml: "The Intelligence Trap: Why Smart People Stay Stuck",
+      dek: "The Cost of an Unlived Life and exploring why many smart people can get stuck. Whether it's analysis paralysis, failure to launch or something deeper, this is a perspective on the topic.",
+      readMin: 5, date: "June 30, 2026", dateShort: "06 · 30 · 26", year: "2026", type: "Essay",
+      localHref: "essay-008.html", href: "https://thinkersdilemma.substack.com/p/the-intelligence-trap-why-smart-people" },
+
+    { no: "007", cat: "power",
       titleHtml: "The Model Minority Myth was always A Cage.",
       dek: "A lie built on the subjugation of minorities",
       readMin: 9, date: "June 25, 2026", dateShort: "06 · 25 · 26", year: "2026", type: "Essay",
@@ -166,10 +172,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "7 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "8 essays · 2026",
       titleHtml: "Essays",
-      dek: "7 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "7", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "8 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "8", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
