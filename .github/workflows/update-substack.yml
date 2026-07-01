@@ -35,6 +35,9 @@ jobs:
       - name: Generate from Substack feed
         run: node scripts/build-from-substack.mjs
 
+      - name: Regenerate sitemap
+        run: node scripts/build-sitemap.mjs
+
       - name: Commit new content (if any)
         id: commit
         run: |
