@@ -87,14 +87,20 @@ function cleanBody(html) {
     .replace(/<a class="image-link[^"]*"[^>]*>([\s\S]*?)<\/a>/gi, "$1");
   return h.trim();
 }
-// Article title is <h1>, so shift Substack body headings up so the shallowest
-// becomes <h2> — keeps the heading outline sequential (no H1->H3 skip) for a11y.
+// Re-level headings by nesting depth so the outline is sequential (no skipped
+// levels) for a11y — Substack bodies mix levels inconsistently (e.g. h2 major
+// sections with h4 subsections and no h3). The article title is <h1>, so body
+// headings start at <h2>. Siblings get the same level; each nesting step is +1.
 function promoteHeadings(html) {
-  const levels = [...String(html || "").matchAll(/<h([1-6])\b/gi)].map((m) => +m[1]);
-  if (!levels.length) return html;
-  const delta = Math.min(...levels) - 2;
-  if (delta <= 0) return html;
-  return html.replace(/<(\/?)(h)([1-6])\b/gi, (_m, slash, _h, n) => "<" + slash + "h" + Math.max(2, +n - delta));
+  const stack = [];
+  return String(html || "").replace(/<h([1-6])(\b[^>]*)>([\s\S]*?)<\/h\1>/gi, (_m, lvl, attrs, inner) => {
+    const L = +lvl;
+    if (L === 1) { stack.length = 0; return "<h1" + attrs + ">" + inner + "</h1>"; }
+    while (stack.length && stack[stack.length - 1] >= L) stack.pop();
+    stack.push(L);
+    const out = Math.min(stack.length + 1, 6); // depth 1 -> h2 (under the h1 title)
+    return "<h" + out + attrs + ">" + inner + "</h" + out + ">";
+  });
 }
 
 /* ---- on-site reading page template ------------------------------- */
