@@ -87,6 +87,15 @@ function cleanBody(html) {
     .replace(/<a class="image-link[^"]*"[^>]*>([\s\S]*?)<\/a>/gi, "$1");
   return h.trim();
 }
+// Article title is <h1>, so shift Substack body headings up so the shallowest
+// becomes <h2> — keeps the heading outline sequential (no H1->H3 skip) for a11y.
+function promoteHeadings(html) {
+  const levels = [...String(html || "").matchAll(/<h([1-6])\b/gi)].map((m) => +m[1]);
+  if (!levels.length) return html;
+  const delta = Math.min(...levels) - 2;
+  if (delta <= 0) return html;
+  return html.replace(/<(\/?)(h)([1-6])\b/gi, (_m, slash, _h, n) => "<" + slash + "h" + Math.max(2, +n - delta));
+}
 
 /* ---- on-site reading page template ------------------------------- */
 function pageHtml(p) {
@@ -309,7 +318,7 @@ async function main() {
 
   // 1) generate on-site pages
   for (const p of newPosts) {
-    writeFileSync(join(DIST, p.localHref), pageHtml({ ...p, body: cleanBody(p.content) }));
+    writeFileSync(join(DIST, p.localHref), pageHtml({ ...p, body: promoteHeadings(cleanBody(p.content)) }));
   }
 
   // 2) demote the current essays[] lead (only one entry may be lead)
