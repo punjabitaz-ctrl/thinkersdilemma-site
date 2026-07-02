@@ -96,7 +96,7 @@
         if (l.note || !l.href || l.href === "#") return '<span class="soon">' + stripTags(l.label) + "</span>";
         return '<a href="' + attr(l.href) + '">' + stripTags(l.label) + "</a>";
       }).join("");
-      return '<div class="col"><h5>' + stripTags(col.title) + "</h5>" + links + "</div>";
+      return '<div class="col"><h4>' + stripTags(col.title) + "</h4>" + links + "</div>";
     }).join("");
   };
 

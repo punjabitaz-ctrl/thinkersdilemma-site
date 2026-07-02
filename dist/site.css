@@ -101,6 +101,11 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- STORY GRID (secondary) --------------------------------- */
 .story-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+/* Reserve height for JS-filled regions so they don't shift content on load (CLS).
+   Tuned to the filled desktop height; on narrower widths the filled content is
+   taller than the reserve, so there is no visible gap. */
+[data-render="home-excerpt"] { min-height: 236px; }
+[data-render="home-secondary"] { min-height: 314px; }
 .story { padding: 0 24px; border-left: 1px solid var(--rule); }
 .story:first-child { padding-left: 0; border-left: 0; }
 .story:last-child { padding-right: 0; }
@@ -195,7 +200,7 @@ a:hover .thumb .play .ring { background: var(--signal); border-color: var(--sign
 .foot .brand .wm { font: 500 italic 36px/1 var(--serif); letter-spacing: -0.01em; }
 .foot .brand .tag { font: 500 11px/1 var(--mono); letter-spacing: 0.3em; text-transform: uppercase; color: var(--signal); margin-top: 8px; }
 .foot .brand p { font: 400 15px/1.55 var(--sans); color: var(--ink-2); max-width: 360px; margin-top: 16px; }
-.foot .col h5 { font: 500 11px/1 var(--mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
+.foot .col h4 { font: 500 11px/1 var(--mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 14px; }
 .foot .col a { display: block; font: 400 15px/1 var(--sans); color: var(--ink); padding: 7px 0; transition: color var(--t-fast) var(--ease); }
 .foot .col a:hover { color: var(--signal); }
 .foot .bottom { display: flex; justify-content: space-between; align-items: center; padding-top: 22px; font: 500 11px/1 var(--mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-3); }
@@ -456,12 +461,14 @@ a:hover .thumb .play .ring { background: var(--signal); border-color: var(--sign
   opacity: 0.6;
 }
 .lead .plate .scan {
-  position: absolute; left: 0; right: 0; height: 2px; z-index: 0;
+  position: absolute; left: 0; right: 0; top: 0; height: 100%; z-index: 0;
   background: linear-gradient(90deg, transparent, var(--signal), transparent);
+  background-size: 100% 2px; background-repeat: no-repeat; background-position: 0 0;
   opacity: 0.5; pointer-events: none;
-  animation: plate-scan 5.5s var(--ease) infinite;
+  animation: plate-scan 5.5s var(--ease) infinite; will-change: transform;
 }
-@keyframes plate-scan { 0% { top: -4%; } 100% { top: 104%; } }
+/* transform (not top) so the animation is GPU-composited — no layout/paint per frame */
+@keyframes plate-scan { 0% { transform: translateY(-4%); } 100% { transform: translateY(104%); } }
 
 /* ---------- MINI-MARK — slow rotation in nav ----------------------- */
 .mainnav .mini-mark svg { transition: transform var(--t-slow) var(--ease); }

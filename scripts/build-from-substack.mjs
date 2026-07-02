@@ -90,6 +90,20 @@ function cleanBody(html) {
 
 /* ---- on-site reading page template ------------------------------- */
 function pageHtml(p) {
+  const iso = (() => { const d = new Date(p.date); return isNaN(d) ? "" : d.toISOString().slice(0, 10); })();
+  const ld = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: p.titlePlain,
+    description: p.dek,
+    datePublished: iso,
+    dateModified: iso,
+    author: { "@type": "Person", name: "Taz Punjabi" },
+    publisher: { "@type": "Organization", name: "Thinkers Dilemma" },
+    url: "https://thinkersdilemma.com/" + p.localHref,
+    mainEntityOfPage: { "@type": "WebPage", "@id": "https://thinkersdilemma.com/" + p.localHref },
+    ...(p.image ? { image: p.image } : {}),
+  }).replace(/</g, "\\u003c");
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -102,8 +116,12 @@ function pageHtml(p) {
 <meta property="og:description" content="${esc(p.dek)}">
 <meta property="og:type" content="article">
 ${p.image ? `<meta property="og:image" content="${esc(p.image)}">` : ""}
+<script type="application/ld+json">${ld}</script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <script>(function(){try{var s=localStorage.getItem("td-theme");var n=s?s==="night":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(n)document.documentElement.setAttribute("data-theme","night");}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500;1,6..72,600;1,6..72,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=optional">
 <link rel="stylesheet" href="colors_and_type.css">
 <link rel="stylesheet" href="site.css">
 <style>

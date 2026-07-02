@@ -3,8 +3,6 @@
    Color, type, scale, motion. Import once at the root.
    ===================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500;1,6..72,600;1,6..72,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
-
 :root {
   /* ------- INK (foreground) ----------------------------------------- */
   --ink:        #14110E;   /* primary type; warm near-black, never pure */
