@@ -368,6 +368,12 @@ async function main() {
   src = src.replace(/(issueNo: ")\d+(")/, "$1" + top.no + "$2");
   src = src.replace(/(volume: "Vol\. I · No\. )\d+(")/, "$1" + top.no + "$2");
 
+  // 4d) ticker headline -> newest essay. (dateLine is intentionally the reader's
+  // local date, set at runtime by site.js, so it is not touched here.)
+  // ticker[0] = lead title (star), ticker[1] = "New essay · <date>" (hot)
+  src = src.replace(/(ticker: \[\s*\n\s*\{ text: ")[^"]*(", star: true \})/, "$1" + jsstr(top.titlePlain) + "$2");
+  src = src.replace(/(\{ text: "New essay · )[^"]*(", hot: true \})/, "$1" + top.date + "$2");
+
   // 5) essays count
   const total = known.size + newPosts.length;
   src = replaceRegion(src, "essays-count",

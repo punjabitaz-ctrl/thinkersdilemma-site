@@ -17,10 +17,10 @@ window.TD_CONTENT = {
     established: "MMXXVI",
     questions: "Who benefits? · Who pays? · Who decides?",
 
-    issueNo: "008",
+    issueNo: "009",
     issueLabel: "The DEI Rollback",
-    dateLine: "Thursday · June 19 · 2026",
-    volume: "Vol. I · No. 008",
+    dateLine: "Tuesday · June 30 · 2026",
+    volume: "Vol. I · No. 009",
     datelineCenter: "Technology, culture, diaspora — <b>asked in good faith</b>",
     readers: 1840,
     liveLabel: "New essay this week",
@@ -31,8 +31,8 @@ window.TD_CONTENT = {
     ],
 
     ticker: [
-      { text: "The DEI Rollback and the Illusion it Shattered", star: true },
-      { text: "New essay · June 18, 2026", hot: true },
+      { text: "The End of the Open Internet", star: true },
+      { text: "New essay · July 2, 2026", hot: true },
       { text: "Who benefits?" },
       { text: "Who pays?", star: true },
       { text: "Who decides?" },
@@ -45,7 +45,7 @@ window.TD_CONTENT = {
       blurb: "A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.",
       columns: [
         { title: "Read", links: [
-          { label: "Latest essay", href: "essay-008.html" },
+          { label: "Latest essay", href: "essay-009.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
           { label: "Archive", href: "archive.html" }
@@ -72,18 +72,18 @@ window.TD_CONTENT = {
     /* @gen:lead */ lead: {
       kickerTag: "The lead · Power & systems",
       kickerCat: "Power & systems",
-      titleHtml: "The Intelligence Trap: Why Smart People Stay Stuck",
-      dek: "The Cost of an Unlived Life and exploring why many smart people can get stuck. Whether it's analysis paralysis, failure to launch or something deeper, this is a perspective on the topic.",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; June 30, 2026",
-      plateLabel: "Essay", plateNum: "008", plateName: "The Intelligence Trap: Why",
-      plateSub: "Filed 06 · 30 · 26",
-      href: "essay-008.html"
+      titleHtml: "The End of the Open Internet",
+      dek: "Walled gardens and the loss of a dream",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 2, 2026",
+      plateLabel: "Essay", plateNum: "009", plateName: "The End of the Open Intern",
+      plateSub: "Filed 07 · 02 · 26",
+      href: "essay-009.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "You know this person. They are unmistakably bright—the kind of person who sees three moves ahead, who leaves every meeting having identified the problem no one else named. They have been about to launch something for two years. The plan has been revised eleven times; each revision made it better; each revision moved the launch further out. The website is almost ready. The audience isn't quite built yet. The framework isn't fully theorized. The timing isn't right.",
-      "That person is also, in some real and uncomfortable sense, you.",
-      "The thesis is simple but devastating: high intelligence enables specific patterns of paralysis that are more sophisticated than ordinary procrastination. The cure is not to be less smart. It is to understand the specific &quot;stuckness&quot; that high analytical capacity creates, and to build structures that route around it. <a class=\"jump\" href=\"essay-008.html\">Read the full essay</a>"
+      "In 1989, Tim Berners Lee submitted a proposal to CERN management that his supervisor described, in a handwritten note on the cover page, as vague but exciting. The proposal was for a distributed information system, the World Wide Web , designed to allow scientists to share and access documents across disparate computer systems without the need for a central administrator. The fundamental philosophy was revolutionary: the network would be the system, not any particular machine sitting atop it.",
+      "The web that emerged from that vision was, for roughly fifteen years, an embodiment of the &quot;End to End&quot; principle. A concept in computer networking which suggests that the intelligence of a network should reside at the edges (the users and their devices) rather than in the core (the infrastructure providers).",
+      "In this era, the web was a pluralistic, chaotic, and remarkably free landscape. Pages linked to pages. Servers were owned by universities, hobbyists, small businesses, and individuals. The protocol was open, and the access, once the technical friction was cleared, was structurally equal. No one decided what you could publish; no one optimized your reading for dopamine driven return visits; and, perhaps most importantly, no one knew exactly who you were. <a class=\"jump\" href=\"essay-009.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -100,7 +100,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "008", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+    { no: "009", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+      titleHtml: "The End of the Open Internet",
+      dek: "Walled gardens and the loss of a dream",
+      readMin: 10, date: "July 2, 2026", dateShort: "07 · 02 · 26", year: "2026", type: "Essay",
+      localHref: "essay-009.html", href: "https://thinkersdilemma.substack.com/p/the-end-of-the-open-internet" },
+
+    { no: "008", cat: "power",
       titleHtml: "The Intelligence Trap: Why Smart People Stay Stuck",
       dek: "The Cost of an Unlived Life and exploring why many smart people can get stuck. Whether it's analysis paralysis, failure to launch or something deeper, this is a perspective on the topic.",
       readMin: 5, date: "June 30, 2026", dateShort: "06 · 30 · 26", year: "2026", type: "Essay",
@@ -172,10 +178,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "8 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "9 essays · 2026",
       titleHtml: "Essays",
-      dek: "8 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "8", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "9 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "9", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
