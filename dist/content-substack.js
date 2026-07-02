@@ -45,7 +45,7 @@ window.TD_CONTENT = {
       blurb: "A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.",
       columns: [
         { title: "Read", links: [
-          { label: "Latest essay", href: "essay-005.html" },
+          { label: "Latest essay", href: "essay-008.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
           { label: "Archive", href: "archive.html" }

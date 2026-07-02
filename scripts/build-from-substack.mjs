@@ -361,6 +361,9 @@ async function main() {
   ).join(",\n");
   src = replaceRegion(src, "excerpt", "excerpt: [\n" + excerpt + "\n    ]");
 
+  // 4b) footer "Latest essay" link -> newest essay
+  src = src.replace(/(\{ label: "Latest essay", href: ")essay-\d+\.html("\s*\},)/, "$1" + top.localHref + "$2");
+
   // 5) essays count
   const total = known.size + newPosts.length;
   src = replaceRegion(src, "essays-count",
