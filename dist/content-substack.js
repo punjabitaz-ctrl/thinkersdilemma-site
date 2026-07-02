@@ -17,10 +17,10 @@ window.TD_CONTENT = {
     established: "MMXXVI",
     questions: "Who benefits? · Who pays? · Who decides?",
 
-    issueNo: "005",
+    issueNo: "008",
     issueLabel: "The DEI Rollback",
     dateLine: "Thursday · June 19 · 2026",
-    volume: "Vol. I · No. 005",
+    volume: "Vol. I · No. 008",
     datelineCenter: "Technology, culture, diaspora — <b>asked in good faith</b>",
     readers: 1840,
     liveLabel: "New essay this week",

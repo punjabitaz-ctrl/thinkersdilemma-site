@@ -364,6 +364,10 @@ async function main() {
   // 4b) footer "Latest essay" link -> newest essay
   src = src.replace(/(\{ label: "Latest essay", href: ")essay-\d+\.html("\s*\},)/, "$1" + top.localHref + "$2");
 
+  // 4c) masthead issue number (site.issueNo + volume "No. NNN") -> newest essay no
+  src = src.replace(/(issueNo: ")\d+(")/, "$1" + top.no + "$2");
+  src = src.replace(/(volume: "Vol\. I · No\. )\d+(")/, "$1" + top.no + "$2");
+
   // 5) essays count
   const total = known.size + newPosts.length;
   src = replaceRegion(src, "essays-count",
