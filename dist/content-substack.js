@@ -17,10 +17,10 @@ window.TD_CONTENT = {
     established: "MMXXVI",
     questions: "Who benefits? · Who pays? · Who decides?",
 
-    issueNo: "009",
+    issueNo: "010",
     issueLabel: "The DEI Rollback",
     dateLine: "Tuesday · June 30 · 2026",
-    volume: "Vol. I · No. 009",
+    volume: "Vol. I · No. 010",
     datelineCenter: "Technology, culture, diaspora — <b>asked in good faith</b>",
     readers: 1840,
     liveLabel: "New essay this week",
@@ -31,8 +31,8 @@ window.TD_CONTENT = {
     ],
 
     ticker: [
-      { text: "The End of the Open Internet", star: true },
-      { text: "New essay · July 2, 2026", hot: true },
+      { text: "When Democracy becomes theater", star: true },
+      { text: "New essay · July 7, 2026", hot: true },
       { text: "Who benefits?" },
       { text: "Who pays?", star: true },
       { text: "Who decides?" },
@@ -45,7 +45,7 @@ window.TD_CONTENT = {
       blurb: "A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.",
       columns: [
         { title: "Read", links: [
-          { label: "Latest essay", href: "essay-009.html" },
+          { label: "Latest essay", href: "essay-010.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
           { label: "Archive", href: "archive.html" }
@@ -72,18 +72,18 @@ window.TD_CONTENT = {
     /* @gen:lead */ lead: {
       kickerTag: "The lead · Power & systems",
       kickerCat: "Power & systems",
-      titleHtml: "The End of the Open Internet",
-      dek: "Walled gardens and the loss of a dream",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 2, 2026",
-      plateLabel: "Essay", plateNum: "009", plateName: "The End of the Open Intern",
-      plateSub: "Filed 07 · 02 · 26",
-      href: "essay-009.html"
+      titleHtml: "When Democracy becomes theater",
+      dek: "The mechanisms of theatrical democracy",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 7, 2026",
+      plateLabel: "Essay", plateNum: "010", plateName: "When Democracy becomes the",
+      plateSub: "Filed 07 · 07 · 26",
+      href: "essay-010.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "In 1989, Tim Berners Lee submitted a proposal to CERN management that his supervisor described, in a handwritten note on the cover page, as vague but exciting. The proposal was for a distributed information system, the World Wide Web , designed to allow scientists to share and access documents across disparate computer systems without the need for a central administrator. The fundamental philosophy was revolutionary: the network would be the system, not any particular machine sitting atop it.",
-      "The web that emerged from that vision was, for roughly fifteen years, an embodiment of the &quot;End to End&quot; principle. A concept in computer networking which suggests that the intelligence of a network should reside at the edges (the users and their devices) rather than in the core (the infrastructure providers).",
-      "In this era, the web was a pluralistic, chaotic, and remarkably free landscape. Pages linked to pages. Servers were owned by universities, hobbyists, small businesses, and individuals. The protocol was open, and the access, once the technical friction was cleared, was structurally equal. No one decided what you could publish; no one optimized your reading for dopamine driven return visits; and, perhaps most importantly, no one knew exactly who you were. <a class=\"jump\" href=\"essay-009.html\">Read the full essay</a>"
+      "Every four years, in countries that describe themselves as democracies, a meticulously choreographed ritual is performed. Candidates embark on grueling tours of swing districts; voters queue in community centers and schools; votes are counted with high-stakes tension; results are certified by legal authorities; and winners are inaugurated under the gaze of history.",
+      "To the casual observer, the machinery is working. The democracy has functioned. The people have spoken.",
+      "And then, in the months and years that follow, the same patterns of inertia emerge. The housing crisis continues to metastasize, driven by zoning laws and supply constraints that neither party seems able or willing to tackle. Pharmaceutical pricing remains decoupled from the cost of production, fueled by patent thickets that no legislation can pierce. <a class=\"jump\" href=\"essay-010.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -100,7 +100,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "009", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+    { no: "010", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+      titleHtml: "When Democracy becomes theater",
+      dek: "The mechanisms of theatrical democracy",
+      readMin: 12, date: "July 7, 2026", dateShort: "07 · 07 · 26", year: "2026", type: "Essay",
+      localHref: "essay-010.html", href: "https://thinkersdilemma.substack.com/p/when-democracy-becomes-theater" },
+
+    { no: "009", cat: "power",
       titleHtml: "The End of the Open Internet",
       dek: "Walled gardens and the loss of a dream",
       readMin: 10, date: "July 2, 2026", dateShort: "07 · 02 · 26", year: "2026", type: "Essay",
@@ -178,10 +184,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "9 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "10 essays · 2026",
       titleHtml: "Essays",
-      dek: "9 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "9", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "10 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "10", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
