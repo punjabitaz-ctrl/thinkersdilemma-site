@@ -17,10 +17,10 @@ window.TD_CONTENT = {
     established: "MMXXVI",
     questions: "Who benefits? · Who pays? · Who decides?",
 
-    issueNo: "010",
+    issueNo: "011",
     issueLabel: "The DEI Rollback",
     dateLine: "Tuesday · June 30 · 2026",
-    volume: "Vol. I · No. 010",
+    volume: "Vol. I · No. 011",
     datelineCenter: "Technology, culture, diaspora — <b>asked in good faith</b>",
     readers: 1840,
     liveLabel: "New essay this week",
@@ -31,8 +31,8 @@ window.TD_CONTENT = {
     ],
 
     ticker: [
-      { text: "When Democracy becomes theater", star: true },
-      { text: "New essay · July 7, 2026", hot: true },
+      { text: "How the Pandemic exposed the fatal flaws of Global tourism", star: true },
+      { text: "New essay · July 9, 2026", hot: true },
       { text: "Who benefits?" },
       { text: "Who pays?", star: true },
       { text: "Who decides?" },
@@ -45,7 +45,7 @@ window.TD_CONTENT = {
       blurb: "A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.",
       columns: [
         { title: "Read", links: [
-          { label: "Latest essay", href: "essay-010.html" },
+          { label: "Latest essay", href: "essay-011.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
           { label: "Archive", href: "archive.html" }
@@ -72,18 +72,18 @@ window.TD_CONTENT = {
     /* @gen:lead */ lead: {
       kickerTag: "The lead · Power & systems",
       kickerCat: "Power & systems",
-      titleHtml: "When Democracy becomes theater",
-      dek: "The mechanisms of theatrical democracy",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 7, 2026",
-      plateLabel: "Essay", plateNum: "010", plateName: "When Democracy becomes the",
-      plateSub: "Filed 07 · 07 · 26",
-      href: "essay-010.html"
+      titleHtml: "How the Pandemic exposed the fatal flaws of Global tourism",
+      dek: "The great disruption to leisure travel",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 9, 2026",
+      plateLabel: "Essay", plateNum: "011", plateName: "How the Pandemic exposed t",
+      plateSub: "Filed 07 · 09 · 26",
+      href: "essay-011.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "Every four years, in countries that describe themselves as democracies, a meticulously choreographed ritual is performed. Candidates embark on grueling tours of swing districts; voters queue in community centers and schools; votes are counted with high-stakes tension; results are certified by legal authorities; and winners are inaugurated under the gaze of history.",
-      "To the casual observer, the machinery is working. The democracy has functioned. The people have spoken.",
-      "And then, in the months and years that follow, the same patterns of inertia emerge. The housing crisis continues to metastasize, driven by zoning laws and supply constraints that neither party seems able or willing to tackle. Pharmaceutical pricing remains decoupled from the cost of production, fueled by patent thickets that no legislation can pierce. <a class=\"jump\" href=\"essay-010.html\">Read the full essay</a>"
+      "In March 2020, the world’s circulatory system, in other words, the global network of aviation, maritime shipping, and international transit, simply stopped. It was a sudden, violent silence. For decades, the trajectory of human movement had been one of relentless expansion, a pursuit of the “elsewhere” that saw 1.5 billion international travelers crossing borders in 2019 alone. When that number plummeted to near zero, the silence at airports and the stillness in once congested hubs like Venice or Bangkok were more than just a symptom of a health crisis; they were a diagnostic revelation.",
+      "The pause did not merely halt travel; it exposed the structural rot within the industry.",
+      "As the world reopened, the returning traveler did not return to the status quo. Instead, they entered a landscape defined by a fundamental tension: the collision of a broken mass tourism model, the rise of a mobile, remote working class, and a burgeoning, often performative, sense of environmental and social responsibility. <a class=\"jump\" href=\"essay-011.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -100,7 +100,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "010", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+    { no: "011", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+      titleHtml: "How the Pandemic exposed the fatal flaws of Global tourism",
+      dek: "The great disruption to leisure travel",
+      readMin: 10, date: "July 9, 2026", dateShort: "07 · 09 · 26", year: "2026", type: "Essay",
+      localHref: "essay-011.html", href: "https://thinkersdilemma.substack.com/p/how-the-pandemic-exposed-the-fatal" },
+
+    { no: "010", cat: "power",
       titleHtml: "When Democracy becomes theater",
       dek: "The mechanisms of theatrical democracy",
       readMin: 12, date: "July 7, 2026", dateShort: "07 · 07 · 26", year: "2026", type: "Essay",
@@ -184,10 +190,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "10 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "11 essays · 2026",
       titleHtml: "Essays",
-      dek: "10 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "10", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "11 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "11", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
