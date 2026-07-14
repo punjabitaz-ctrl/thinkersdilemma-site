@@ -17,10 +17,10 @@ window.TD_CONTENT = {
     established: "MMXXVI",
     questions: "Who benefits? · Who pays? · Who decides?",
 
-    issueNo: "011",
+    issueNo: "012",
     issueLabel: "The DEI Rollback",
     dateLine: "Tuesday · June 30 · 2026",
-    volume: "Vol. I · No. 011",
+    volume: "Vol. I · No. 012",
     datelineCenter: "Technology, culture, diaspora — <b>asked in good faith</b>",
     readers: 1840,
     liveLabel: "New essay this week",
@@ -31,8 +31,8 @@ window.TD_CONTENT = {
     ],
 
     ticker: [
-      { text: "How the Pandemic exposed the fatal flaws of Global tourism", star: true },
-      { text: "New essay · July 9, 2026", hot: true },
+      { text: "The Quiet Power of Discomfort", star: true },
+      { text: "New essay · July 14, 2026", hot: true },
       { text: "Who benefits?" },
       { text: "Who pays?", star: true },
       { text: "Who decides?" },
@@ -45,7 +45,7 @@ window.TD_CONTENT = {
       blurb: "A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.",
       columns: [
         { title: "Read", links: [
-          { label: "Latest essay", href: "essay-011.html" },
+          { label: "Latest essay", href: "essay-012.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
           { label: "Archive", href: "archive.html" }
@@ -72,18 +72,18 @@ window.TD_CONTENT = {
     /* @gen:lead */ lead: {
       kickerTag: "The lead · Power & systems",
       kickerCat: "Power & systems",
-      titleHtml: "How the Pandemic exposed the fatal flaws of Global tourism",
-      dek: "The great disruption to leisure travel",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 9, 2026",
-      plateLabel: "Essay", plateNum: "011", plateName: "How the Pandemic exposed t",
-      plateSub: "Filed 07 · 09 · 26",
-      href: "essay-011.html"
+      titleHtml: "The Quiet Power of Discomfort",
+      dek: "A Neurobiological and Psychological Framework for High Performance",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 14, 2026",
+      plateLabel: "Essay", plateNum: "012", plateName: "The Quiet Power of Discomf",
+      plateSub: "Filed 07 · 14 · 26",
+      href: "essay-012.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "In March 2020, the world’s circulatory system, in other words, the global network of aviation, maritime shipping, and international transit, simply stopped. It was a sudden, violent silence. For decades, the trajectory of human movement had been one of relentless expansion, a pursuit of the “elsewhere” that saw 1.5 billion international travelers crossing borders in 2019 alone. When that number plummeted to near zero, the silence at airports and the stillness in once congested hubs like Venice or Bangkok were more than just a symptom of a health crisis; they were a diagnostic revelation.",
-      "The pause did not merely halt travel; it exposed the structural rot within the industry.",
-      "As the world reopened, the returning traveler did not return to the status quo. Instead, they entered a landscape defined by a fundamental tension: the collision of a broken mass tourism model, the rise of a mobile, remote working class, and a burgeoning, often performative, sense of environmental and social responsibility. <a class=\"jump\" href=\"essay-011.html\">Read the full essay</a>"
+      "Something happens in the quiet aftermath of a difficult meeting, a piece of biting feedback, or the heavy silence following a high stakes decision. It is a specific, directional friction. It is not the productive tension of two competing ideas, the kind of intellectual friction that sparks innovation, but a visceral, physiological unease.",
+      "They address the feedback, close the loop on the decision, and move to the next item on the agenda. They seek closure because, for the high performer, closure is synonymous with competence. But in the rush to resolve the friction, something is often left behind in the resolution: the data.",
+      "The thesis of this inquiry is that discomfort is not an obstacle to be bypassed, but a primary source of information to be decoded. The difference between productive and destructive difficulty is readable, but it is rarely read correctly. <a class=\"jump\" href=\"essay-012.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -100,7 +100,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "011", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+    { no: "012", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+      titleHtml: "The Quiet Power of Discomfort",
+      dek: "A Neurobiological and Psychological Framework for High Performance",
+      readMin: 10, date: "July 14, 2026", dateShort: "07 · 14 · 26", year: "2026", type: "Essay",
+      localHref: "essay-012.html", href: "https://thinkersdilemma.substack.com/p/the-quiet-power-of-discomfort" },
+
+    { no: "011", cat: "power",
       titleHtml: "How the Pandemic exposed the fatal flaws of Global tourism",
       dek: "The great disruption to leisure travel",
       readMin: 10, date: "July 9, 2026", dateShort: "07 · 09 · 26", year: "2026", type: "Essay",
@@ -190,10 +196,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "11 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "12 essays · 2026",
       titleHtml: "Essays",
-      dek: "11 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "11", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "12 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "12", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
