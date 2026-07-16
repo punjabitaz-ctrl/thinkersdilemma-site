@@ -17,10 +17,10 @@ window.TD_CONTENT = {
     established: "MMXXVI",
     questions: "Who benefits? · Who pays? · Who decides?",
 
-    issueNo: "012",
+    issueNo: "013",
     issueLabel: "The DEI Rollback",
     dateLine: "Tuesday · June 30 · 2026",
-    volume: "Vol. I · No. 012",
+    volume: "Vol. I · No. 013",
     datelineCenter: "Technology, culture, diaspora — <b>asked in good faith</b>",
     readers: 1840,
     liveLabel: "New essay this week",
@@ -31,8 +31,8 @@ window.TD_CONTENT = {
     ],
 
     ticker: [
-      { text: "The Quiet Power of Discomfort", star: true },
-      { text: "New essay · July 14, 2026", hot: true },
+      { text: "Belonging Nowhere, At Home Everywhere", star: true },
+      { text: "New essay · July 16, 2026", hot: true },
       { text: "Who benefits?" },
       { text: "Who pays?", star: true },
       { text: "Who decides?" },
@@ -45,7 +45,7 @@ window.TD_CONTENT = {
       blurb: "A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.",
       columns: [
         { title: "Read", links: [
-          { label: "Latest essay", href: "essay-012.html" },
+          { label: "Latest essay", href: "essay-013.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
           { label: "Archive", href: "archive.html" }
@@ -72,18 +72,18 @@ window.TD_CONTENT = {
     /* @gen:lead */ lead: {
       kickerTag: "The lead · Power & systems",
       kickerCat: "Power & systems",
-      titleHtml: "The Quiet Power of Discomfort",
-      dek: "A Neurobiological and Psychological Framework for High Performance",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 14, 2026",
-      plateLabel: "Essay", plateNum: "012", plateName: "The Quiet Power of Discomf",
-      plateSub: "Filed 07 · 14 · 26",
-      href: "essay-012.html"
+      titleHtml: "Belonging Nowhere, At Home Everywhere",
+      dek: "The Midlife Reckoning of the Third Culture Adult",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 16, 2026",
+      plateLabel: "Essay", plateNum: "013", plateName: "Belonging Nowhere, At Home",
+      plateSub: "Filed 07 · 16 · 26",
+      href: "essay-013.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "Something happens in the quiet aftermath of a difficult meeting, a piece of biting feedback, or the heavy silence following a high stakes decision. It is a specific, directional friction. It is not the productive tension of two competing ideas, the kind of intellectual friction that sparks innovation, but a visceral, physiological unease.",
-      "They address the feedback, close the loop on the decision, and move to the next item on the agenda. They seek closure because, for the high performer, closure is synonymous with competence. But in the rush to resolve the friction, something is often left behind in the resolution: the data.",
-      "The thesis of this inquiry is that discomfort is not an obstacle to be bypassed, but a primary source of information to be decoded. The difference between productive and destructive difficulty is readable, but it is rarely read correctly. <a class=\"jump\" href=\"essay-012.html\">Read the full essay</a>"
+      "You are forty one years old. You speak three languages with varying degrees of fluency and total cultural competence in none. The friends you made in childhood are scattered across four continents, and the relationships that once felt permanent now exist in the narrow band of WhatsApp message chains and biennial visits that are either too short or too loaded with expectation to be fully satisfying.",
+      "Your parents are in the country you were born in, growing older alone. Your children are growing up with even less cultural inheritance than you received, and you have not yet figured out what to do about that.",
+      "You were told, implicitly and explicitly, that this would resolve. <a class=\"jump\" href=\"essay-013.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -100,7 +100,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "012", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+    { no: "013", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+      titleHtml: "Belonging Nowhere, At Home Everywhere",
+      dek: "The Midlife Reckoning of the Third Culture Adult",
+      readMin: 11, date: "July 16, 2026", dateShort: "07 · 16 · 26", year: "2026", type: "Essay",
+      localHref: "essay-013.html", href: "https://thinkersdilemma.substack.com/p/belonging-nowhere-at-home-everywhere" },
+
+    { no: "012", cat: "power",
       titleHtml: "The Quiet Power of Discomfort",
       dek: "A Neurobiological and Psychological Framework for High Performance",
       readMin: 10, date: "July 14, 2026", dateShort: "07 · 14 · 26", year: "2026", type: "Essay",
@@ -196,10 +202,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "12 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "13 essays · 2026",
       titleHtml: "Essays",
-      dek: "12 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "12", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "13 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "13", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
