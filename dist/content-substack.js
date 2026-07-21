@@ -17,10 +17,10 @@ window.TD_CONTENT = {
     established: "MMXXVI",
     questions: "Who benefits? · Who pays? · Who decides?",
 
-    issueNo: "013",
+    issueNo: "014",
     issueLabel: "The DEI Rollback",
     dateLine: "Tuesday · June 30 · 2026",
-    volume: "Vol. I · No. 013",
+    volume: "Vol. I · No. 014",
     datelineCenter: "Technology, culture, diaspora — <b>asked in good faith</b>",
     readers: 1840,
     liveLabel: "New essay this week",
@@ -31,8 +31,8 @@ window.TD_CONTENT = {
     ],
 
     ticker: [
-      { text: "Belonging Nowhere, At Home Everywhere", star: true },
-      { text: "New essay · July 16, 2026", hot: true },
+      { text: "The Thinkers Burden & the Racing Mind", star: true },
+      { text: "New essay · July 21, 2026", hot: true },
       { text: "Who benefits?" },
       { text: "Who pays?", star: true },
       { text: "Who decides?" },
@@ -45,7 +45,7 @@ window.TD_CONTENT = {
       blurb: "A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.",
       columns: [
         { title: "Read", links: [
-          { label: "Latest essay", href: "essay-013.html" },
+          { label: "Latest essay", href: "essay-014.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
           { label: "Archive", href: "archive.html" }
@@ -72,18 +72,18 @@ window.TD_CONTENT = {
     /* @gen:lead */ lead: {
       kickerTag: "The lead · Power & systems",
       kickerCat: "Power & systems",
-      titleHtml: "Belonging Nowhere, At Home Everywhere",
-      dek: "The Midlife Reckoning of the Third Culture Adult",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 16, 2026",
-      plateLabel: "Essay", plateNum: "013", plateName: "Belonging Nowhere, At Home",
-      plateSub: "Filed 07 · 16 · 26",
-      href: "essay-013.html"
+      titleHtml: "The Thinkers Burden &amp; the Racing Mind",
+      dek: "When you can't find the off switch",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 21, 2026",
+      plateLabel: "Essay", plateNum: "014", plateName: "The Thinkers Burden & the ",
+      plateSub: "Filed 07 · 21 · 26",
+      href: "essay-014.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "You are forty one years old. You speak three languages with varying degrees of fluency and total cultural competence in none. The friends you made in childhood are scattered across four continents, and the relationships that once felt permanent now exist in the narrow band of WhatsApp message chains and biennial visits that are either too short or too loaded with expectation to be fully satisfying.",
-      "Your parents are in the country you were born in, growing older alone. Your children are growing up with even less cultural inheritance than you received, and you have not yet figured out what to do about that.",
-      "You were told, implicitly and explicitly, that this would resolve. <a class=\"jump\" href=\"essay-013.html\">Read the full essay</a>"
+      "It is 3:17 a.m. and the mind has been running for two hours. It is not running on anything useful, not on the urgent logistics of the coming week or the resolution of a complex problem. Instead, it is looping on a conversation from last Tuesday, auditing a minor social misstep from three years ago, and simulating a hypothetical conflict that will almost certainly never occur.",
+      "The body is exhausted, heavy, and signaling a desperate need for rest, yet the mind interprets this exhaustion as mere background noise, it reads it as additional data to be processed, analyzed, and solved.",
+      "If this sequence feels familiar, you are not broken. You are running hardware that does not come with an off switch. <a class=\"jump\" href=\"essay-014.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -100,7 +100,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "013", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+    { no: "014", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+      titleHtml: "The Thinkers Burden &amp; the Racing Mind",
+      dek: "When you can't find the off switch",
+      readMin: 11, date: "July 21, 2026", dateShort: "07 · 21 · 26", year: "2026", type: "Essay",
+      localHref: "essay-014.html", href: "https://thinkersdilemma.substack.com/p/the-thinkers-burden" },
+
+    { no: "013", cat: "power",
       titleHtml: "Belonging Nowhere, At Home Everywhere",
       dek: "The Midlife Reckoning of the Third Culture Adult",
       readMin: 11, date: "July 16, 2026", dateShort: "07 · 16 · 26", year: "2026", type: "Essay",
@@ -202,10 +208,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "13 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "14 essays · 2026",
       titleHtml: "Essays",
-      dek: "13 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "13", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "14 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "14", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
