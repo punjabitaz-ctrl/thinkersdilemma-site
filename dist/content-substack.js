@@ -17,10 +17,10 @@ window.TD_CONTENT = {
     established: "MMXXVI",
     questions: "Who benefits? · Who pays? · Who decides?",
 
-    issueNo: "014",
+    issueNo: "015",
     issueLabel: "The DEI Rollback",
     dateLine: "Tuesday · June 30 · 2026",
-    volume: "Vol. I · No. 014",
+    volume: "Vol. I · No. 015",
     datelineCenter: "Technology, culture, diaspora — <b>asked in good faith</b>",
     readers: 1840,
     liveLabel: "New essay this week",
@@ -31,8 +31,8 @@ window.TD_CONTENT = {
     ],
 
     ticker: [
-      { text: "The Thinkers Burden & the Racing Mind", star: true },
-      { text: "New essay · July 21, 2026", hot: true },
+      { text: "Building in the Dark", star: true },
+      { text: "New essay · July 23, 2026", hot: true },
       { text: "Who benefits?" },
       { text: "Who pays?", star: true },
       { text: "Who decides?" },
@@ -45,7 +45,7 @@ window.TD_CONTENT = {
       blurb: "A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.",
       columns: [
         { title: "Read", links: [
-          { label: "Latest essay", href: "essay-014.html" },
+          { label: "Latest essay", href: "essay-015.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
           { label: "Archive", href: "archive.html" }
@@ -72,18 +72,18 @@ window.TD_CONTENT = {
     /* @gen:lead */ lead: {
       kickerTag: "The lead · Power & systems",
       kickerCat: "Power & systems",
-      titleHtml: "The Thinkers Burden &amp; the Racing Mind",
-      dek: "When you can't find the off switch",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 21, 2026",
-      plateLabel: "Essay", plateNum: "014", plateName: "The Thinkers Burden & the ",
-      plateSub: "Filed 07 · 21 · 26",
-      href: "essay-014.html"
+      titleHtml: "Building in the Dark",
+      dek: "The Architecture of Starting Without an Audience",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 23, 2026",
+      plateLabel: "Essay", plateNum: "015", plateName: "Building in the Dark",
+      plateSub: "Filed 07 · 23 · 26",
+      href: "essay-015.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "It is 3:17 a.m. and the mind has been running for two hours. It is not running on anything useful, not on the urgent logistics of the coming week or the resolution of a complex problem. Instead, it is looping on a conversation from last Tuesday, auditing a minor social misstep from three years ago, and simulating a hypothetical conflict that will almost certainly never occur.",
-      "The body is exhausted, heavy, and signaling a desperate need for rest, yet the mind interprets this exhaustion as mere background noise, it reads it as additional data to be processed, analyzed, and solved.",
-      "If this sequence feels familiar, you are not broken. You are running hardware that does not come with an off switch. <a class=\"jump\" href=\"essay-014.html\">Read the full essay</a>"
+      "The spreadsheet says fourteen subscribers. Eleven of them are people who opened the email because they know you personally, one is your partner, and two are bots. The video posted on Tuesday has 23 views. The Substack essay that took nine hours to research and write, the one you thought was your best work yet, has been opened by your mother, a former colleague, and three people whose email addresses you don’t recognize. The silence is complete.",
+      "Every piece of content about content creation is authored by people who have already crossed the threshold. The podcaster with 80,000 subscribers explaining how to start a podcast . The Substack writer with 45,000 readers explaining how to find your niche .",
+      "They are describing a world from the other side of a mountain, providing retrospective sense making for a climb they achieved through a chaotic mixture of luck, timing, and grit. Their advice is often a map of the summit , rarely a map of the base camp where the air is thin and the visibility is zero. <a class=\"jump\" href=\"essay-015.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -100,7 +100,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "014", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+    { no: "015", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+      titleHtml: "Building in the Dark",
+      dek: "The Architecture of Starting Without an Audience",
+      readMin: 10, date: "July 23, 2026", dateShort: "07 · 23 · 26", year: "2026", type: "Essay",
+      localHref: "essay-015.html", href: "https://thinkersdilemma.substack.com/p/building-in-the-dark" },
+
+    { no: "014", cat: "power",
       titleHtml: "The Thinkers Burden &amp; the Racing Mind",
       dek: "When you can't find the off switch",
       readMin: 11, date: "July 21, 2026", dateShort: "07 · 21 · 26", year: "2026", type: "Essay",
@@ -208,10 +214,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "14 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "15 essays · 2026",
       titleHtml: "Essays",
-      dek: "14 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "14", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "15 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "15", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
