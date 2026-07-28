@@ -17,10 +17,10 @@ window.TD_CONTENT = {
     established: "MMXXVI",
     questions: "Who benefits? · Who pays? · Who decides?",
 
-    issueNo: "015",
+    issueNo: "016",
     issueLabel: "The DEI Rollback",
     dateLine: "Tuesday · June 30 · 2026",
-    volume: "Vol. I · No. 015",
+    volume: "Vol. I · No. 016",
     datelineCenter: "Technology, culture, diaspora — <b>asked in good faith</b>",
     readers: 1840,
     liveLabel: "New essay this week",
@@ -31,8 +31,8 @@ window.TD_CONTENT = {
     ],
 
     ticker: [
-      { text: "Building in the Dark", star: true },
-      { text: "New essay · July 23, 2026", hot: true },
+      { text: "The Battle for the Cognitive Stack of the 21st Century", star: true },
+      { text: "New essay · July 28, 2026", hot: true },
       { text: "Who benefits?" },
       { text: "Who pays?", star: true },
       { text: "Who decides?" },
@@ -45,7 +45,7 @@ window.TD_CONTENT = {
       blurb: "A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.",
       columns: [
         { title: "Read", links: [
-          { label: "Latest essay", href: "essay-015.html" },
+          { label: "Latest essay", href: "essay-016.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
           { label: "Archive", href: "archive.html" }
@@ -72,18 +72,18 @@ window.TD_CONTENT = {
     /* @gen:lead */ lead: {
       kickerTag: "The lead · Power & systems",
       kickerCat: "Power & systems",
-      titleHtml: "Building in the Dark",
-      dek: "The Architecture of Starting Without an Audience",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 23, 2026",
-      plateLabel: "Essay", plateNum: "015", plateName: "Building in the Dark",
-      plateSub: "Filed 07 · 23 · 26",
-      href: "essay-015.html"
+      titleHtml: "The Battle for the Cognitive Stack of the 21st Century",
+      dek: "Open Source vs Closed AI systems",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 28, 2026",
+      plateLabel: "Essay", plateNum: "016", plateName: "The Battle for the Cogniti",
+      plateSub: "Filed 07 · 28 · 26",
+      href: "essay-016.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "The spreadsheet says fourteen subscribers. Eleven of them are people who opened the email because they know you personally, one is your partner, and two are bots. The video posted on Tuesday has 23 views. The Substack essay that took nine hours to research and write, the one you thought was your best work yet, has been opened by your mother, a former colleague, and three people whose email addresses you don’t recognize. The silence is complete.",
-      "Every piece of content about content creation is authored by people who have already crossed the threshold. The podcaster with 80,000 subscribers explaining how to start a podcast . The Substack writer with 45,000 readers explaining how to find your niche .",
-      "They are describing a world from the other side of a mountain, providing retrospective sense making for a climb they achieved through a chaotic mixture of luck, timing, and grit. Their advice is often a map of the summit , rarely a map of the base camp where the air is thin and the visibility is zero. <a class=\"jump\" href=\"essay-015.html\">Read the full essay</a>"
+      "Somewhere this week, a frontier model trained by a closed lab representing tens of billions of dollars in compute, talent, and curated data sat behind a proprietary API, metering access by the token. The same week, a research team released open weights on Hugging Face that approximated eighty percent of that model’s capability and could be run on a single, consumer grade workstation.",
+      "This is not a mere developer tools story. The question of who can see, modify, and run AI models is a question about democratic access to the cognitive infrastructure of the next century. The architecture decides who gets to participate in the new economy, and who is merely a tenant.",
+      "To understand this battle, the vocabulary must be precise, because the political claims built on it are often intentionally obfuscated. <a class=\"jump\" href=\"essay-016.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -100,7 +100,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "015", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+    { no: "016", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+      titleHtml: "The Battle for the Cognitive Stack of the 21st Century",
+      dek: "Open Source vs Closed AI systems",
+      readMin: 9, date: "July 28, 2026", dateShort: "07 · 28 · 26", year: "2026", type: "Essay",
+      localHref: "essay-016.html", href: "https://thinkersdilemma.substack.com/p/the-battle-for-the-cognitive-stack" },
+
+    { no: "015", cat: "power",
       titleHtml: "Building in the Dark",
       dek: "The Architecture of Starting Without an Audience",
       readMin: 10, date: "July 23, 2026", dateShort: "07 · 23 · 26", year: "2026", type: "Essay",
@@ -214,10 +220,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "15 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "16 essays · 2026",
       titleHtml: "Essays",
-      dek: "15 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "15", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "16 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "16", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
