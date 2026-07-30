@@ -17,10 +17,10 @@ window.TD_CONTENT = {
     established: "MMXXVI",
     questions: "Who benefits? · Who pays? · Who decides?",
 
-    issueNo: "016",
+    issueNo: "017",
     issueLabel: "The DEI Rollback",
     dateLine: "Tuesday · June 30 · 2026",
-    volume: "Vol. I · No. 016",
+    volume: "Vol. I · No. 017",
     datelineCenter: "Technology, culture, diaspora — <b>asked in good faith</b>",
     readers: 1840,
     liveLabel: "New essay this week",
@@ -31,8 +31,8 @@ window.TD_CONTENT = {
     ],
 
     ticker: [
-      { text: "The Battle for the Cognitive Stack of the 21st Century", star: true },
-      { text: "New essay · July 28, 2026", hot: true },
+      { text: "The Geopolitics of AI", star: true },
+      { text: "New essay · July 30, 2026", hot: true },
       { text: "Who benefits?" },
       { text: "Who pays?", star: true },
       { text: "Who decides?" },
@@ -45,7 +45,7 @@ window.TD_CONTENT = {
       blurb: "A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.",
       columns: [
         { title: "Read", links: [
-          { label: "Latest essay", href: "essay-016.html" },
+          { label: "Latest essay", href: "essay-017.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
           { label: "Archive", href: "archive.html" }
@@ -70,20 +70,20 @@ window.TD_CONTENT = {
   /* ---- HOMEPAGE ---------------------------------------------------- */
   home: {
     /* @gen:lead */ lead: {
-      kickerTag: "The lead · Power & systems",
-      kickerCat: "Power & systems",
-      titleHtml: "The Battle for the Cognitive Stack of the 21st Century",
-      dek: "Open Source vs Closed AI systems",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 28, 2026",
-      plateLabel: "Essay", plateNum: "016", plateName: "The Battle for the Cogniti",
-      plateSub: "Filed 07 · 28 · 26",
-      href: "essay-016.html"
+      kickerTag: "The lead · Technology",
+      kickerCat: "Technology",
+      titleHtml: "The Geopolitics of AI",
+      dek: "Why the Chip war is the REAL WAR!",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 30, 2026",
+      plateLabel: "Essay", plateNum: "017", plateName: "The Geopolitics of AI",
+      plateSub: "Filed 07 · 30 · 26",
+      href: "essay-017.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "Somewhere this week, a frontier model trained by a closed lab representing tens of billions of dollars in compute, talent, and curated data sat behind a proprietary API, metering access by the token. The same week, a research team released open weights on Hugging Face that approximated eighty percent of that model’s capability and could be run on a single, consumer grade workstation.",
-      "This is not a mere developer tools story. The question of who can see, modify, and run AI models is a question about democratic access to the cognitive infrastructure of the next century. The architecture decides who gets to participate in the new economy, and who is merely a tenant.",
-      "To understand this battle, the vocabulary must be precise, because the political claims built on it are often intentionally obfuscated. <a class=\"jump\" href=\"essay-016.html\">Read the full essay</a>"
+      "Somewhere in the Dutch countryside, in a town most people couldn’t find on a map, sits a factory that the entire digital age depends on.",
+      "ASML, based in Veldhoven, Netherlands, is the sole manufacturer of extreme ultraviolet (EUV) lithography machines, the $380 million tools required to etch the nanoscale circuits onto the most advanced semiconductors on earth [1]. There is no alternative supplier. No workaround. No “Plan B.”",
+      "If ASML stopped shipping tomorrow, the production of every cutting edge chip in the world from the processor in a smartphone to the guidance system in a hypersonic missile would grind to a halt within months. <a class=\"jump\" href=\"essay-017.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -100,7 +100,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "016", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+    { no: "017", cat: "technology", catLabel: "The lead · Technology", lead: true,
+      titleHtml: "The Geopolitics of AI",
+      dek: "Why the Chip war is the REAL WAR!",
+      readMin: 13, date: "July 30, 2026", dateShort: "07 · 30 · 26", year: "2026", type: "Essay",
+      localHref: "essay-017.html", href: "https://thinkersdilemma.substack.com/p/the-geopolitics-of-ai" },
+
+    { no: "016", cat: "power",
       titleHtml: "The Battle for the Cognitive Stack of the 21st Century",
       dek: "Open Source vs Closed AI systems",
       readMin: 9, date: "July 28, 2026", dateShort: "07 · 28 · 26", year: "2026", type: "Essay",
@@ -220,10 +226,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "16 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "17 essays · 2026",
       titleHtml: "Essays",
-      dek: "16 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "16", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "17 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "17", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
