@@ -17,10 +17,10 @@ window.TD_CONTENT = {
     established: "MMXXVI",
     questions: "Who benefits? · Who pays? · Who decides?",
 
-    issueNo: "017",
+    issueNo: "018",
     issueLabel: "The DEI Rollback",
     dateLine: "Tuesday · June 30 · 2026",
-    volume: "Vol. I · No. 017",
+    volume: "Vol. I · No. 018",
     datelineCenter: "Technology, culture, diaspora — <b>asked in good faith</b>",
     readers: 1840,
     liveLabel: "New essay this week",
@@ -31,8 +31,8 @@ window.TD_CONTENT = {
     ],
 
     ticker: [
-      { text: "The Geopolitics of AI", star: true },
-      { text: "New essay · July 30, 2026", hot: true },
+      { text: "Tariffs, Trickle-Down, and the People Who Wait", star: true },
+      { text: "New essay · August 4, 2026", hot: true },
       { text: "Who benefits?" },
       { text: "Who pays?", star: true },
       { text: "Who decides?" },
@@ -45,7 +45,7 @@ window.TD_CONTENT = {
       blurb: "A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.",
       columns: [
         { title: "Read", links: [
-          { label: "Latest essay", href: "essay-017.html" },
+          { label: "Latest essay", href: "essay-018.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
           { label: "Archive", href: "archive.html" }
@@ -70,20 +70,20 @@ window.TD_CONTENT = {
   /* ---- HOMEPAGE ---------------------------------------------------- */
   home: {
     /* @gen:lead */ lead: {
-      kickerTag: "The lead · Technology",
-      kickerCat: "Technology",
-      titleHtml: "The Geopolitics of AI",
-      dek: "Why the Chip war is the REAL WAR!",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; July 30, 2026",
-      plateLabel: "Essay", plateNum: "017", plateName: "The Geopolitics of AI",
-      plateSub: "Filed 07 · 30 · 26",
-      href: "essay-017.html"
+      kickerTag: "The lead · Power & systems",
+      kickerCat: "Power & systems",
+      titleHtml: "Tariffs, Trickle-Down, and the People Who Wait",
+      dek: "The High Cost of Economic Theater",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; August 4, 2026",
+      plateLabel: "Essay", plateNum: "018", plateName: "Tariffs, Trickle-Down, and",
+      plateSub: "Filed 08 · 04 · 26",
+      href: "essay-018.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "Somewhere in the Dutch countryside, in a town most people couldn’t find on a map, sits a factory that the entire digital age depends on.",
-      "ASML, based in Veldhoven, Netherlands, is the sole manufacturer of extreme ultraviolet (EUV) lithography machines, the $380 million tools required to etch the nanoscale circuits onto the most advanced semiconductors on earth [1]. There is no alternative supplier. No workaround. No “Plan B.”",
-      "If ASML stopped shipping tomorrow, the production of every cutting edge chip in the world from the processor in a smartphone to the guidance system in a hypersonic missile would grind to a halt within months. <a class=\"jump\" href=\"essay-017.html\">Read the full essay</a>"
+      "Somewhere in Ohio, a warehouse manager is staring at an invoice. The microwave that cost $34 last quarter now costs $48. It’s the same product, same supplier, same container ship. The only thing that changed was a press conference in Washington, where a tariff was announced as a “ victory for the American worker. ”",
+      "The manager faces a choice: absorb the difference and watch his margins vanish, or pass the cost to a customer who is already stretching to make ends meet. The manager is not the person the tariff was designed to protect; he is the person who will pay for it.",
+      "Thanks for reading! Subscribe for free to receive new posts and support my work. <a class=\"jump\" href=\"essay-018.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -100,7 +100,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "017", cat: "technology", catLabel: "The lead · Technology", lead: true,
+    { no: "018", cat: "power", catLabel: "The lead · Power & systems", lead: true,
+      titleHtml: "Tariffs, Trickle-Down, and the People Who Wait",
+      dek: "The High Cost of Economic Theater",
+      readMin: 10, date: "August 4, 2026", dateShort: "08 · 04 · 26", year: "2026", type: "Essay",
+      localHref: "essay-018.html", href: "https://thinkersdilemma.substack.com/p/tariffs-trickle-down-and-the-people" },
+
+    { no: "017", cat: "technology",
       titleHtml: "The Geopolitics of AI",
       dek: "Why the Chip war is the REAL WAR!",
       readMin: 13, date: "July 30, 2026", dateShort: "07 · 30 · 26", year: "2026", type: "Essay",
@@ -226,10 +232,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "17 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "18 essays · 2026",
       titleHtml: "Essays",
-      dek: "17 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "17", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "18 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "18", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
