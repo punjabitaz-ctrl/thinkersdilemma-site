@@ -370,7 +370,6 @@ details.upd li em, .logl em { display: block; font-style: normal; font: 500 12px
 @media (max-width: 860px) { .dsp-home { grid-template-columns: 1fr; padding: 32px 22px; gap: 28px; } }
 
 /* ---------- the Declaration ----------------------------------------- */
-.draft-flag { display: inline-block; font: 500 11px/1 var(--mono); letter-spacing: 0.2em; text-transform: uppercase; color: #fff; background: var(--signal); padding: 8px 12px; margin-top: 18px; }
 .decl { max-width: 820px; margin: 0 auto; padding: 40px 0 8px; }
 .decl-pre { font: 400 22px/1.6 var(--serif); }
 .decl-pre p { margin: 0 0 20px; }
@@ -387,7 +386,7 @@ details.upd li em, .logl em { display: block; font-style: normal; font: 500 12px
 .decl-close { max-width: 820px; margin: 0 auto; }
 .decl-sign { font: 500 12px/1.8 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); padding: 26px 0 8px; border-top: 2px solid var(--ink); }
 @media (max-width: 700px) { .decl-art { grid-template-columns: 1fr; } .decl-art .no { grid-row: auto; font-size: 48px; } .decl-pre { font-size: 19px; } }
-@media print { .utility, .mainnav, .dsp-subnav, .foot, .draft-flag, .subscribe { display: none !important; } .decl-art { break-inside: avoid; } }
+@media print { .utility, .mainnav, .dsp-subnav, .foot, .subscribe { display: none !important; } .decl-art { break-inside: avoid; } }
 
 /* =====================================================================
    STATE AUDITS — index grid + per-state template
