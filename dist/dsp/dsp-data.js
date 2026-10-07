@@ -12,8 +12,9 @@
     asOf: "Entry 12",
     totalStates: 50,
 
-    /* Launch: Week 1 publishes Nov 5, 2026. Entries 1-12 (already audited) run
-       as Weeks 1-12; Entry N publishes in Week N. Weeks are 7 days apart. */
+    /* Launch: Week 1 publishes Thursday Nov 5, 2026 at 12:00 a.m. Eastern. States publish
+       alphabetically, one a week: Week 1 = Alabama ... Week 50 = Wyoming (Oct 14, 2027).
+       A state's audit record can exist earlier; it stays hidden until its week arrives. */
     launch: "2026-11-05",
     verifiedOn: "2026-10-07",
     tagline: "50 states graded in 50 weeks",
@@ -166,9 +167,9 @@
         ] }
     ],
 
-    next: { entry: 13, state: "Washington", note: "The first audited state where a resident can personally sue over a data violation, if only for health data." },
+    next: { entry: 1, state: "Alabama", note: "Week 1 of 50. Alabama\u2019s comprehensive privacy law takes effect May 1, 2027." },
     /* All fifty states, alphabetical. Audit status is derived from DSP.states; a state
-       absent from DSP.states is queued. Queue order beyond Entry 13 is not yet fixed. */
+       absent from DSP.states is queued. Publishing order is alphabetical (see roster). */
     roster: ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"],
     watch: ["Louisiana", "Alabama", "Oklahoma", "Vermont"],
     watchNote: "Louisiana and Oklahoma take effect January 1, 2027, Alabama May 1, 2027, Vermont January 1, 2028. The original forecasts assumed none of them had a comprehensive law.",
@@ -185,12 +186,42 @@
     if (typeof d === "string") d = parseDay(d);
     return ["January","February","March","April","May","June","July","August","September","October","November","December"][d.getUTCMonth()] + " " + d.getUTCDate() + ", " + d.getUTCFullYear();
   };
+  /* ---------- Eastern-time clock ----------------------------------
+     Every publish instant is 12:00 a.m. America/New_York on the date, with the US daylight
+     rule applied (second Sunday of March to first Sunday of November). */
+  function easternMidnight(iso) {
+    var p = iso.split("-"), y = +p[0], m = +p[1], d = +p[2];
+    function firstSunday(mo) { var w = new Date(Date.UTC(y, mo - 1, 1)).getUTCDay(); return 1 + (7 - w) % 7; }
+    var start = firstSunday(3) + 7, end = firstSunday(11);
+    var dst = (m > 3 && m < 11) || (m === 3 && d > start) || (m === 11 && d <= end);
+    return Date.parse(iso + "T00:00:00" + (dst ? "-04:00" : "-05:00"));
+  }
+  function isoOf(dt) { return dt.toISOString().slice(0, 10); }
+  DSP.launchAt = easternMidnight(DSP.launch);
+  DSP.weekAt = function (week) { return easternMidnight(isoOf(DSP.weekDate(week))); };
+  DSP.weekOf = function (name) { return DSP.roster.indexOf(name) + 1; };
+  DSP.weekdayName = function (d) { if (typeof d === "string") d = parseDay(d); return ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][d.getUTCDay()]; };
+
+  /* Alphabetical publishing: a state's week is its place in the roster. */
+  DSP.states.forEach(function (s) { s.auditSeq = s.entry; s.entry = s.week = DSP.weekOf(s.state); });
+
+  /* Gate: the page opens at launch. Add ?preview=1 to any DSP URL to see everything
+     (remembered for the browser session). This is a presentation gate, not a vault: the
+     data file is a public static asset. */
+  DSP.published = function (now) { return (now ? now.getTime() : Date.now()) >= DSP.launchAt; };
+  DSP.preview = function () {
+    var q = /[?&]preview(=1|=true)?(&|$)/.test(typeof location !== "undefined" ? location.search : "");
+    try { if (q) sessionStorage.setItem("dsp-preview", "1"); return q || sessionStorage.getItem("dsp-preview") === "1"; } catch (e) { return q; }
+  };
+  DSP.revealed = function () { return DSP.published() || DSP.preview(); };
+  /* A state's audit is public once its own week has arrived (or in preview). */
+  DSP.isLive = function (rec, now) { return DSP.preview() || (now ? now.getTime() : Date.now()) >= DSP.weekAt(rec.week); };
   /* Where are we in the 50 weeks? now = Date (defaults to today). */
   DSP.phase = function (now) {
     var t = (now || new Date()).getTime();
-    var launch = parseDay(DSP.launch).getTime();
-    if (t < launch) return { phase: "pre", days: Math.ceil((launch - t) / 864e5) };
-    var week = Math.min(DSP.totalStates, Math.floor((t - launch) / (7 * 864e5)) + 1);
+    if (t < DSP.launchAt) return { phase: "pre", days: Math.ceil((DSP.launchAt - t) / 864e5) };
+    var week = 1;
+    for (var w = 2; w <= DSP.totalStates; w++) { if (t >= DSP.weekAt(w)) week = w; }
     return { phase: week >= DSP.totalStates ? "final" : "live", week: week };
   };
 

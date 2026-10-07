@@ -16,6 +16,8 @@
   if (!D) return;
 
   var SVGNS = "http://www.w3.org/2000/svg";
+  var REV = D.revealed ? D.revealed() : true;   /* false = locked: no grades, scores or colors */
+  var PAGE_GATED = !!document.querySelector('[data-dsp="us-map"]');   /* State audits page: publish week by week */
   var ABBR = { Alabama: "AL", Alaska: "AK", Arizona: "AZ", Arkansas: "AR", California: "CA", Colorado: "CO", Connecticut: "CT", Delaware: "DE", Florida: "FL", Georgia: "GA", Hawaii: "HI", Idaho: "ID", Illinois: "IL", Indiana: "IN", Iowa: "IA", Kansas: "KS", Kentucky: "KY", Louisiana: "LA", Maine: "ME", Maryland: "MD", Massachusetts: "MA", Michigan: "MI", Minnesota: "MN", Mississippi: "MS", Missouri: "MO", Montana: "MT", Nebraska: "NE", Nevada: "NV", "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY", "North Carolina": "NC", "North Dakota": "ND", Ohio: "OH", Oklahoma: "OK", Oregon: "OR", Pennsylvania: "PA", "Rhode Island": "RI", "South Carolina": "SC", "South Dakota": "SD", Tennessee: "TN", Texas: "TX", Utah: "UT", Vermont: "VT", Virginia: "VA", Washington: "WA", "West Virginia": "WV", Wisconsin: "WI", Wyoming: "WY" };
   /* too small to carry a label inside the outline */
   var NO_LABEL = { "New Hampshire": 1, Vermont: 1, Massachusetts: 1, "Rhode Island": 1, Connecticut: 1, "New Jersey": 1, Delaware: 1, Maryland: 1 };
@@ -30,7 +32,10 @@
 
   function rec(name) { return D.states.filter(function (x) { return x.state === name; })[0] || null; }
   function statusOf(name) { var r = rec(name); return !r ? "queued" : (r.status === "reaudit" ? "reaudit" : "audited"); }
-  function scoredList() { return D.states.filter(function (x) { return x.status !== "reaudit"; }); }
+  function scoredList() { return D.states.filter(function (x) { return x.status !== "reaudit" && (!PAGE_GATED || (REV && D.isLive(x))); }); }
+  /* what the public may see for a state right now (null = not published yet) */
+  function vrec(n) { var r = rec(n); return r && REV && D.isLive(r) ? r : null; }
+  function vstatus(n) { var r = vrec(n); return !r ? "queued" : (r.status === "reaudit" ? "reaudit" : "audited"); }
   function pillarsFor(r) {
     if (!r) return null;
     if (r.pillars) return { p: r.pillars, penalty: r.penalty || 0 };
@@ -62,19 +67,19 @@
     if (!M) { host.innerHTML = '<p class="state-empty">The map could not load.</p>'; return; }
     var names = D.roster;
     var paths = names.map(function (n) {
-      var r = rec(n), st = statusOf(n), g = st === "audited" ? r.grade : "";
-      var label = n + ", " + (st === "audited" ? "grade " + r.grade + ", " + r.score + " out of 100" : st === "reaudit" ? "score under correction" : (D.next && D.next.state === n ? "next audit" : "not yet audited"));
+      var r = vrec(n), st = vstatus(n), g = st === "audited" ? r.grade : "";
+      var label = n + ", " + (st === "audited" ? "grade " + r.grade + ", " + r.score + " out of 100" : st === "reaudit" ? "score under correction" : "publishes " + D.fmtDate(D.weekDate(D.weekOf(n))));
       return '<path class="us-state" d="' + M.states[n] + '" data-name="' + esc(n) + '" data-status="' + st + '"' + (g ? ' data-grade="' + g + '"' : "") +
         (D.next && D.next.state === n ? ' data-next="1"' : "") + ' tabindex="0" role="button" aria-label="' + esc(label) + '"></path>';
     }).join("");
     var labels = names.map(function (n) {
       if (NO_LABEL[n]) return "";
-      var c = M.centers[n], r = rec(n), g = r && r.status !== "reaudit" ? r.grade : "";
+      var c = M.centers[n], r = vrec(n), g = r && r.status !== "reaudit" ? r.grade : "";
       return '<text class="us-lab" x="' + c[0] + '" y="' + c[1] + '"' + (g ? ' data-grade="' + g + '"' : "") + ">" + ABBR[n] + "</text>";
     }).join("");
-    var scored = scoredList().length, pend = D.states.length - scored;
+    var scored = scoredList().length, pend = D.roster.filter(function (n) { return vstatus(n) === "reaudit"; }).length;
 
-    var legend = D.bands.slice().reverse().map(function (b) {
+    var legend = !REV ? "" : D.bands.slice().reverse().map(function (b) {
       var n = scoredList().filter(function (s) { return s.grade === b.grade; }).length;
       return '<li><i class="sw g-' + b.grade + '"></i><b>' + b.grade + "</b><span>" + b.min + "&ndash;" + b.max + (n ? " &middot; " + n : "") + "</span></li>";
     }).join("");
@@ -89,10 +94,10 @@
       '<div class="us-pop" role="dialog" aria-modal="false" aria-label="State scorecard" tabindex="-1" hidden></div>' +
       "</div>" +
       '<div class="usmap-foot"><ul class="usmap-legend" aria-label="Legend">' + legend +
-      '<li><i class="sw sw-q"></i><span>Not yet audited</span></li>' +
-      (pend ? '<li><i class="sw sw-h"></i><span>Under correction</span></li>' : "") +
+      '<li><i class="sw sw-q"></i><span>' + (REV ? "Not yet published" : "Scores locked") + "</span></li>" +
+      (REV && pend ? '<li><i class="sw sw-h"></i><span>Under correction</span></li>' : "") +
       '<li><i class="sw sw-n"></i><span>Next up</span></li></ul>' +
-      '<p class="usmap-hint">' + scored + " of " + D.totalStates + " states scored. Select a state for its scorecard.</p></div></div>";
+      '<p class="usmap-hint">' + (REV ? (scored ? scored + " of " + D.totalStates + " audits published. One more each week." : "Audits publish weekly, Alabama first.") + " Select a state for its scorecard or schedule." : "Scores and grades publish weekly from " + D.fmtDate(D.launch) + ", Alabama first. Select a state for its schedule.") + "</p></div></div>";
 
     var stage = $(".usmap-stage", host), svg = $(".usmap-svg", host), grp = $(".us-states", host), pop = $(".us-pop", host), tip = $(".us-tip", host);
     var current = null, lastFocus = null;
@@ -103,11 +108,18 @@
     }
 
     function popHtml(n) {
-      var r = rec(n), st = statusOf(n), pil = pillarsFor(r);
+      var r = vrec(n), st = vstatus(n), pil = pillarsFor(r);
       var h = '<button type="button" class="up-x" aria-label="Close scorecard">&times;</button>';
+      if (st === "queued") {
+        var w = D.weekOf(n), when = D.fmtDate(D.weekDate(w));
+        return h + '<div class="up-head"><div><span class="up-k">Week ' + w + " of " + D.totalStates + "</span><h3>" + esc(n) + '</h3></div><span class="grade-chip g-queued">&ndash;</span></div>' +
+          '<div class="up-score"><em>' + (REV ? "Not yet published" : "Score locked until launch") + "</em></div>" +
+          '<p class="up-blurb">' + (D.next && D.next.state === n ? esc(D.next.note) + " " : "") + "The " + esc(n) + " audit publishes " + D.weekdayName(D.weekDate(w)) + ", " + when + ". States publish alphabetically, one a week, through Wyoming on " + D.fmtDate(D.weekDate(D.totalStates)) + ".</p>" +
+          '<a class="up-link" href="grading.html">How states are graded &rarr;</a>';
+      }
       if (st === "audited") {
         var band = D.gradeFor(r.score);
-        h += '<div class="up-head"><div><span class="up-k">Week ' + r.week + " &middot; Entry " + r.entry + " of " + D.totalStates + "</span><h3>" + esc(n) + "</h3></div>" + chip(r.grade) + "</div>" +
+        h += '<div class="up-head"><div><span class="up-k">Week ' + r.week + " of " + D.totalStates + "</span><h3>" + esc(n) + "</h3></div>" + chip(r.grade) + "</div>" +
           '<div class="up-score"><b>' + r.score + "</b><span>/100</span><em>Grade " + r.grade + " &middot; " + esc(band.short) + "</em></div>" +
           '<div class="up-track"><i class="g-' + r.grade + '" style="width:' + r.score + '%"></i><b style="left:70%"></b></div>';
         if (pil) {
@@ -122,16 +134,10 @@
           '<p class="up-meta"><span>Comprehensive law: <b>' + (r.comp ? "Yes" : "None") + "</b></span><span>Verified " + D.fmtDate(r.verified) + "</span></p>" +
           '<a class="up-link" href="' + href(n) + '">Read the full audit &rarr;</a>';
       } else if (st === "reaudit") {
-        h += '<div class="up-head"><div><span class="up-k">Week ' + r.week + " &middot; Entry " + r.entry + " of " + D.totalStates + "</span><h3>" + esc(n) + '</h3></div><span class="grade-chip g-pending">?</span></div>' +
+        h += '<div class="up-head"><div><span class="up-k">Week ' + r.week + " of " + D.totalStates + "</span><h3>" + esc(n) + '</h3></div><span class="grade-chip g-pending">?</span></div>' +
           '<div class="up-score"><em>Score withdrawn while the audit is corrected</em></div>' +
           '<p class="up-blurb">' + esc(r.finding) + "</p>" +
           '<a class="up-link" href="' + href(n) + '">See the correction &rarr;</a>';
-      } else {
-        var nx = D.next && D.next.state === n;
-        h += '<div class="up-head"><div><span class="up-k">' + (nx ? "Next up &middot; Entry " + D.next.entry : "Queued") + "</span><h3>" + esc(n) + '</h3></div><span class="grade-chip g-queued">&ndash;</span></div>' +
-          '<div class="up-score"><em>Not yet audited</em></div>' +
-          '<p class="up-blurb">' + (nx ? esc(D.next.note) + " Publishes " + D.fmtDate(D.weekDate(D.next.entry)) + "." : "This audit is in production. All fifty publish by " + D.fmtDate(D.weekDate(D.totalStates)) + ".") + "</p>" +
-          '<a class="up-link" href="grading.html">How states are graded &rarr;</a>';
       }
       return h;
     }
@@ -184,8 +190,8 @@
     stage.addEventListener("mousemove", function (e) {
       var t = e.target.closest && e.target.closest(".us-state");
       if (!t || !pop.hidden && window.innerWidth >= 720 && pop.contains(e.target)) { tip.hidden = true; return; }
-      var n = t.getAttribute("data-name"), r = rec(n), s = stage.getBoundingClientRect();
-      tip.textContent = n + (r && r.status !== "reaudit" ? " · " + r.score + " · " + r.grade : r ? " · under correction" : "");
+      var n = t.getAttribute("data-name"), r = vrec(n), s = stage.getBoundingClientRect();
+      tip.textContent = REV ? n + (r && r.status !== "reaudit" ? " · " + r.score + " · " + r.grade : r ? " · under correction" : "") : n;
       tip.hidden = false;
       tip.style.left = Math.min(stage.clientWidth - tip.offsetWidth - 4, e.clientX - s.left + 14) + "px";
       tip.style.top = Math.max(2, e.clientY - s.top - 34) + "px";
@@ -350,11 +356,60 @@
   /* =================================================================
      boot
      ================================================================= */
+  /* Embargo interstitial: the map stays live; everything below it is hazed behind a launch card. */
+  function embargoPage() {
+    var map = document.getElementById("map"), glance = document.getElementById("glance"), states = document.getElementById("states");
+    if (!map || !states) return;
+    /* decorative, data-free skeletons: no scores exist in the DOM while embargoed */
+    var sk = slot("viz-dist");
+    if (sk && glance && glance.contains(sk)) sk.innerHTML = '<div class="vz-dist">' + D.bands.slice().reverse().map(function (b) {
+      return '<div class="vcol"><div class="vstack"><span class="vt vt-empty"></span></div><span class="vlab"><b>' + b.grade + "</b><span>" + b.min + "&ndash;" + b.max + "</span></span></div>";
+    }).join("") + "</div>";
+    var hk = slot("viz-pillar-heat");
+    if (hk && glance && glance.contains(hk)) hk.innerHTML = '<div class="vz-heat-wrap"><div class="hc-skel"></div></div>';
+
+    var wrap = document.createElement("div");
+    wrap.className = "embargo";
+    var body = document.createElement("div");
+    body.className = "embargo-body";
+    body.setAttribute("aria-hidden", "true");
+    if ("inert" in body) body.inert = true;
+    var veil = document.createElement("div");
+    veil.className = "embargo-veil";
+    var when = D.weekdayName(D.launch) + ", " + D.fmtDate(D.launch) + " \u00b7 12:00 a.m. Eastern";
+    veil.innerHTML = '<aside class="embargo-card" role="region" aria-label="Launch countdown">' +
+      '<span class="ek">Opens at launch</span>' +
+      "<h2>Fifty states. One rubric. <em>Week 1 is Alabama.</em></h2>" +
+      '<div class="ek-clock" role="timer" aria-live="off"></div>' +
+      '<p class="ek-when">' + when + "</p>" +
+      "<p>The map shows the schedule. Each audit unlocks on its week, alphabetically, from Alabama to Wyoming on " + D.fmtDate(D.weekDate(D.totalStates)) + ".</p>" +
+      '<div class="ek-btns"><a class="up-link" href="https://thinkersdilemma.substack.com/subscribe" rel="noopener">Get the launch note</a>' +
+      '<a class="ek-ghost" href="declaration.html">Read the Declaration</a></div></aside>';
+    var clock = $(".ek-clock", veil);
+    function tick() {
+      var ms = D.launchAt - Date.now();
+      if (ms <= 0) { clock.innerHTML = ""; location.reload(); return; }
+      var d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), m = Math.floor(ms % 36e5 / 6e4), sec = Math.floor(ms % 6e4 / 1e3);
+      function cell(n, l) { return "<div><b>" + String(n).padStart(2, "0") + "</b><span>" + l + "</span></div>"; }
+      clock.innerHTML = cell(d, "days") + cell(h, "hours") + cell(m, "min") + cell(sec, "sec");
+      clock.setAttribute("aria-label", d + " days, " + h + " hours, " + m + " minutes until launch");
+    }
+    tick();
+    var timer = setInterval(tick, 1000);
+    map.parentNode.insertBefore(wrap, map.nextSibling);
+    [glance, states].forEach(function (n) { if (n) body.appendChild(n); });
+    wrap.appendChild(body);
+    wrap.appendChild(veil);
+  }
+
   function boot() {
     var h;
     if ((h = slot("us-map"))) renderMap(h);
-    if ((h = slot("viz-dist"))) renderDist(h);
-    if ((h = slot("viz-pillar-heat"))) renderPillarHeat(h);
+    if (!REV && slot("us-map")) embargoPage();
+    if (REV || !(slot("viz-dist") && document.getElementById("glance") && document.getElementById("glance").contains(slot("viz-dist")))) {
+      if ((h = slot("viz-dist"))) renderDist(h);
+      if ((h = slot("viz-pillar-heat"))) renderPillarHeat(h);
+    }
     $$("[data-viz-state]").forEach(renderStateViz);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();

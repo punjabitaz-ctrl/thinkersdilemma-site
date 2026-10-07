@@ -701,3 +701,27 @@ a.seg:hover { filter: brightness(1.15); }
   .vv { font-size: 15px; }
   .vaxis .b70 { font-size: 0; } .vaxis .b70::before { content: "70"; font-size: 9px; }
 }
+
+/* ---------- embargo interstitial (State audits, before launch) ---------- */
+.embargo { position: relative; margin-top: 8px; }
+.embargo-body { max-height: 860px; overflow: hidden; filter: blur(7px) saturate(0.85); opacity: 0.6; pointer-events: none; user-select: none; -webkit-user-select: none; transform: translateZ(0); }
+.embargo-veil { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0, var(--paper) 78%); display: flex; justify-content: center; align-items: flex-start; padding: 56px 16px 0; }
+.embargo-card { max-width: 560px; width: 100%; text-align: center; background: var(--paper-hi); border: 1.5px solid var(--ink); box-shadow: 8px 8px 0 rgba(20,17,14,0.2); padding: 30px 30px 26px; position: sticky; top: 130px; }
+html[data-theme="night"] .embargo-card { box-shadow: 8px 8px 0 rgba(0,0,0,0.55); }
+.embargo-card .ek { font: 500 10px/1 var(--mono); letter-spacing: 0.22em; text-transform: uppercase; color: var(--signal); }
+.embargo-card h2 { font: 500 clamp(26px, 3.4vw, 36px)/1.12 var(--serif); letter-spacing: -0.01em; margin: 14px 0 12px; }
+.embargo-card h2 em { color: var(--signal); }
+.embargo-card p { font: 400 15px/1.55 var(--sans); color: var(--ink-2); }
+.ek-clock { display: flex; justify-content: center; gap: 18px; margin: 4px 0 8px; }
+.ek-clock div { display: flex; flex-direction: column; gap: 6px; min-width: 52px; }
+.ek-clock b { font: 500 40px/0.95 var(--mono); letter-spacing: -0.04em; font-feature-settings: "tnum"; }
+.ek-clock span { font: 500 10px/1 var(--mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); }
+.embargo-card p.ek-when { font: 500 11px/1.4 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin: 6px 0 14px; }
+@media (max-width: 480px) { .ek-clock { gap: 10px; } .ek-clock b { font-size: 30px; } .ek-clock div { min-width: 44px; } }
+.ek-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+.ek-btns .up-link { display: inline-block; padding: 14px 22px; }
+.ek-ghost { font: 600 12px/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); border: 1.5px solid var(--ink); padding: 13px 20px; transition: color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease); }
+.ek-ghost:hover, .ek-ghost:focus-visible { color: var(--signal); border-color: var(--signal); }
+.vt-empty { background: transparent; border: 1.5px dashed var(--rule); height: 36px; display: block; }
+.hc-skel { height: 190px; border: 1.5px dashed var(--rule); }
+@media (max-width: 860px) { .embargo-body { max-height: 700px; } .embargo-veil { padding-top: 28px; } .embargo-card { top: 110px; padding: 24px 20px 20px; } }

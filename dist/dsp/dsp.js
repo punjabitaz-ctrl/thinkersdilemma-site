@@ -44,7 +44,7 @@
       html +=
         '<article class="board-row" data-grade="' + r.grade + '">' +
         '<span class="c-rank">' + (i + 1) + "</span>" +
-        '<div class="c-state"><h3>' + esc(r.state) + '</h3><p>' + esc(r.finding) + '</p><span class="entry">Week ' + r.week + " · Entry " + r.entry + " of " + D.totalStates + " · Verified " + D.fmtDate(r.verified) + "</span>" + rescored(r) + updatesHtml(r) + "</div>" +
+        '<div class="c-state"><h3>' + esc(r.state) + '</h3><p>' + esc(r.finding) + '</p><span class="entry">Week ' + r.week + " of " + D.totalStates + " · Verified " + D.fmtDate(r.verified) + "</span>" + rescored(r) + updatesHtml(r) + "</div>" +
         '<span class="c-law ' + (r.comp ? "yes" : "no") + '">' + (r.comp ? "Yes" : "None") + "</span>" +
         '<div class="c-bar"><div class="track" role="img" aria-label="' + esc(r.state) + " scored " + r.score + ' out of 100"><i class="fill g-' + r.grade + '" style="width:' + r.score + '%"></i><b class="tick" style="left:70%"></b></div><span class="num">' + r.score + "</span></div>" +
         '<span class="c-grade">' + chip(r.grade) + "</span></article>";
@@ -52,7 +52,7 @@
     pendingStates().forEach(function (r) {
       html += '<article class="board-row pending" data-grade="pending">' +
         '<span class="c-rank">&ndash;</span>' +
-        '<div class="c-state"><h3>' + esc(r.state) + '</h3><p>' + esc(r.finding) + '</p><span class="entry">Week ' + r.week + " · Entry " + r.entry + " of " + D.totalStates + " · Checked " + D.fmtDate(r.verified) + "</span>" + updatesHtml(r) + "</div>" +
+        '<div class="c-state"><h3>' + esc(r.state) + '</h3><p>' + esc(r.finding) + '</p><span class="entry">Week ' + r.week + " of " + D.totalStates + " · Checked " + D.fmtDate(r.verified) + "</span>" + updatesHtml(r) + "</div>" +
         '<span class="c-law no">Re-audit</span>' +
         '<div class="c-bar"><span class="pend-note">Score withdrawn. Republished in Week ' + r.week + ".</span></div>" +
         '<span class="c-grade"><span class="grade-chip g-pending" aria-label="Under correction">?</span></span></article>';
@@ -106,10 +106,10 @@
       var ph = D.phase();
       var launch = D.fmtDate(D.launch);
       if (ph.phase === "pre") {
-        var ms = Date.parse(D.launch + "T00:00:00") - Date.now();
+        var ms = D.launchAt - Date.now();
         if (ms < 0) ms = 0;
         var d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), m = Math.floor(ms % 36e5 / 6e4);
-        host.innerHTML = '<div class="cd-label">Week 1 publishes ' + launch + '</div>' +
+        host.innerHTML = '<div class="cd-label">Week 1 (Alabama) publishes ' + launch + ' \u00b7 12:00 a.m. Eastern</div>' +
           '<div class="cd-clock" role="timer" aria-label="' + d + " days, " + h + " hours, " + m + ' minutes until launch">' +
           '<div><b>' + d + '</b><span>days</span></div><div><b>' + h + '</b><span>hours</span></div><div><b>' + m + '</b><span>minutes</span></div></div>' +
           '<div class="cd-tag">' + esc(D.tagline) + "</div>";
@@ -348,14 +348,40 @@
     D.states.forEach(function (x) { byName[x.state] = x; });
     return D.roster.map(function (name) {
       var r = byName[name];
-      if (r) return { name: name, slug: D.slug(name), rec: r, status: r.status === "reaudit" ? "reaudit" : "audited" };
-      return { name: name, slug: D.slug(name), rec: null, status: "queued", isNext: D.next && D.next.state === name };
+      var wk = D.weekOf(name);
+      if (r && D.isLive(r)) return { name: name, slug: D.slug(name), week: wk, rec: r, status: r.status === "reaudit" ? "reaudit" : "audited" };
+      return { name: name, slug: D.slug(name), week: wk, rec: null, status: "queued", isNext: D.next && D.next.state === name };
     });
   }
   function stateHref(slug) { return "state-" + slug + ".html"; }
 
   function renderStateGrid(host) {
     var rows = stateRows();
+    var gated = !(D.revealed && D.revealed());
+    if (gated) {
+      /* embargo: no scores, no grades, no finding text, no links to audits */
+      var cards = rows.map(function (r) {
+        var w = r.week;
+        var head = "Week " + w;
+        var line = "Publishes " + D.fmtDate(D.weekDate(w)) + ".";
+        return '<article class="state-card is-queued is-embargo' + (r.isNext ? " is-next" : "") + '" data-status="embargo" data-name="' + esc(r.name.toLowerCase()) + '">' +
+          '<div class="sc-top"><h3>' + esc(r.name) + '</h3><span class="grade-chip g-queued" aria-hidden="true">&ndash;</span></div>' +
+          '<span class="sc-score sc-note">' + head + "</span><p>" + esc(line) + "</p>" +
+          '<span class="sc-foot">Score publishes with the audit</span></article>';
+      }).join("");
+      host.innerHTML = cards + '<p class="state-empty is-hidden" data-state-empty>No state matches that search.</p>';
+      var fl = slot("state-filter"); if (fl) fl.style.display = "none";
+      var inp0 = slot("state-search");
+      function apply0() {
+        var q = inp0 ? inp0.value.trim().toLowerCase() : "", shown = 0;
+        $$(".state-card", host).forEach(function (c) { var ok = !q || c.getAttribute("data-name").indexOf(q) !== -1; c.classList.toggle("is-hidden", !ok); if (ok) shown++; });
+        $("[data-state-empty]", host).classList.toggle("is-hidden", shown !== 0);
+        var c2 = slot("state-count"); if (c2) c2.textContent = shown;
+      }
+      if (inp0) inp0.addEventListener("input", apply0);
+      apply0();
+      return;
+    }
     var counts = { all: rows.length, audited: 0, reaudit: 0, queued: 0 };
     rows.forEach(function (r) { counts[r.status]++; });
     var html = rows.map(function (r) {
@@ -364,16 +390,16 @@
       if (r.status === "audited") {
         chipH = chip(r.rec.grade);
         body = '<span class="sc-score"><b>' + r.rec.score + '</b>/100</span><p>' + esc(r.rec.finding) + "</p>";
-        foot = "Week " + r.rec.week + " · Entry " + r.rec.entry + " · Read the audit &rarr;";
+        foot = "Week " + r.rec.week + " · Read the audit &rarr;";
       } else if (r.status === "reaudit") {
         chipH = '<span class="grade-chip g-pending" aria-label="Under correction">?</span>';
         body = '<span class="sc-score sc-note">Score withdrawn</span><p>' + esc(r.rec.finding) + "</p>";
         foot = "Re-audit · Republished Week " + r.rec.week + " &rarr;";
       } else {
         chipH = '<span class="grade-chip g-queued" aria-label="Not yet audited">&ndash;</span>';
-        body = '<span class="sc-score sc-note">' + (r.isNext ? "Next up" : "Queued") + "</span><p>" +
-          (r.isNext ? esc(D.next.note) : "Audit in production. Publishes weekly through " + D.fmtDate(D.weekDate(D.totalStates)) + ".") + "</p>";
-        foot = r.isNext ? "Entry " + D.next.entry + " · Week " + D.next.entry + " · " + D.fmtDate(D.weekDate(D.next.entry)) : "Not yet scheduled";
+        body = '<span class="sc-score sc-note">Week ' + r.week + "</span><p>" +
+          (r.isNext ? esc(D.next.note) + " " : "") + "Publishes " + D.fmtDate(D.weekDate(r.week)) + ".</p>";
+        foot = "Not yet published";
       }
       var inner = '<div class="sc-top"><h3>' + esc(r.name) + "</h3>" + chipH + "</div>" + body + '<span class="sc-foot">' + foot + "</span>";
       var tag = r.status === "queued"
@@ -442,7 +468,7 @@
     }
     h += '<dl class="sd-facts">' +
       "<div><dt>Comprehensive law</dt><dd>" + (r.comp ? "Yes" : "None") + "</dd></div>" +
-      "<div><dt>Audit</dt><dd>Week " + r.week + " &middot; Entry " + r.entry + " of " + D.totalStates + "</dd></div>" +
+      "<div><dt>Audit</dt><dd>Week " + r.week + " of " + D.totalStates + "</dd></div>" +
       "<div><dt>Last verified</dt><dd>" + D.fmtDate(r.verified) + "</dd></div>" +
       "<div><dt>Rubric</dt><dd>v1.1 &middot; <a href=\"grading.html\">how it scores</a></dd></div></dl></section>";
     if (!pending) h += '<div class="sd-track" role="img" aria-label="' + esc(name) + " scored " + r.score + ' out of 100"><i class="fill g-' + r.grade + '" style="width:' + r.score + '%"></i><b class="tick" style="left:70%"></b></div>';
