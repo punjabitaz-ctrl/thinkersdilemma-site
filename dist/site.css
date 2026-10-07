@@ -649,3 +649,9 @@ a.jump:hover { text-decoration: underline; text-underline-offset: 3px; }
   .mainnav .wrap::-webkit-scrollbar { display: none; }
   .mainnav a { white-space: nowrap; }
 }
+
+/* ---------- NAV MARK: the dot orbits on hover ------------------------ */
+.mainnav .mini-mark svg circle:last-child { transform-box: view-box; transform-origin: 50% 50%; }
+.mainnav .mini-mark:hover svg circle:last-child, .mainnav .mini-mark:focus-visible svg circle:last-child { animation: mark-orbit 1.6s linear infinite; }
+@keyframes mark-orbit { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .mainnav .mini-mark:hover svg circle:last-child { animation: none; } }

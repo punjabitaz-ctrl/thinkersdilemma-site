@@ -130,12 +130,12 @@
       { entry: 4,  week: 4,  state: "Florida",        score: 13, grade: "F", comp: true,  verified: "2026-10-07", finding: "A Digital Bill of Rights with a threshold set so high it covers almost no one.",
         scoreWas: 21, pillars: { ownership: 35, consent: 40, portability: 38, erasure: 30, accountability: 32 }, penalty: 22,
         updates: [
-          { date: "2026-06-29", text: "The Roku case under the Digital Bill of Rights concluded: $25M in compliance engineering, no monetary fine, no finding of wrongdoing.", effect: "Re-scored. The enforcement criterion rewards penalties collected, so it stays at 6/20." },
+          { date: "2026-06-29", text: "The Roku case under the Digital Bill of Rights concluded: $25M in compliance engineering, no monetary fine, no finding of wrongdoing.", effect: "Re-scored under Rubric v1.1. The criterion rewards penalties collected and none were, so it stays at 6/20. No change from the settlement." },
           { date: "2026-10-07", text: "Arithmetic reconciliation: the published pillar scores (35, 40, 38, 30, 32) weight to 34.55; less the 22-point penalty that is 13, not 21.", effect: "Score corrected from 21 (E) to 13 (F). Pillars and penalty unchanged." }
         ] },
       { entry: 5,  week: 5,  state: "Pennsylvania",   score: 19, grade: "F", comp: false, verified: "2026-10-07", finding: "Residents have standing through consumer-protection law, not privacy law.",
         updates: [
-          { date: "2026-06-24", text: "HB 78, a comprehensive privacy bill, cleared the Senate Communications & Technology Committee. No floor vote found.", effect: "No score change. Pending bills score zero. If enacted, Pennsylvania is re-audited as a comprehensive-law state." }
+          { date: "2026-06-24", text: "HB 78, a comprehensive privacy bill, cleared the Senate Communications & Technology Committee unanimously (June 24, 2026) and was sent to the full Senate. No floor vote found as of October 7.", effect: "No score change. Pending bills score zero. If enacted, Pennsylvania is re-audited as a comprehensive-law state." }
         ] },
       { entry: 6,  week: 6,  state: "Illinois",       score: 31, grade: "E", comp: false, verified: "2026-10-07", finding: "The strongest private remedy in the country, for biometrics only.",
         updates: [
@@ -143,10 +143,11 @@
         ] },
       { entry: 7,  week: 7,  state: "Ohio",           score: 11, grade: "F", comp: false, verified: "2026-10-07", finding: "Its national first protects businesses from lawsuits, not residents from harm.",
         updates: [] },
-      { entry: 8,  week: 8,  state: "Georgia",        score: 20, grade: "E", comp: true,  verified: "2026-10-07", finding: "Forecast as a Void state, then enacted SB 111 mid-cycle.",
-        pillars: { ownership: 44, consent: 38, portability: 48, erasure: 44, accountability: 22 }, penalty: 17,
+      { entry: 8,  week: 8,  state: "Georgia",        score: null, grade: null, comp: false, status: "reaudit", verified: "2026-10-07",
+        finding: "Under correction. The audit scored Georgia as having enacted a privacy law. The signed act is a rural-hospital tax credit bill.",
+        scoreWas: 20,
         updates: [
-          { date: "2026-07-01", text: "SB 111 (Georgia Consumer Privacy Protection Act) took effect.", effect: "No score change. Already scored as enacted." }
+          { date: "2026-10-07", text: "Correction. SB 111 began as the Georgia Consumer Privacy Protection Act, but a House committee substitute on March 25, 2026 replaced it. The act the Governor signed on May 11, 2026 amends Code Section 31-8-9.1 (rural hospital tax credits) and contains no privacy provisions. The audit's premise, that Georgia enacted a comprehensive privacy law, was wrong.", effect: "Score withdrawn (was 20, E). Georgia is re-audited as a state with no comprehensive law and republished in Week 8." }
         ] },
       { entry: 9,  week: 9,  state: "North Carolina", score: 14, grade: "F", comp: false, verified: "2026-10-07", finding: "An aggressive attorney general and not one consumer data right.",
         updates: [] },
@@ -154,14 +155,14 @@
         updates: [] },
       { entry: 11, week: 11, state: "New Jersey",     score: 46, grade: "D", comp: true,  verified: "2026-10-07", finding: "Rights like California's, a courthouse door like nobody's.",
         updates: [
-          { date: "2026-06-02", text: "The Division of Consumer Affairs' proposed regulations expired without adoption. Enforcement rests on the statute alone.", effect: "Under review against the rulemaking criterion." },
-          { date: "2026-06-30", text: "An amendment took effect prohibiting the sale of sensitive data.", effect: "Under review against the consent criteria." }
+          { date: "2026-06-02", text: "The Division of Consumer Affairs' proposed regulations expired without adoption. The statute's rulemaking authority is unchanged.", effect: "No score change. The audit credits the authority, not a finished rule." },
+          { date: "2026-06-30", text: "A5328 was signed. It bars any person from selling sensitive data regardless of how many consumers' data they hold, with no consent exception, and creates a data broker registry (opening spring 2027). Reported penalty: $50,000 per record. Reports say the administration will not enforce the sale ban until legislative fixes pass.", effect: "No score change. The audit already credited opt-in for sensitive data, and the enforcement criterion rewards actions brought. Logged, not scored, until an enforcement posture is on record." }
         ] },
       { entry: 12, week: 12, state: "Virginia",       score: 33, grade: "E", comp: true,  verified: "2026-10-07", finding: "The most-copied privacy law in America, and no publicly announced enforcement action found in the Attorney General's releases as of October 7, 2026.",
         pillars: { ownership: 48, consent: 40, portability: 50, erasure: 48, accountability: 28 }, penalty: 8,
         updates: [
           { date: "2026-07-01", text: "SB 388 took effect: a ban on the sale of precise geolocation data, enforced by the Attorney General through the VCDPA.", effect: "No score change." },
-          { date: "2026-10-07", text: "Wording changed from \u201czero enforcement actions\u201d to \u201cno publicly announced enforcement action found,\u201d backed by a dated check of Attorney General news releases.", effect: "No score change." }
+          { date: "2026-10-07", text: "Wording changed from \u201czero enforcement actions\u201d to \u201cno publicly announced enforcement action found,\u201d backed by a dated check. On October 7, 2026 the Attorney General\u2019s news-release listing and a site search for the Consumer Data Protection Act returned no VCDPA enforcement release.", effect: "No score change." }
         ] }
     ],
 

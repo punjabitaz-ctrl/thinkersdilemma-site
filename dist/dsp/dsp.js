@@ -15,18 +15,22 @@
   function pillarByKey(k) { return D.pillars.filter(function (p) { return p.key === k; })[0]; }
   function chip(grade) { return '<span class="grade-chip g-' + grade + '" aria-label="Grade ' + grade + '">' + grade + "</span>"; }
 
+  /* states withdrawn for re-audit carry no score and are kept out of every statistic */
+  function scored() { return D.states.filter(function (x) { return x.status !== "reaudit"; }); }
+  function pendingStates() { return D.states.filter(function (x) { return x.status === "reaudit"; }); }
+
   /* ---------- derived stats (never hard-coded) -------------------- */
   function stats() {
-    var s = D.states.slice().sort(function (a, b) { return b.score - a.score; });
+    var s = scored().sort(function (a, b) { return b.score - a.score; });
     var top = s[0], bottom = s[s.length - 1];
     var aboveC = s.filter(function (x) { return x.score >= 70; }).length;
-    return { n: s.length, top: top, bottom: bottom, spread: top.score - bottom.score, aboveC: aboveC };
+    return { n: s.length, pending: D.states.length - s.length, top: top, bottom: bottom, spread: top.score - bottom.score, aboveC: aboveC };
   }
 
   function renderStats(host) {
     var st = stats();
     host.innerHTML =
-      '<div class="dsp-stat"><span class="n">' + st.n + '<small>/' + D.totalStates + '</small></span><span class="l">States audited</span></div>' +
+      '<div class="dsp-stat"><span class="n">' + st.n + '<small>/' + D.totalStates + '</small></span><span class="l">States audited' + (st.pending ? '<br>+ ' + st.pending + ' under correction' : "") + '</span></div>' +
       '<div class="dsp-stat"><span class="n">' + st.top.score + '</span><span class="l">Highest score<br>' + esc(st.top.state) + " · " + st.top.grade + "</span></div>" +
       '<div class="dsp-stat"><span class="n">' + st.bottom.score + '</span><span class="l">Lowest score<br>' + esc(st.bottom.state) + " · " + st.bottom.grade + "</span></div>" +
       '<div class="dsp-stat"><span class="n">' + st.aboveC + '</span><span class="l">States above a C</span></div>';
@@ -34,7 +38,7 @@
 
   /* ---------- leaderboard ----------------------------------------- */
   function renderBoard(host) {
-    var rows = D.states.slice().sort(function (a, b) { return b.score - a.score || a.entry - b.entry; });
+    var rows = scored().sort(function (a, b) { return b.score - a.score || a.entry - b.entry; });
     var html = '<div class="board-head" aria-hidden="true"><span>#</span><span>State</span><span class="c-law">Comprehensive law</span><span class="c-bar">Sovereignty Score</span><span class="c-grade">Grade</span></div>';
     rows.forEach(function (r, i) {
       html +=
@@ -44,6 +48,14 @@
         '<span class="c-law ' + (r.comp ? "yes" : "no") + '">' + (r.comp ? "Yes" : "None") + "</span>" +
         '<div class="c-bar"><div class="track" role="img" aria-label="' + esc(r.state) + " scored " + r.score + ' out of 100"><i class="fill g-' + r.grade + '" style="width:' + r.score + '%"></i><b class="tick" style="left:70%"></b></div><span class="num">' + r.score + "</span></div>" +
         '<span class="c-grade">' + chip(r.grade) + "</span></article>";
+    });
+    pendingStates().forEach(function (r) {
+      html += '<article class="board-row pending" data-grade="pending">' +
+        '<span class="c-rank">&ndash;</span>' +
+        '<div class="c-state"><h3>' + esc(r.state) + '</h3><p>' + esc(r.finding) + '</p><span class="entry">Week ' + r.week + " · Entry " + r.entry + " of " + D.totalStates + " · Checked " + D.fmtDate(r.verified) + "</span>" + updatesHtml(r) + "</div>" +
+        '<span class="c-law no">Re-audit</span>' +
+        '<div class="c-bar"><span class="pend-note">Score withdrawn. Republished in Week ' + r.week + ".</span></div>" +
+        '<span class="c-grade"><span class="grade-chip g-pending" aria-label="Under correction">?</span></span></article>';
     });
     html += '<p class="board-foot"><b class="tickkey"></b> The line at 70 is where a B begins. No audited state has crossed it.</p>';
     host.innerHTML = html;
@@ -63,9 +75,9 @@
         var g = b.getAttribute("data-g");
         var shown = 0;
         $$(".board-row", host).forEach(function (row) {
-          var show = g === "all" || row.getAttribute("data-grade") === g;
+          var show = g === "all" ? true : row.getAttribute("data-grade") === g;
           row.classList.toggle("is-hidden", !show);
-          if (show) shown++;
+          if (show && !row.classList.contains("pending")) shown++;
         });
         var c = slot("board-count");
         if (c) c.textContent = shown;

@@ -333,3 +333,9 @@ details.upd li em, .logl em { display: block; font-style: normal; font: 500 12px
   .dsp-countdown { min-width: 0; width: 100%; }
   .cd-clock { gap: 16px; } .cd-clock b { font-size: 40px; }
 }
+
+/* ---------- states withdrawn for re-audit --------------------------- */
+.grade-chip.g-pending { background: transparent; color: var(--ink-3); border: 1.5px dashed var(--ink-3); }
+.board-row.pending { background: repeating-linear-gradient(135deg, transparent 0 10px, var(--paper-lo) 10px 11px); }
+.board-row.pending .c-law.no { color: var(--signal); }
+.pend-note { font: 500 12px/1.5 var(--mono); letter-spacing: 0.06em; color: var(--ink-2); }
