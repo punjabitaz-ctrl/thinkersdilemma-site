@@ -1,0 +1,83 @@
+/* =====================================================================
+   THUMB ART: styles for the animated card motifs (thumb-art.js).
+   Colors come from the site tokens, so night mode carries through.
+   ===================================================================== */
+.thumb .art { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; color: var(--paper); pointer-events: none; transition: opacity var(--t-slow) var(--ease); }
+html[data-theme="night"] .thumb .art { color: var(--ink); }
+.thumb .art * { fill: none; stroke: currentColor; stroke-width: 1; vector-effect: non-scaling-stroke; }
+.thumb .art .a-grid, .thumb .art .a-grid * { stroke-opacity: 0.16; }
+.thumb .art .dot { fill: currentColor; stroke: none; fill-opacity: 0.7; }
+.thumb .art .dot.sig, .thumb .art .sig { fill: var(--signal); stroke: var(--signal); fill-opacity: 1; stroke-opacity: 1; }
+.thumb .art .dot.sig { stroke: none; }
+.thumb.has-cover .art { opacity: 0.35; mix-blend-mode: screen; }
+
+/* keep text and controls above the art, and readable over it */
+.thumb .big-q, .thumb .play, .thumb .runtime, .thumb .corner { z-index: 2; }
+.thumb .big-q .q { text-shadow: 0 0 18px #14110E, 0 0 6px #14110E; }
+html[data-theme="night"] .thumb .big-q .q { text-shadow: 0 0 18px #0C0A07, 0 0 6px #0C0A07; }
+
+/* everything animates only while .live (on screen) */
+.thumb .art * { animation-play-state: paused; }
+.thumb .art.live * { animation-play-state: running; }
+.thumb .art [class*="a-"] { transform-box: fill-box; transform-origin: center; }
+
+/* orbit */
+.thumb .art .a-spin { transform-box: view-box; transform-origin: 50% 50%; animation: a-rot 40s linear infinite; }
+.a-spin.s1 { animation-duration: 46s; } .a-spin.s2 { animation-duration: 30s; } .a-spin.s2.rev, .a-spin.rev { animation-direction: reverse; }
+.a-spin.s3 { animation-duration: 14s; transform: rotate(var(--a0, 0deg)); animation-name: a-rot-from; }
+.a-spin.s4 { animation-duration: 20s; animation-name: a-rot-from; }
+.a-spin.s5 { animation-duration: 9s;  animation-name: a-rot-from; }
+@keyframes a-rot { to { transform: rotate(360deg); } }
+@keyframes a-rot-from { from { transform: rotate(var(--a0, 0deg)); } to { transform: rotate(calc(var(--a0, 0deg) + 360deg)); } }
+
+/* ledger */
+.a-bar { fill: currentColor !important; fill-opacity: 0.16; stroke: none !important; transform-origin: 50% 100% !important; animation: a-grow 5.5s var(--ease) infinite; }
+@keyframes a-grow { 0% { transform: scaleY(0.15); } 30%, 70% { transform: scaleY(1); } 100% { transform: scaleY(0.15); } }
+.a-draw { stroke: var(--signal) !important; stroke-width: 2 !important; stroke-dasharray: 1; stroke-dashoffset: 1; animation: a-line 5.5s var(--ease) infinite; }
+@keyframes a-line { 0% { stroke-dashoffset: 1; } 45%, 80% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -1; } }
+.a-blink { animation: a-pulse 2.2s ease-in-out infinite; }
+@keyframes a-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.45; transform: scale(1.5); } }
+
+/* pillars */
+.a-col { stroke-opacity: 0.5; stroke-width: 3 !important; animation: a-flick 5s ease-in-out infinite; }
+.a-col.weak { stroke: var(--signal) !important; stroke-opacity: 1; }
+@keyframes a-flick { 0%, 100% { stroke-opacity: 0.5; } 50% { stroke-opacity: 0.2; } }
+.a-scan { fill: var(--signal) !important; stroke: none !important; fill-opacity: 0.85; animation: a-sweep 5.5s ease-in-out infinite; transform-origin: 50% 0 !important; }
+@keyframes a-sweep { 0% { transform: translateY(0); opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { transform: translateY(var(--sweep, 120px)); opacity: 0; } }
+
+/* routes */
+.a-route { stroke-opacity: 0.4; stroke-dasharray: 3 7; animation: a-flow 3s linear infinite; }
+@keyframes a-flow { to { stroke-dashoffset: -20; } }
+.a-node { fill: var(--paper) !important; fill-opacity: 0.0; stroke-opacity: 0.85; }
+html[data-theme="night"] .a-node { fill: var(--ink) !important; }
+.a-ping { stroke: var(--signal) !important; stroke-opacity: 0; animation: a-ring 3.6s ease-out infinite; }
+@keyframes a-ring { 0% { transform: scale(1); stroke-opacity: 0.9; } 100% { transform: scale(4.2); stroke-opacity: 0; } }
+.a-travel { offset-distance: 0%; animation: a-go 3.6s ease-in-out infinite; }
+@keyframes a-go { 0% { offset-distance: 0%; opacity: 0; } 12% { opacity: 1; } 88% { opacity: 1; } 100% { offset-distance: 100%; opacity: 0; } }
+
+/* windows */
+.a-win { fill: currentColor !important; stroke: none !important; fill-opacity: 0.06; animation: a-lit 5s ease-in-out infinite; }
+.a-win.sig { fill: var(--signal) !important; }
+@keyframes a-lit { 0%, 100% { fill-opacity: 0.05; } 45%, 60% { fill-opacity: 0.5; } }
+
+/* wave */
+.a-wave { stroke-opacity: 0.55; stroke-width: 1.5 !important; }
+.a-wave.faint { stroke-opacity: 0.22; }
+.a-drift { animation: a-slide 9s linear infinite; }
+.a-drift.d2 { animation-duration: 14s; animation-direction: reverse; }
+@keyframes a-slide { to { transform: translateX(var(--dx, 140px)); } }
+
+/* ---------- play button: bottom-left on cards so it never covers the question */
+.episode .thumb .big-q, .notes-grid .thumb .big-q { align-items: start; }
+.episode .thumb .big-q { padding-top: 34px; }
+.episode .thumb .play { place-items: end start; padding: 14px; }
+.episode .thumb .play .ring { width: 44px; height: 44px; }
+.episode .thumb .play .ring::after { border-left-width: 12px; border-top-width: 8px; border-bottom-width: 8px; margin-left: 3px; }
+.ep-hero .thumb .play { padding: 26px; }
+
+/* ---------- reduced motion: the motif stays, the motion goes -------- */
+@media (prefers-reduced-motion: reduce) {
+  .thumb .art * { animation: none !important; }
+  .a-bar { transform: none; } .a-draw { stroke-dashoffset: 0; } .a-win { fill-opacity: 0.2; }
+  .a-ping { stroke-opacity: 0.4; } .a-scan { display: none; }
+}

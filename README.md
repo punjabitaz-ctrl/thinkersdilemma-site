@@ -20,6 +20,7 @@ A static site hosted on **GitHub Pages**, fed by the Substack feed.
 | --- | --- |
 | `index.html` | Front page |
 | `essays.html` / `episodes.html` / `notes.html` / `archive.html` / `about.html` | Sections |
+| `dsp/` | Digital Sovereignty Audit section: `index.html` (leaderboard), `methodology.html`, `grading.html`; data in `dsp-data.js` (rubric + scores + update log), rendering in `dsp.js`, styles in `dsp.css`. Launches Nov 5, 2026. |
 | `article.html`, `essay-001…005.html` | On-site essay reading pages |
 | `studio-substack.html` | Authoring studio (Google sign-in) — not indexed |
 | `studio-distribute.html` | Distribution dashboard — not indexed |

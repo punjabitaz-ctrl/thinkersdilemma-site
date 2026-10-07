@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grading System — Thinkers Dilemma</title>
+<meta name="description" content="The Sovereignty Score: five weighted pillars, fixed criteria, the exemption penalty, grade bands, and a calculator to score a state yourself.">
+<meta name="theme-color" content="#F2EBDD">
+<link rel="canonical" href="https://thinkersdilemma.com/dsp/grading.html">
+<meta property="og:title" content="Grading System — Thinkers Dilemma">
+<meta property="og:description" content="The Sovereignty Score: five weighted pillars, fixed criteria, the exemption penalty, grade bands, and a calculator to score a state yourself.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thinkersdilemma.com/dsp/grading.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<script>(function(){try{var s=localStorage.getItem("td-theme");var n=s?s==="night":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(n)document.documentElement.setAttribute("data-theme","night");}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500;1,6..72,600;1,6..72,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=optional">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="dsp.css">
+</head>
+<body class="paper-grain" data-page="dsp">
+
+<div class="utility">
+  <div class="wrap">
+    <div class="group">
+      <span data-bind="site.dateLine">Friday · May 30 · 2026</span>
+      <span class="dot">·</span>
+      <span>Issue № <span data-bind="site.issueNo">014</span></span>
+    </div>
+    <div class="group">
+      <span data-render="social" style="display:contents"></span>
+      <span class="dot">·</span>
+      <span class="live" data-bind="site.liveLabel">New episode Friday</span>
+    </div>
+  </div>
+</div>
+
+<nav class="mainnav">
+  <div class="wrap">
+    <a href="../index.html" class="mini-mark" aria-label="Thinkers Dilemma — front page">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="5"/>
+        <line x1="50" y1="4" x2="50" y2="96" stroke="currentColor" stroke-width="5"/>
+        <path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/>
+        <circle cx="68" cy="50" r="4" fill="currentColor"/>
+      </svg>
+    </a>
+    <a href="../index.html">Front Page</a>
+    <a href="../essays.html">Essays</a>
+    <a href="../episodes.html">Episodes</a>
+    <a href="../notes.html">Field Notes</a>
+    <a href="../archive.html">Archive</a>
+    <a href="declaration.html" class="active nav-dsp">Digital Sovereignty</a>
+    <a href="../about.html">About</a>
+    <a href="../index.html#subscribe">Subscribe</a>
+  </div>
+</nav>
+
+<div class="dsp-subnav">
+  <div class="wrap">
+    <span class="label">Digital Sovereignty Audit</span>
+    <a href="declaration.html">Declaration</a><a href="methodology.html">Methodology</a><a href="grading.html" class="active">Grading system</a><a href="index.html">Leaderboard</a><a href="states.html">State audits</a><a class="back" href="../index.html">← Thinkers Dilemma</a>
+  </div>
+</div>
+
+
+<main class="wrap">
+  <header class="page-head dsp-head">
+    <div>
+      <div class="ph-kicker"><span>Grading system</span><span class="sep"></span><span class="muted">Rubric v1.1 · Frozen for the cycle</span></div>
+      <h1 class="ph-title">The <em>Sovereignty</em> Score</h1>
+      <p class="ph-dek">Five pillars, fixed criteria, one number from 0 to 100. Score a state yourself in the calculator below, then check it against the published audits.</p>
+    </div>
+  </header>
+  <nav class="toc" aria-label="On this page">
+    <a href="#formula">Formula</a><a href="#criteria">Pillar criteria</a><a href="#exemption-table">Exemption penalty</a><a href="#bands">Grade bands</a><a href="#calculator">Calculator</a><a href="#examples">Worked examples</a>
+  </nav>
+
+  <section class="dsp-section" id="formula">
+    <div class="formula"><span class="k">The formula</span>
+      <code>Sovereignty Score = (Ownership × 0.25) + (Consent × 0.15) + (Portability × 0.15) + (Erasure × 0.15) + (Accountability × 0.30) − Exemption penalty</code>
+      <p>Each pillar is scored 0 to 100 from the criteria below. The exemption penalty (up to 40) applies only where a comprehensive statute exists. The Reality Test can cap the result at 54. The score is rounded and held between 0 and 100.</p></div>
+  </section>
+
+  <section class="dsp-section" id="criteria">
+    <div class="sec-head"><span class="num">№ 01</span><span class="title">Pillar criteria</span><span class="note">Each pillar totals 100</span></div>
+    <div class="crit-grid" data-dsp="criteria"></div>
+  </section>
+
+  <section class="dsp-section" id="exemption-table">
+    <div class="sec-head"><span class="num">№ 02</span><span class="title">Exemption penalty</span><span class="note">Comprehensive statutes only</span></div>
+    <div class="dsp-prose" style="margin-bottom:18px"><p>Where a state has a comprehensive law, each exemption below that applies is deducted, up to a maximum of 40 points. Where it has no such law, the penalty is not applied (Refinement #1).</p></div>
+    <div style="max-width:760px" data-dsp="exemptions"></div>
+  </section>
+
+  <section class="dsp-section" id="bands">
+    <div class="sec-head"><span class="num">№ 03</span><span class="title">Grade bands</span><span class="note">Hypothesis: none above a C</span></div>
+    <div class="dsp-bands" data-dsp="bands"></div>
+  </section>
+
+  <section class="dsp-section" id="calculator">
+    <div class="sec-head"><span class="num">№ 04</span><span class="title">Score calculator</span><span class="note">Runs in your browser</span></div>
+    <div class="dsp-prose" style="margin-bottom:22px"><p>Score by criterion, or enter pillar totals directly. The calculator uses the same engine as the leaderboard, so a state scored here with the published inputs lands on the published number.</p></div>
+    <div class="calc" data-dsp="calculator"></div>
+  </section>
+
+  <section class="dsp-section" id="examples" style="padding-bottom:24px">
+    <div class="sec-head"><span class="num">№ 05</span><span class="title">Worked examples</span><span class="note">Published pillar scores</span></div>
+    <div class="dsp-examples" data-dsp="examples"></div>
+    <p class="dsp-footnote">Each example is recomputed live from its published pillar scores and checked against the published result.</p>
+  </section>
+</main>
+
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="wm">Thinkers Dilemma</div>
+        <div class="tag">A work of inquiry</div>
+        <p>Society through a critical lens, asking the tough questions in good faith and at unhurried length.</p>
+      </div>
+      <div class="col"><h4>Read</h4>
+        <a href="../essay-019.html">Latest essay</a>
+        <a href="../essays.html">All essays</a>
+        <a href="index.html">Digital Sovereignty Audit</a>
+        <a href="../index.html#subscribe">Subscribe free</a>
+      </div>
+      <div class="col"><h4>The audit</h4>
+        <a href="declaration.html">The Declaration</a>
+        <a href="methodology.html">The Methodology</a>
+        <a href="states.html">State Audits</a>
+        <a href="grading.html">Grading System</a>
+      </div>
+      <div class="col"><h4>Connect</h4>
+        <a href="../about.html">About</a>
+        <a href="https://thinkersdilemma.substack.com">Substack</a>
+        <a href="mailto:hello@thinkersdilemma.com">Contact</a>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© MMXXVI Taz Punjabi · Thinkers Dilemma</span>
+      <span>Who benefits? · Who pays? · Who decides?</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../content-substack.js"></script>
+<script src="../render.js"></script>
+<script src="../site.js"></script>
+<script src="dsp-data.js"></script>
+<script src="dsp.js"></script>
+<script src="dsp-viz.js"></script>
+<noscript><p style="text-align:center;font:14px sans-serif;padding:16px">The leaderboard and calculator need JavaScript. Methodology text is readable without it.</p></noscript>
+</body>
+</html>

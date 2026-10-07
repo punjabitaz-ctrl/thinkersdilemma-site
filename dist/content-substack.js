@@ -48,7 +48,8 @@ window.TD_CONTENT = {
           { label: "Latest essay", href: "essay-019.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
-          { label: "Archive", href: "archive.html" }
+          { label: "Archive", href: "archive.html" },
+          { label: "Digital Sovereignty Audit", href: "dsp/index.html" }
         ]},
         { title: "Topics", links: [
           { label: "Diaspora & identity", href: "essays.html?cat=diaspora" },

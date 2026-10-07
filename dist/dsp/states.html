@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>State Audits — Thinkers Dilemma</title>
+<meta name="description" content="All fifty states graded against the five articles of the Declaration of Digital Sovereignty: scores, criteria, evidence, and a dated log of changes.">
+<meta name="theme-color" content="#F2EBDD">
+<link rel="canonical" href="https://thinkersdilemma.com/dsp/states.html">
+<meta property="og:title" content="State Audits — Thinkers Dilemma">
+<meta property="og:description" content="All fifty states graded against the five articles of the Declaration of Digital Sovereignty: scores, criteria, evidence, and a dated log of changes.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thinkersdilemma.com/dsp/states.html">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<script>(function(){try{var s=localStorage.getItem("td-theme");var n=s?s==="night":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(n)document.documentElement.setAttribute("data-theme","night");}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500;1,6..72,600;1,6..72,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=optional">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="dsp.css">
+</head>
+<body class="paper-grain" data-page="dsp">
+
+<div class="utility">
+  <div class="wrap">
+    <div class="group">
+      <span data-bind="site.dateLine">Friday · May 30 · 2026</span>
+      <span class="dot">·</span>
+      <span>Issue № <span data-bind="site.issueNo">014</span></span>
+    </div>
+    <div class="group">
+      <span data-render="social" style="display:contents"></span>
+      <span class="dot">·</span>
+      <span class="live" data-bind="site.liveLabel">New episode Friday</span>
+    </div>
+  </div>
+</div>
+
+<nav class="mainnav">
+  <div class="wrap">
+    <a href="../index.html" class="mini-mark" aria-label="Thinkers Dilemma — front page">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="5"/>
+        <line x1="50" y1="4" x2="50" y2="96" stroke="currentColor" stroke-width="5"/>
+        <path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/>
+        <circle cx="68" cy="50" r="4" fill="currentColor"/>
+      </svg>
+    </a>
+    <a href="../index.html">Front Page</a>
+    <a href="../essays.html">Essays</a>
+    <a href="../episodes.html">Episodes</a>
+    <a href="../notes.html">Field Notes</a>
+    <a href="../archive.html">Archive</a>
+    <a href="declaration.html" class="active nav-dsp">Digital Sovereignty</a>
+    <a href="../about.html">About</a>
+    <a href="../index.html#subscribe">Subscribe</a>
+  </div>
+</nav>
+
+<div class="dsp-subnav">
+  <div class="wrap">
+    <span class="label">Digital Sovereignty Audit</span>
+    <a href="declaration.html">Declaration</a><a href="methodology.html">Methodology</a><a href="grading.html">Grading system</a><a href="index.html">Leaderboard</a><a href="states.html" class="active">State audits</a><a class="back" href="../index.html">← Thinkers Dilemma</a>
+  </div>
+</div>
+
+
+<main class="wrap" id="top">
+  <header class="page-head dsp-head" data-screen-label="State audits — page head">
+    <div>
+      <div class="ph-kicker"><span>Weekend Edition</span><span class="sep"></span><span class="muted">Digital Sovereignty Audit</span></div>
+      <h1 class="ph-title">State <em>audits</em></h1>
+      <p class="ph-dek">Fifty states, each graded against the five articles of the Declaration on the published rubric. Scores and audits publish weekly from November 5, 2026. Each audit shows the score, every criterion behind it, and the dated log of what has changed since.</p>
+      <p class="dsp-asof">Last verified <span data-bind-stat="verified"></span> &middot; Rubric v1.1</p>
+    </div>
+    <div class="dsp-countdown" data-dsp="countdown" aria-live="off"></div>
+  </header>
+
+  <section class="dsp-section" id="map">
+    <div class="sec-head"><span class="num">&#8470; 01</span><span class="title">The map</span><span class="note">Select a state</span></div>
+    <div data-dsp="us-map"></div>
+  </section>
+
+  <section class="dsp-section" id="glance">
+    <div class="sec-head"><span class="num">&#8470; 02</span><span class="title">The data at a glance</span><span class="note"><a href="index.html#leaderboard">Ranked leaderboard &rarr;</a></span></div>
+    <h3 class="viz-title">Every scored state, by grade band</h3>
+    <div data-dsp="viz-dist"></div>
+    <h3 class="viz-title">Pillar scores, state by state</h3>
+    <div data-dsp="viz-pillar-heat"></div>
+  </section>
+
+  <section class="dsp-section" id="states">
+    <div class="sec-head"><span class="num">&#8470; 03</span><span class="title">All fifty states</span><span class="note">Showing <span data-dsp="state-count">50</span> of 50</span></div>
+    <div class="state-tools">
+      <div class="chips" data-dsp="state-filter"></div>
+      <input class="state-search" type="search" placeholder="Find a state" aria-label="Find a state" data-dsp="state-search" autocomplete="off">
+    </div>
+    <div class="state-grid" data-dsp="state-grid"></div>
+    <p class="dsp-footnote">Every audit follows the same template: verdict, a scorecard by Declaration article with each criterion and its evidence, the exemption penalty, the Reality Test, the write-up, and a dated log of changes since the audit.</p>
+  </section>
+</main>
+
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="wm">Thinkers Dilemma</div>
+        <div class="tag">A work of inquiry</div>
+        <p>Society through a critical lens, asking the tough questions in good faith and at unhurried length.</p>
+      </div>
+      <div class="col"><h4>Read</h4>
+        <a href="../essay-019.html">Latest essay</a>
+        <a href="../essays.html">All essays</a>
+        <a href="index.html">Digital Sovereignty Audit</a>
+        <a href="../index.html#subscribe">Subscribe free</a>
+      </div>
+      <div class="col"><h4>The audit</h4>
+        <a href="declaration.html">The Declaration</a>
+        <a href="methodology.html">The Methodology</a>
+        <a href="states.html">State Audits</a>
+        <a href="grading.html">Grading System</a>
+      </div>
+      <div class="col"><h4>Connect</h4>
+        <a href="../about.html">About</a>
+        <a href="https://thinkersdilemma.substack.com">Substack</a>
+        <a href="mailto:hello@thinkersdilemma.com">Contact</a>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© MMXXVI Taz Punjabi · Thinkers Dilemma</span>
+      <span>Who benefits? · Who pays? · Who decides?</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../content-substack.js"></script>
+<script src="../render.js"></script>
+<script src="../site.js"></script>
+<script src="dsp-data.js"></script>
+<script src="us-map-data.js"></script>
+<script src="dsp.js"></script>
+<script src="dsp-viz.js"></script>
+<noscript><p style="text-align:center;font:14px sans-serif;padding:16px">The leaderboard and calculator need JavaScript. Methodology text is readable without it.</p></noscript>
+</body>
+</html>

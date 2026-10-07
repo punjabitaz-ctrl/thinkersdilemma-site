@@ -649,3 +649,22 @@ a.jump:hover { text-decoration: underline; text-underline-offset: 3px; }
   .mainnav .wrap::-webkit-scrollbar { display: none; }
   .mainnav a { white-space: nowrap; }
 }
+
+/* ---------- NAV MARK: the dot orbits on hover ------------------------ */
+.mainnav .mini-mark svg circle:last-child { transform-box: view-box; transform-origin: 50% 50%; }
+.mainnav .mini-mark:hover svg circle:last-child, .mainnav .mini-mark:focus-visible svg circle:last-child { animation: mark-orbit 1.6s linear infinite; }
+@keyframes mark-orbit { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .mainnav .mini-mark:hover svg circle:last-child { animation: none; } }
+
+/* Digital Sovereignty tab — solid brand-red fill, light and night */
+.mainnav a.nav-dsp,
+.mainnav a.nav-dsp.active { background: var(--signal); color: #fff; }
+.mainnav a.nav-dsp:hover,
+.mainnav a.nav-dsp:focus-visible { background: var(--signal-deep); color: #fff; }
+.mainnav a.nav-dsp.active::after { background: var(--ink); }
+html[data-theme="night"] .mainnav a.nav-dsp:hover { background: var(--signal-quiet, #B23725); }
+/* night red is lighter — dark label keeps WCAG AA contrast */
+html[data-theme="night"] .mainnav a.nav-dsp,
+html[data-theme="night"] .mainnav a.nav-dsp.active,
+html[data-theme="night"] .mainnav a.nav-dsp:hover { color: var(--paper); }
+html[data-theme="night"] .mainnav a.nav-dsp.active::after { background: var(--paper); }
