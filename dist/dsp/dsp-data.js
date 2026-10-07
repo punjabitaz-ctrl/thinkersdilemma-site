@@ -1,0 +1,167 @@
+/* =====================================================================
+   DIGITAL SOVEREIGNTY AUDIT — data + scoring engine
+   Single source of truth for the rubric, grade bands and leaderboard.
+   Rubric v1.1 is FROZEN for the cycle: do not edit weights, criteria or
+   bands here without publishing a revision and re-scoring every state.
+   ===================================================================== */
+(function (root) {
+  "use strict";
+
+  var DSP = {
+    rubricVersion: "v1.1",
+    asOf: "Entry 12",
+    totalStates: 50,
+
+    pillars: [
+      {
+        key: "ownership", name: "Ownership", weight: 25, heavy: true,
+        question: "Is data yours, or merely about you?",
+        blurb: "Does the state grant residents an affirmative interest in their own data, or a set of requests they may politely submit?",
+        reality: "A right to know that returns a spreadsheet of what you already knew you gave them scores low. The test is whether a resident learns something new, specifically who else now has it.",
+        criteria: [
+          { label: "Statute frames data as a resident's property, asset or interest, not merely a subject of protection", pts: 20 },
+          { label: "Right to know: resident can compel disclosure of what is held", pts: 15 },
+          { label: "Disclosure includes sources (where it came from)", pts: 10 },
+          { label: "Disclosure includes recipients (who it was given to, by name)", pts: 15 },
+          { label: "Right to correct inaccurate records", pts: 10 },
+          { label: "Covers inferred and derived data, not just data the resident supplied", pts: 15 },
+          { label: "Covers sensitive categories explicitly (biometric, health, geolocation, immigration status, religion, sexuality)", pts: 15 }
+        ]
+      },
+      {
+        key: "consent", name: "Consent", weight: 15,
+        question: "Was permission given, or merely not successfully refused?",
+        blurb: "Does consent mean permission freely given, or the absence of a successfully navigated objection?",
+        reality: "Pay-or-consent schemes, where declining tracking costs money, are recorded as a failure of the anti-discrimination criterion regardless of how the statute characterizes them. A right you must purchase is a product.",
+        criteria: [
+          { label: "Opt-in required for sensitive data (not opt-out)", pts: 25 },
+          { label: "Universal opt-out mechanism recognized (browser signal / Global Privacy Control honored by law)", pts: 20 },
+          { label: "Dark patterns explicitly prohibited in consent flows", pts: 15 },
+          { label: "Anti-discrimination: service cannot be degraded or priced punitively for refusing", pts: 15 },
+          { label: "Consent revocable as easily as it was given", pts: 10 },
+          { label: "Minors given heightened protection (opt-in, no targeted ads)", pts: 15 }
+        ]
+      },
+      {
+        key: "portability", name: "Portability", weight: 15,
+        question: "Can you leave and take the record with you?",
+        blurb: "Can a resident actually leave, or only receive a PDF?",
+        reality: "Format is the whole game. A portability right satisfied by a PDF is a right to look, not to leave.",
+        criteria: [
+          { label: "Right to obtain data in a structured, machine-readable format", pts: 30 },
+          { label: "Right to direct transmission to another controller", pts: 20 },
+          { label: "No fee for exercise (or fee capped at trivial)", pts: 15 },
+          { label: "Response deadline of 45 days or less", pts: 15 },
+          { label: "Covers inferred and derived data, not just raw inputs", pts: 20 }
+        ]
+      },
+      {
+        key: "erasure", name: "Erasure", weight: 15,
+        question: "When you say delete, does it die?",
+        blurb: "When a resident demands deletion, does the data actually die, everywhere?",
+        reality: "Deletion that stops at the first company is theatre. The data left that building years ago. Propagation and broker coverage are weighted accordingly.",
+        criteria: [
+          { label: "Right to delete personal data on request", pts: 20 },
+          { label: "Obligation to propagate deletion downstream to processors, affiliates and third parties who received it", pts: 30 },
+          { label: "Data broker deletion: single-request mechanism covering all registered brokers (a DELETE Act style regime)", pts: 25 },
+          { label: "Data minimization and retention limits independent of request (data dies on a schedule, not only on demand)", pts: 15 },
+          { label: "Deletion verified or auditable, not merely asserted", pts: 10 }
+        ]
+      },
+      {
+        key: "accountability", name: "Accountability", weight: 30, heavy: true,
+        question: "When violated, what actually happens?",
+        blurb: "When this is violated: who can sue, what does it cost, and has anyone actually paid?",
+        reality: "This is the pillar where states go to die. Most comprehensive state privacy laws provide no general private right of action, meaning the right belongs to the attorney general, not to you. The last criterion is empirical and non-negotiable: has anyone actually paid? A law never enforced scores zero there, however elegant its text.",
+        criteria: [
+          { label: "Private right of action: general, not limited to breach", pts: 30 },
+          { label: "No mandatory cure period (or cure period sunset or expired)", pts: 10 },
+          { label: "Statutory damages defined per violation (resident need not prove financial loss)", pts: 15 },
+          { label: "Dedicated enforcement body with independent budget and staff", pts: 15 },
+          { label: "Penalty ceiling meaningful relative to violator revenue", pts: 10 },
+          { label: "Enforcement has actually occurred: public actions brought, penalties collected", pts: 20 }
+        ]
+      }
+    ],
+
+    exemptions: [
+      { label: "Employee / HR data excluded (workers unprotected)", pts: 8 },
+      { label: "B2B data excluded", pts: 4 },
+      { label: "Broad entity-level exemptions (GLBA / HIPAA-regulated entities exempt entirely, not just for regulated data)", pts: 8 },
+      { label: "Nonprofits exempt", pts: 3 },
+      { label: "Government / law enforcement exempt from the statute", pts: 6 },
+      { label: "Revenue or volume threshold so high that most data-handling businesses fall outside it", pts: 6 },
+      { label: "“Sale” defined narrowly enough to permit trade for non-monetary consideration", pts: 5 }
+    ],
+    exemptionCap: 40,
+    realityCapGrade: "D",
+    realityCapScore: 54,
+
+    bands: [
+      { min: 85, max: 100, grade: "A", short: "Sovereignty", long: "Rights exist, exit exists, and violation has a price. No U.S. state currently occupies this band." },
+      { min: 70, max: 84,  grade: "B", short: "Substantive protection, structural gaps", long: "Real protection with structural gaps." },
+      { min: 55, max: 69,  grade: "C", short: "Rights on paper, discretionary enforcement", long: "Rights exist on paper; enforcement is discretionary." },
+      { min: 40, max: 54,  grade: "D", short: "A statute, not a shield", long: "A compliance ritual." },
+      { min: 20, max: 39,  grade: "E", short: "Sectoral scraps", long: "No general regime." },
+      { min: 0,  max: 19,  grade: "F", short: "The Void", long: "Residents have essentially no recourse." }
+    ],
+
+    /* Audited states, Entries 1-12 (Rubric v1.1). Order here is audit order. */
+    states: [
+      { entry: 1,  state: "New York",       score: 16, grade: "F", comp: false, finding: "Real enforcement, none of it yours." },
+      { entry: 2,  state: "California",     score: 67, grade: "C", comp: true,  finding: "The only single-request broker deletion in America (DROP). Residents can sue only after a breach." },
+      { entry: 3,  state: "Texas",          score: 48, grade: "D", comp: true,  finding: "About $2.78B in privacy settlements, and no resident can sue." },
+      { entry: 4,  state: "Florida",        score: 21, grade: "E", comp: true,  finding: "A Digital Bill of Rights with a threshold set so high it covers almost no one." },
+      { entry: 5,  state: "Pennsylvania",   score: 19, grade: "F", comp: false, finding: "Residents have standing through consumer-protection law, not privacy law." },
+      { entry: 6,  state: "Illinois",       score: 31, grade: "E", comp: false, finding: "The strongest private remedy in the country, for biometrics only." },
+      { entry: 7,  state: "Ohio",           score: 11, grade: "F", comp: false, finding: "Its national first protects businesses from lawsuits, not residents from harm." },
+      { entry: 8,  state: "Georgia",        score: 20, grade: "E", comp: true,  finding: "Forecast as a Void state, then enacted SB 111 mid-cycle." },
+      { entry: 9,  state: "North Carolina", score: 14, grade: "F", comp: false, finding: "An aggressive attorney general and not one consumer data right." },
+      { entry: 10, state: "Michigan",       score: 12, grade: "F", comp: false, finding: "The first exact forecast of the series (error zero)." },
+      { entry: 11, state: "New Jersey",     score: 46, grade: "D", comp: true,  finding: "Rights like California's, a courthouse door like nobody's." },
+      { entry: 12, state: "Virginia",       score: 33, grade: "E", comp: true,  finding: "The most-copied privacy law in America, with zero enforcement actions in three years." }
+    ],
+
+    next: { entry: 13, state: "Washington", note: "The first audited state where a resident can personally sue over a data violation, if only for health data." },
+    watch: ["Louisiana", "Alabama", "Oklahoma"]
+  };
+
+  /* ---------- scoring engine (pure) ------------------------------- */
+  DSP.gradeFor = function (score) {
+    var s = Math.max(0, Math.min(100, Math.round(score)));
+    for (var i = 0; i < DSP.bands.length; i++) {
+      if (s >= DSP.bands[i].min && s <= DSP.bands[i].max) return DSP.bands[i];
+    }
+    return DSP.bands[DSP.bands.length - 1];
+  };
+
+  /* pillarScores: { ownership: 0-100, ... }
+     penalty: total exemption points (only pass >0 if a comprehensive statute exists)
+     realityCap: boolean, caps the score at the top of the D band */
+  DSP.score = function (pillarScores, penalty, realityCap) {
+    var weighted = 0;
+    DSP.pillars.forEach(function (p) {
+      var v = Math.max(0, Math.min(100, Number(pillarScores[p.key]) || 0));
+      weighted += v * p.weight / 100;
+    });
+    var pen = Math.max(0, Math.min(DSP.exemptionCap, Number(penalty) || 0));
+    var raw = weighted - pen;
+    var score = Math.max(0, Math.min(100, Math.round(raw)));
+    var capped = false;
+    if (realityCap && score > DSP.realityCapScore) { score = DSP.realityCapScore; capped = true; }
+    return { weighted: weighted, penalty: pen, raw: raw, score: score, band: DSP.gradeFor(score), capped: capped };
+  };
+
+  /* Published pillar-level scores that have been verified against the audits. */
+  DSP.examples = [
+    { state: "Illinois", entry: 6, comp: false, pillars: { ownership: 14, consent: 30, portability: 0, erasure: 18, accountability: 68 }, penalty: 0, published: 31,
+      note: "A 68 on the heaviest pillar is worth about 20 points. Near-zero Ownership and a literal zero in Portability drag the composite to 31. Depth cannot substitute for breadth." },
+    { state: "Ohio", entry: 7, comp: false, pillars: { ownership: 4, consent: 10, portability: 0, erasure: 5, accountability: 26 }, penalty: 0, published: 11,
+      note: "No comprehensive statute, so the exemption penalty is N/A. The absence is already priced into the pillars." },
+    { state: "Michigan", entry: 10, comp: false, pillars: { ownership: 5, consent: 8, portability: 0, erasure: 5, accountability: 28 }, penalty: 0, published: 12,
+      note: "Forecast 12, audited 12. When the territory does not move, the instrument is calibrated." }
+  ];
+
+  root.DSP = DSP;
+  if (typeof module !== "undefined" && module.exports) module.exports = DSP;
+})(typeof window !== "undefined" ? window : globalThis);
