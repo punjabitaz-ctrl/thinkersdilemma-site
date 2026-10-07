@@ -581,6 +581,27 @@
   }
 
   /* ---------- boot ------------------------------------------------ */
+  /* Findings that name specific states appear only once those audits are live. */
+  function pruneFindings() {
+    var sec = document.querySelector("[data-findings]"); if (!sec) return;
+    var live = {}; D.liveStates().forEach(function (r) { live[r.state] = r.status !== "reaudit"; });
+    var items = $$("[data-needs]", sec), kept = 0;
+    items.forEach(function (el) {
+      var need = el.getAttribute("data-needs"), ok = need === "*" ? Object.keys(live).some(function (k) { return live[k]; }) : need.split(",").every(function (n) { return live[n]; });
+      if (!ok) { el.parentNode.removeChild(el); return; }
+      kept++; var no = $(".no", el); if (no) no.textContent = String(kept).padStart(2, "0");
+    });
+    var t = $("[data-find-title]", sec), n = $("[data-find-note]", sec);
+    if (!kept) { sec.parentNode.removeChild(sec); }
+    else {
+      var cnt = scored().length;
+      if (t) t.textContent = D.states.length && cnt === D.totalStates ? "What the fifty show" : "What the first " + (cnt === 1 ? "audit shows" : cnt + " show");
+      if (n) n.textContent = kept + (kept === 1 ? " finding" : " findings");
+    }
+    /* keep the section numbers consecutive */
+    $$("main > .dsp-section > .sec-head > .num").forEach(function (el, i) { el.textContent = "\u2116 " + String(i + 1).padStart(2, "0"); });
+  }
+
   function boot() {
     var h;
     if ((h = slot("countdown"))) renderCountdown(h);
@@ -597,9 +618,10 @@
     if ((h = slot("state-grid"))) renderStateGrid(h);
     if ((h = slot("state-detail"))) renderStateDetail(h);
     revealActiveSubnav();
+    pruneFindings();
     $$("[data-bind-stat]").forEach(function (el) {
       var st = stats(), k = el.getAttribute("data-bind-stat");
-      var map = { n: st.n, top: st.top ? st.top.score : "–", topState: st.top ? st.top.state : "–", topGrade: st.top ? st.top.grade : "–", bottom: st.bottom ? st.bottom.score : "–", bottomState: st.bottom ? st.bottom.state : "–", spread: st.spread == null ? "–" : st.spread, left: D.totalStates - st.n, nextEntry: D.next.entry, nextState: D.next.state, launch: D.fmtDate(D.launch), verified: D.fmtDate(D.verifiedOn), lastWeek: D.fmtDate(D.weekDate(D.totalStates)), tagline: D.tagline };
+      var map = { n: st.n, top: st.top ? st.top.score : "–", topState: st.top ? st.top.state : "–", topGrade: st.top ? st.top.grade : "–", bottom: st.bottom ? st.bottom.score : "–", bottomState: st.bottom ? st.bottom.state : "–", spread: st.spread == null ? "–" : st.spread, left: D.totalStates - st.n, nextEntry: D.next.entry, nextState: D.next.state, launch: D.fmtDate(D.launch), verified: D.fmtDate(D.verifiedOn), lastWeek: D.fmtDate(D.weekDate(D.totalStates)), topClaim: st.top ? (st.aboveC ? st.aboveC + " published state" + (st.aboveC === 1 ? " has" : "s have") + " reached the 70 where a B begins." : "No published state has reached the 70 where a B begins. The hypothesis going in was that none would.") : "", tagline: D.tagline };
       if (k in map) el.textContent = map[k];
     });
   }
