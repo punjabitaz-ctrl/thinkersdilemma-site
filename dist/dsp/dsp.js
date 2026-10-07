@@ -341,6 +341,198 @@
     setMode("criteria");
   }
 
+
+  /* ---------- state audits: index grid ---------------------------- */
+  function stateRows() {
+    var byName = {};
+    D.states.forEach(function (x) { byName[x.state] = x; });
+    return D.roster.map(function (name) {
+      var r = byName[name];
+      if (r) return { name: name, slug: D.slug(name), rec: r, status: r.status === "reaudit" ? "reaudit" : "audited" };
+      return { name: name, slug: D.slug(name), rec: null, status: "queued", isNext: D.next && D.next.state === name };
+    });
+  }
+  function stateHref(slug) { return "state-" + slug + ".html"; }
+
+  function renderStateGrid(host) {
+    var rows = stateRows();
+    var counts = { all: rows.length, audited: 0, reaudit: 0, queued: 0 };
+    rows.forEach(function (r) { counts[r.status]++; });
+    var html = rows.map(function (r) {
+      var cls = "state-card is-" + r.status + (r.isNext ? " is-next" : "");
+      var chipH, body, foot;
+      if (r.status === "audited") {
+        chipH = chip(r.rec.grade);
+        body = '<span class="sc-score"><b>' + r.rec.score + '</b>/100</span><p>' + esc(r.rec.finding) + "</p>";
+        foot = "Week " + r.rec.week + " · Entry " + r.rec.entry + " · Read the audit &rarr;";
+      } else if (r.status === "reaudit") {
+        chipH = '<span class="grade-chip g-pending" aria-label="Under correction">?</span>';
+        body = '<span class="sc-score sc-note">Score withdrawn</span><p>' + esc(r.rec.finding) + "</p>";
+        foot = "Re-audit · Republished Week " + r.rec.week + " &rarr;";
+      } else {
+        chipH = '<span class="grade-chip g-queued" aria-label="Not yet audited">&ndash;</span>';
+        body = '<span class="sc-score sc-note">' + (r.isNext ? "Next up" : "Queued") + "</span><p>" +
+          (r.isNext ? esc(D.next.note) : "Audit in production. Publishes weekly through " + D.fmtDate(D.weekDate(D.totalStates)) + ".") + "</p>";
+        foot = r.isNext ? "Entry " + D.next.entry + " · Week " + D.next.entry + " · " + D.fmtDate(D.weekDate(D.next.entry)) : "Not yet scheduled";
+      }
+      var inner = '<div class="sc-top"><h3>' + esc(r.name) + "</h3>" + chipH + "</div>" + body + '<span class="sc-foot">' + foot + "</span>";
+      var tag = r.status === "queued"
+        ? '<article class="' + cls + '" data-status="' + r.status + '" data-name="' + esc(r.name.toLowerCase()) + '">' + inner + "</article>"
+        : '<a class="' + cls + '" href="' + stateHref(r.slug) + '" data-status="' + r.status + '" data-name="' + esc(r.name.toLowerCase()) + '">' + inner + "</a>";
+      return tag;
+    }).join("");
+    host.innerHTML = html + '<p class="state-empty is-hidden" data-state-empty>No state matches that search.</p>';
+
+    var f = slot("state-filter");
+    var q = "", status = "all";
+    function apply() {
+      var shown = 0;
+      $$(".state-card", host).forEach(function (c) {
+        var ok = (status === "all" || c.getAttribute("data-status") === status) && (!q || c.getAttribute("data-name").indexOf(q) !== -1);
+        c.classList.toggle("is-hidden", !ok);
+        if (ok) shown++;
+      });
+      $("[data-state-empty]", host).classList.toggle("is-hidden", shown !== 0);
+      var c2 = slot("state-count"); if (c2) c2.textContent = shown;
+    }
+    if (f) {
+      var labels = [["all", "All"], ["audited", "Audited"], ["reaudit", "Under correction"], ["queued", "Queued"]];
+      f.innerHTML = labels.filter(function (l) { return l[0] === "all" || counts[l[0]]; }).map(function (l, i) {
+        return '<button type="button" class="chip' + (i === 0 ? " active" : "") + '" data-s="' + l[0] + '">' + l[1] + " (" + counts[l[0]] + ")</button>";
+      }).join("");
+      f.addEventListener("click", function (e) {
+        var b = e.target.closest("button[data-s]"); if (!b) return;
+        $$("button", f).forEach(function (x) { x.classList.toggle("active", x === b); });
+        status = b.getAttribute("data-s"); apply();
+      });
+    }
+    var inp = slot("state-search");
+    if (inp) inp.addEventListener("input", function () { q = inp.value.trim().toLowerCase(); apply(); });
+    apply();
+  }
+
+  /* ---------- state audits: per-state page template ---------------
+     The page mirrors the Declaration: one block per article (I-V), each scored
+     criterion by criterion against the grading system. Optional per-state fields:
+       scorecard: { ownership: [{ pts, note, src }, ...] }   aligned to D.pillars[].criteria
+       exemptionsApplied: [index, ...]                      indexes into D.exemptions
+       reality: { capped: bool, note }                      the Reality Test
+       writeup: ["paragraph", ...]                          the published article
+       forecast, infographic, sources: [{title,url}]                                   */
+  var NUMERALS = ["I", "II", "III", "IV", "V"];
+
+  function renderStateDetail(host) {
+    var name = host.getAttribute("data-state");
+    var r = D.states.filter(function (x) { return x.state === name; })[0];
+    if (!r) { host.innerHTML = "<p>This audit has not been published yet.</p>"; return; }
+    var pending = r.status === "reaudit";
+    var band = pending ? null : D.gradeFor(r.score);
+    var pubDate = D.fmtDate(D.weekDate(r.week));
+    var sec = 0;
+    function head(title, note) { sec++; return '<div class="sec-head"><span class="num">№ ' + String(sec).padStart(2, "0") + '</span><span class="title">' + title + "</span>" + (note ? '<span class="note">' + note + "</span>" : "") + "</div>"; }
+    var h = "";
+
+    /* verdict strip */
+    h += '<section class="sd-verdict' + (pending ? " is-pending" : "") + '" aria-label="Verdict">';
+    if (pending) {
+      h += '<div class="sd-score"><span class="grade-chip g-pending sd-chip">?</span><div><span class="sd-num sd-num-w">Withdrawn</span><span class="sd-band">Score under correction</span></div></div>';
+    } else {
+      h += '<div class="sd-score">' + chip(r.grade).replace("grade-chip", "grade-chip sd-chip") +
+        '<div><span class="sd-num">' + r.score + '<small>/100</small></span><span class="sd-band">Grade ' + r.grade + " &middot; " + esc(band.short) + "</span></div></div>";
+    }
+    h += '<dl class="sd-facts">' +
+      "<div><dt>Comprehensive law</dt><dd>" + (r.comp ? "Yes" : "None") + "</dd></div>" +
+      "<div><dt>Audit</dt><dd>Week " + r.week + " &middot; Entry " + r.entry + " of " + D.totalStates + "</dd></div>" +
+      "<div><dt>Last verified</dt><dd>" + D.fmtDate(r.verified) + "</dd></div>" +
+      "<div><dt>Rubric</dt><dd>v1.1 &middot; <a href=\"grading.html\">how it scores</a></dd></div></dl></section>";
+    if (!pending) h += '<div class="sd-track" role="img" aria-label="' + esc(name) + " scored " + r.score + ' out of 100"><i class="fill g-' + r.grade + '" style="width:' + r.score + '%"></i><b class="tick" style="left:70%"></b></div>';
+    if (r.scoreWas != null && !pending) h += '<p class="rescored sd-rescored">Re-scored from ' + r.scoreWas + " to " + r.score + ". See the update log below.</p>";
+    h += '<blockquote class="sd-finding">' + esc(r.finding) + "</blockquote>";
+
+    /* the standard, in the Declaration's own order */
+    h += '<section class="sd-block" id="scorecard">' + head("Scorecard, by article", '<a href="declaration.html">The Declaration →</a>');
+    D.pillars.forEach(function (pl, pi) {
+      var card = r.scorecard && r.scorecard[pl.key];
+      var got = null;
+      if (card) got = card.reduce(function (a, c) { return a + (Number(c.pts) || 0); }, 0);
+      else if (r.pillars && r.pillars[pl.key] != null) got = r.pillars[pl.key];
+      var rows = pl.criteria.map(function (c, ci) {
+        var e = card && card[ci];
+        return "<tr><td>" + esc(c.label) + '</td><td class="pts">' + c.pts + '</td><td class="pts aw">' + (e ? e.pts : "&ndash;") + "</td><td class=\"ev\">" +
+          (e && e.note ? esc(e.note) + (e.src ? ' <a href="' + esc(e.src) + '" rel="noopener">source</a>' : "") : '<span class="ev-empty">Evidence and citation</span>') + "</td></tr>";
+      }).join("");
+      h += '<article class="sd-art' + (pl.heavy ? " heavy" : "") + '" id="art-' + pl.key + '">' +
+        '<header><span class="no">' + NUMERALS[pi] + '</span><div><h3>' + esc(pl.name) + ' <em>' + pl.weight + '% of the score</em></h3><p class="dl">' + esc(pl.decl) + '</p><p class="q">' + esc(pl.question) + "</p></div>" +
+        '<div class="ps"><b>' + (got == null ? "&ndash;" : got) + "</b><span>/100</span></div></header>" +
+        '<table class="dsp-table sd-crit"><thead><tr><th>Criterion</th><th class="pts">Possible</th><th class="pts">Awarded</th><th>Evidence</th></tr></thead><tbody>' + rows + "</tbody></table></article>";
+    });
+    h += "</section>";
+
+    /* exemption penalty + Reality Test */
+    h += '<section class="sd-block" id="adjustments">' + head("Penalty and Reality Test", '<a href="methodology.html#exemptions">How they work →</a>');
+    if (r.comp) {
+      var applied = r.exemptionsApplied || [];
+      h += '<table class="dsp-table sd-ex"><thead><tr><th>Exemption present</th><th class="pts">Deduction</th><th class="pts">Applied</th></tr></thead><tbody>' +
+        D.exemptions.map(function (x, xi) { return "<tr><td>" + esc(x.label) + '</td><td class="pts">&minus;' + x.pts + '</td><td class="pts">' + (r.exemptionsApplied ? (applied.indexOf(xi) !== -1 ? "Yes" : "No") : "&ndash;") + "</td></tr>"; }).join("") +
+        '<tr class="tot"><td>Total deduction (cap ' + D.exemptionCap + ')</td><td></td><td class="pts">' + (r.penalty != null ? "&minus;" + r.penalty : "&ndash;") + "</td></tr></tbody></table>";
+    } else {
+      h += '<div class="sd-hold">No comprehensive statute, so no exemption penalty applies. The absence is already priced into the pillars.</div>';
+    }
+    h += '<div class="sd-reality"><span class="k">Reality Test</span><p>' +
+      (r.reality ? (r.reality.capped ? "<b>Cap applied.</b> " : "<b>No cap.</b> ") + esc(r.reality.note || "") : "Does the law, as it operates, deliver the rights it grants? A cap holds a score at " + D.realityCapScore + " or below. Result recorded with the full audit.") + "</p></div></section>";
+
+    /* the write-up */
+    h += '<section class="sd-block" id="writeup">' + head("The write-up", "Publishes " + pubDate);
+    if (r.writeup && r.writeup.length) h += '<div class="sd-prose">' + r.writeup.map(function (t) { return "<p>" + esc(t) + "</p>"; }).join("") + "</div>";
+    else h += '<div class="sd-hold sd-hold-lg">The article for ' + esc(name) + " goes here: the finding in plain language, the number, and what it means for a resident.</div>";
+    h += "</section>";
+
+    if (r.forecast != null) {
+      var err = r.score - r.forecast;
+      h += '<section class="sd-block" id="forecast">' + head("Forecast vs. audit", "Rankings Hypothesis") +
+        '<div class="sd-forecast"><div><span class="n">' + r.forecast + '</span><span class="l">Pre-registered forecast</span></div>' +
+        '<div><span class="n">' + r.score + '</span><span class="l">Audited score</span></div>' +
+        '<div><span class="n">' + (err > 0 ? "+" : "") + err + '</span><span class="l">Error (audited &minus; forecast)</span></div></div></section>';
+    }
+
+    h += '<section class="sd-block" id="infographic">' + head("The data, one picture") +
+      (r.infographic
+        ? '<figure class="sd-info"><img src="' + esc(r.infographic) + '" alt="Data infographic for ' + esc(name) + '" loading="lazy"></figure>'
+        : '<div class="sd-hold sd-info-slot">Data-only infographic for ' + esc(name) + " publishes with the audit.</div>") + "</section>";
+
+    h += '<section class="sd-block" id="updates">' + head("Updates since audit", "Last verified " + D.fmtDate(r.verified));
+    if (r.updates && r.updates.length) {
+      h += '<ol class="sd-log">' + r.updates.map(function (u) {
+        return "<li><time>" + D.fmtDate(u.date) + "</time><p>" + esc(u.text) + "</p><em>" + esc(u.effect) + "</em></li>";
+      }).join("") + "</ol>";
+    } else {
+      h += '<p class="upd-none">No changes since audit.</p>';
+    }
+    h += '<p class="dsp-footnote">A score changes only when an enacted, in-force change moves a rubric criterion. The ruler stays frozen; the world is allowed to move. <a href="methodology.html#verification">Change policy →</a></p></section>';
+
+    if (r.sources && r.sources.length) {
+      h += '<section class="sd-block" id="sources">' + head("Sources") + '<ul class="sd-sources">' +
+        r.sources.map(function (x) { return '<li><a href="' + esc(x.url) + '" rel="noopener">' + esc(x.title) + "</a></li>"; }).join("") + "</ul></section>";
+    }
+
+    var ordered = D.roster, i = ordered.indexOf(name), prev = ordered[i - 1], next = ordered[i + 1];
+    function nb(n, dir) {
+      if (!n) return "<span></span>";
+      var rec = D.states.filter(function (x) { return x.state === n; })[0];
+      var href = rec ? stateHref(D.slug(n)) : "states.html#" + D.slug(n);
+      return '<a class="sd-' + dir + '" href="' + href + '"><span>' + (dir === "prev" ? "&larr; Previous" : "Next &rarr;") + "</span><b>" + esc(n) + "</b><i>" + (rec ? (rec.status === "reaudit" ? "Under correction" : rec.score + " · " + rec.grade) : "Queued") + "</i></a>";
+    }
+    h += '<nav class="sd-pager" aria-label="Other states">' + nb(prev, "prev") + nb(next, "next") + "</nav>";
+    host.innerHTML = h;
+    document.title = name + " — Digital Sovereignty Audit — Thinkers Dilemma";
+  }
+
+  /* keep the active sub-menu item in view on narrow screens */
+  function revealActiveSubnav() {
+    var a = $(".dsp-subnav a.active"), w = $(".dsp-subnav .wrap");
+    if (a && w && w.scrollWidth > w.clientWidth) w.scrollLeft = Math.max(0, a.offsetLeft - 16);
+  }
+
   /* ---------- boot ------------------------------------------------ */
   function boot() {
     var h;
@@ -355,6 +547,9 @@
     if ((h = slot("exemptions"))) renderExemptions(h);
     if ((h = slot("examples"))) renderExamples(h);
     if ((h = slot("calculator"))) renderCalc(h);
+    if ((h = slot("state-grid"))) renderStateGrid(h);
+    if ((h = slot("state-detail"))) renderStateDetail(h);
+    revealActiveSubnav();
     $$("[data-bind-stat]").forEach(function (el) {
       var st = stats(), k = el.getAttribute("data-bind-stat");
       var map = { n: st.n, top: st.top.score, topState: st.top.state, topGrade: st.top.grade, bottom: st.bottom.score, bottomState: st.bottom.state, spread: st.spread, left: D.totalStates - st.n, nextEntry: D.next.entry, nextState: D.next.state, launch: D.fmtDate(D.launch), verified: D.fmtDate(D.verifiedOn), lastWeek: D.fmtDate(D.weekDate(D.totalStates)), tagline: D.tagline };

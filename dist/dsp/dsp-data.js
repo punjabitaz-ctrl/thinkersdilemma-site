@@ -20,7 +20,7 @@
 
     pillars: [
       {
-        key: "ownership", name: "Ownership", weight: 25, heavy: true,
+        key: "ownership", decl: "Your data is yours. It is not merely about you.", name: "Ownership", weight: 25, heavy: true,
         question: "Is data yours, or merely about you?",
         blurb: "Does the state grant residents an affirmative interest in their own data, or a set of requests they may politely submit?",
         reality: "A right to know that returns a spreadsheet of what you already knew you gave them scores low. The test is whether a resident learns something new, specifically who else now has it.",
@@ -35,7 +35,7 @@
         ]
       },
       {
-        key: "consent", name: "Consent", weight: 15,
+        key: "consent", decl: "Permission is something given. It is not something you failed to refuse.", name: "Consent", weight: 15,
         question: "Was permission given, or merely not successfully refused?",
         blurb: "Does consent mean permission freely given, or the absence of a successfully navigated objection?",
         reality: "Pay-or-consent schemes, where declining tracking costs money, are recorded as a failure of the anti-discrimination criterion regardless of how the statute characterizes them. A right you must purchase is a product.",
@@ -49,7 +49,7 @@
         ]
       },
       {
-        key: "portability", name: "Portability", weight: 15,
+        key: "portability", decl: "You can leave, and you can take the record with you.", name: "Portability", weight: 15,
         question: "Can you leave and take the record with you?",
         blurb: "Can a resident actually leave, or only receive a PDF?",
         reality: "Format is the whole game. A portability right satisfied by a PDF is a right to look, not to leave.",
@@ -62,7 +62,7 @@
         ]
       },
       {
-        key: "erasure", name: "Erasure", weight: 15,
+        key: "erasure", decl: "When you say delete, it dies.", name: "Erasure", weight: 15,
         question: "When you say delete, does it die?",
         blurb: "When a resident demands deletion, does the data actually die, everywhere?",
         reality: "Deletion that stops at the first company is theatre. The data left that building years ago. Propagation and broker coverage are weighted accordingly.",
@@ -75,7 +75,7 @@
         ]
       },
       {
-        key: "accountability", name: "Accountability", weight: 30, heavy: true,
+        key: "accountability", decl: "A right you cannot enforce is a suggestion.", name: "Accountability", weight: 30, heavy: true,
         question: "When violated, what actually happens?",
         blurb: "When this is violated: who can sue, what does it cost, and has anyone actually paid?",
         reality: "This is the pillar where states go to die. Most comprehensive state privacy laws provide no general private right of action, meaning the right belongs to the attorney general, not to you. The last criterion is empirical and non-negotiable: has anyone actually paid? A law never enforced scores zero there, however elegant its text.",
@@ -167,6 +167,9 @@
     ],
 
     next: { entry: 13, state: "Washington", note: "The first audited state where a resident can personally sue over a data violation, if only for health data." },
+    /* All fifty states, alphabetical. Audit status is derived from DSP.states; a state
+       absent from DSP.states is queued. Queue order beyond Entry 13 is not yet fixed. */
+    roster: ["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"],
     watch: ["Louisiana", "Alabama", "Oklahoma", "Vermont"],
     watchNote: "Louisiana and Oklahoma take effect January 1, 2027, Alabama May 1, 2027, Vermont January 1, 2028. The original forecasts assumed none of them had a comprehensive law.",
     preemption: {
@@ -192,6 +195,8 @@
   };
 
   /* ---------- scoring engine (pure) ------------------------------- */
+  DSP.slug = function (name) { return String(name).toLowerCase().replace(/[^a-z]+/g, "-").replace(/^-|-$/g, ""); };
+
   DSP.gradeFor = function (score) {
     var s = Math.max(0, Math.min(100, Math.round(score)));
     for (var i = 0; i < DSP.bands.length; i++) {

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grading System — Thinkers Dilemma</title>
-<meta name="description" content="The Sovereignty Score: five weighted pillars, fixed criteria, the exemption penalty, grade bands, and a calculator to score a state yourself.">
+<title>State Audits — Thinkers Dilemma</title>
+<meta name="description" content="All fifty states graded against the five articles of the Declaration of Digital Sovereignty: scores, criteria, evidence, and a dated log of changes.">
 <meta name="theme-color" content="#F2EBDD">
-<link rel="canonical" href="https://thinkersdilemma.com/dsp/grading.html">
-<meta property="og:title" content="Grading System — Thinkers Dilemma">
-<meta property="og:description" content="The Sovereignty Score: five weighted pillars, fixed criteria, the exemption penalty, grade bands, and a calculator to score a state yourself.">
+<link rel="canonical" href="https://thinkersdilemma.com/dsp/states.html">
+<meta property="og:title" content="State Audits — Thinkers Dilemma">
+<meta property="og:description" content="All fifty states graded against the five articles of the Declaration of Digital Sovereignty: scores, criteria, evidence, and a dated log of changes.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://thinkersdilemma.com/dsp/grading.html">
+<meta property="og:url" content="https://thinkersdilemma.com/dsp/states.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <script>(function(){try{var s=localStorage.getItem("td-theme");var n=s?s==="night":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(n)document.documentElement.setAttribute("data-theme","night");}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,55 +61,30 @@
 <div class="dsp-subnav">
   <div class="wrap">
     <span class="label">Digital Sovereignty Audit</span>
-    <a href="declaration.html">Declaration</a><a href="methodology.html">Methodology</a><a href="grading.html" class="active">Grading system</a><a href="index.html">Leaderboard</a><a href="states.html">State audits</a><a class="back" href="../index.html">← Thinkers Dilemma</a>
+    <a href="declaration.html">Declaration</a><a href="methodology.html">Methodology</a><a href="grading.html">Grading system</a><a href="index.html">Leaderboard</a><a href="states.html" class="active">State audits</a><a class="back" href="../index.html">← Thinkers Dilemma</a>
   </div>
 </div>
 
 
-<main class="wrap">
-  <header class="page-head dsp-head">
+<main class="wrap" id="top">
+  <header class="page-head dsp-head" data-screen-label="State audits — page head">
     <div>
-      <div class="ph-kicker"><span>Grading system</span><span class="sep"></span><span class="muted">Rubric v1.1 · Frozen for the cycle</span></div>
-      <h1 class="ph-title">The <em>Sovereignty</em> Score</h1>
-      <p class="ph-dek">Five pillars, fixed criteria, one number from 0 to 100. Score a state yourself in the calculator below, then check it against the published audits.</p>
+      <div class="ph-kicker"><span>Weekend Edition</span><span class="sep"></span><span class="muted">Digital Sovereignty Audit</span></div>
+      <h1 class="ph-title">State <em>audits</em></h1>
+      <p class="ph-dek">Fifty states, each graded against the five articles of the Declaration on the published rubric. Open an audit to see the score, every criterion behind it, and the dated log of what has changed since.</p>
+      <p class="dsp-asof">Last verified <span data-bind-stat="verified"></span> &middot; Rubric v1.1</p>
     </div>
+    <div class="dsp-countdown" data-dsp="countdown" aria-live="off"></div>
   </header>
-  <nav class="toc" aria-label="On this page">
-    <a href="#formula">Formula</a><a href="#criteria">Pillar criteria</a><a href="#exemption-table">Exemption penalty</a><a href="#bands">Grade bands</a><a href="#calculator">Calculator</a><a href="#examples">Worked examples</a>
-  </nav>
 
-  <section class="dsp-section" id="formula">
-    <div class="formula"><span class="k">The formula</span>
-      <code>Sovereignty Score = (Ownership × 0.25) + (Consent × 0.15) + (Portability × 0.15) + (Erasure × 0.15) + (Accountability × 0.30) − Exemption penalty</code>
-      <p>Each pillar is scored 0 to 100 from the criteria below. The exemption penalty (up to 40) applies only where a comprehensive statute exists. The Reality Test can cap the result at 54. The score is rounded and held between 0 and 100.</p></div>
-  </section>
-
-  <section class="dsp-section" id="criteria">
-    <div class="sec-head"><span class="num">№ 01</span><span class="title">Pillar criteria</span><span class="note">Each pillar totals 100</span></div>
-    <div class="crit-grid" data-dsp="criteria"></div>
-  </section>
-
-  <section class="dsp-section" id="exemption-table">
-    <div class="sec-head"><span class="num">№ 02</span><span class="title">Exemption penalty</span><span class="note">Comprehensive statutes only</span></div>
-    <div class="dsp-prose" style="margin-bottom:18px"><p>Where a state has a comprehensive law, each exemption below that applies is deducted, up to a maximum of 40 points. Where it has no such law, the penalty is not applied (Refinement #1).</p></div>
-    <div style="max-width:760px" data-dsp="exemptions"></div>
-  </section>
-
-  <section class="dsp-section" id="bands">
-    <div class="sec-head"><span class="num">№ 03</span><span class="title">Grade bands</span><span class="note">Hypothesis: none above a C</span></div>
-    <div class="dsp-bands" data-dsp="bands"></div>
-  </section>
-
-  <section class="dsp-section" id="calculator">
-    <div class="sec-head"><span class="num">№ 04</span><span class="title">Score calculator</span><span class="note">Runs in your browser</span></div>
-    <div class="dsp-prose" style="margin-bottom:22px"><p>Score by criterion, or enter pillar totals directly. The calculator uses the same engine as the leaderboard, so a state scored here with the published inputs lands on the published number.</p></div>
-    <div class="calc" data-dsp="calculator"></div>
-  </section>
-
-  <section class="dsp-section" id="examples" style="padding-bottom:24px">
-    <div class="sec-head"><span class="num">№ 05</span><span class="title">Worked examples</span><span class="note">Published pillar scores</span></div>
-    <div class="dsp-examples" data-dsp="examples"></div>
-    <p class="dsp-footnote">Each example is recomputed live from its published pillar scores and checked against the published result.</p>
+  <section class="dsp-section" id="states">
+    <div class="sec-head"><span class="num">&#8470; 01</span><span class="title">All fifty states</span><span class="note">Showing <span data-dsp="state-count">50</span> of 50 &middot; <a href="index.html">Ranked leaderboard &rarr;</a></span></div>
+    <div class="state-tools">
+      <div class="chips" data-dsp="state-filter"></div>
+      <input class="state-search" type="search" placeholder="Find a state" aria-label="Find a state" data-dsp="state-search" autocomplete="off">
+    </div>
+    <div class="state-grid" data-dsp="state-grid"></div>
+    <p class="dsp-footnote">Every audit follows the same template: verdict, a scorecard by Declaration article with each criterion and its evidence, the exemption penalty, the Reality Test, the write-up, and a dated log of changes since the audit.</p>
   </section>
 </main>
 

@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Grading System — Thinkers Dilemma</title>
-<meta name="description" content="The Sovereignty Score: five weighted pillars, fixed criteria, the exemption penalty, grade bands, and a calculator to score a state yourself.">
+<title>New Jersey — State Audit — Thinkers Dilemma</title>
+<meta name="description" content="The Digital Sovereignty Audit of New Jersey: score, grade, criteria, evidence and a dated log of changes.">
 <meta name="theme-color" content="#F2EBDD">
-<link rel="canonical" href="https://thinkersdilemma.com/dsp/grading.html">
-<meta property="og:title" content="Grading System — Thinkers Dilemma">
-<meta property="og:description" content="The Sovereignty Score: five weighted pillars, fixed criteria, the exemption penalty, grade bands, and a calculator to score a state yourself.">
+<link rel="canonical" href="https://thinkersdilemma.com/dsp/state-new-jersey.html">
+<meta property="og:title" content="New Jersey — State Audit — Thinkers Dilemma">
+<meta property="og:description" content="The Digital Sovereignty Audit of New Jersey: score, grade, criteria, evidence and a dated log of changes.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://thinkersdilemma.com/dsp/grading.html">
+<meta property="og:url" content="https://thinkersdilemma.com/dsp/state-new-jersey.html">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <script>(function(){try{var s=localStorage.getItem("td-theme");var n=s?s==="night":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(n)document.documentElement.setAttribute("data-theme","night");}catch(e){}})();</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -61,56 +61,20 @@
 <div class="dsp-subnav">
   <div class="wrap">
     <span class="label">Digital Sovereignty Audit</span>
-    <a href="declaration.html">Declaration</a><a href="methodology.html">Methodology</a><a href="grading.html" class="active">Grading system</a><a href="index.html">Leaderboard</a><a href="states.html">State audits</a><a class="back" href="../index.html">← Thinkers Dilemma</a>
+    <a href="declaration.html">Declaration</a><a href="methodology.html">Methodology</a><a href="grading.html">Grading system</a><a href="index.html">Leaderboard</a><a href="states.html" class="active">State audits</a><a class="back" href="../index.html">← Thinkers Dilemma</a>
   </div>
 </div>
 
 
-<main class="wrap">
-  <header class="page-head dsp-head">
+<main class="wrap" id="top">
+  <p class="sd-crumb"><a href="states.html">State audits</a> &nbsp;/&nbsp; New Jersey</p>
+  <header class="page-head dsp-head" data-screen-label="New Jersey — page head">
     <div>
-      <div class="ph-kicker"><span>Grading system</span><span class="sep"></span><span class="muted">Rubric v1.1 · Frozen for the cycle</span></div>
-      <h1 class="ph-title">The <em>Sovereignty</em> Score</h1>
-      <p class="ph-dek">Five pillars, fixed criteria, one number from 0 to 100. Score a state yourself in the calculator below, then check it against the published audits.</p>
+      <div class="ph-kicker"><span>Digital Sovereignty Audit</span><span class="sep"></span><span class="muted">State audit</span></div>
+      <h1 class="ph-title">New Jersey</h1>
     </div>
   </header>
-  <nav class="toc" aria-label="On this page">
-    <a href="#formula">Formula</a><a href="#criteria">Pillar criteria</a><a href="#exemption-table">Exemption penalty</a><a href="#bands">Grade bands</a><a href="#calculator">Calculator</a><a href="#examples">Worked examples</a>
-  </nav>
-
-  <section class="dsp-section" id="formula">
-    <div class="formula"><span class="k">The formula</span>
-      <code>Sovereignty Score = (Ownership × 0.25) + (Consent × 0.15) + (Portability × 0.15) + (Erasure × 0.15) + (Accountability × 0.30) − Exemption penalty</code>
-      <p>Each pillar is scored 0 to 100 from the criteria below. The exemption penalty (up to 40) applies only where a comprehensive statute exists. The Reality Test can cap the result at 54. The score is rounded and held between 0 and 100.</p></div>
-  </section>
-
-  <section class="dsp-section" id="criteria">
-    <div class="sec-head"><span class="num">№ 01</span><span class="title">Pillar criteria</span><span class="note">Each pillar totals 100</span></div>
-    <div class="crit-grid" data-dsp="criteria"></div>
-  </section>
-
-  <section class="dsp-section" id="exemption-table">
-    <div class="sec-head"><span class="num">№ 02</span><span class="title">Exemption penalty</span><span class="note">Comprehensive statutes only</span></div>
-    <div class="dsp-prose" style="margin-bottom:18px"><p>Where a state has a comprehensive law, each exemption below that applies is deducted, up to a maximum of 40 points. Where it has no such law, the penalty is not applied (Refinement #1).</p></div>
-    <div style="max-width:760px" data-dsp="exemptions"></div>
-  </section>
-
-  <section class="dsp-section" id="bands">
-    <div class="sec-head"><span class="num">№ 03</span><span class="title">Grade bands</span><span class="note">Hypothesis: none above a C</span></div>
-    <div class="dsp-bands" data-dsp="bands"></div>
-  </section>
-
-  <section class="dsp-section" id="calculator">
-    <div class="sec-head"><span class="num">№ 04</span><span class="title">Score calculator</span><span class="note">Runs in your browser</span></div>
-    <div class="dsp-prose" style="margin-bottom:22px"><p>Score by criterion, or enter pillar totals directly. The calculator uses the same engine as the leaderboard, so a state scored here with the published inputs lands on the published number.</p></div>
-    <div class="calc" data-dsp="calculator"></div>
-  </section>
-
-  <section class="dsp-section" id="examples" style="padding-bottom:24px">
-    <div class="sec-head"><span class="num">№ 05</span><span class="title">Worked examples</span><span class="note">Published pillar scores</span></div>
-    <div class="dsp-examples" data-dsp="examples"></div>
-    <p class="dsp-footnote">Each example is recomputed live from its published pillar scores and checked against the published result.</p>
-  </section>
+  <div data-dsp="state-detail" data-state="New Jersey"><noscript><p>The audit for New Jersey needs JavaScript to display.</p></noscript></div>
 </main>
 
 

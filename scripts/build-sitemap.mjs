@@ -49,6 +49,7 @@ function main() {
     { loc: "/dsp/declaration.html", prio: "0.8", freq: "monthly", mod: newest },
     { loc: "/dsp/methodology.html", prio: "0.7", freq: "monthly", mod: newest },
     { loc: "/dsp/grading.html",     prio: "0.7", freq: "monthly", mod: newest },
+    { loc: "/dsp/states.html",      prio: "0.8", freq: "weekly",  mod: newest },
   ];
 
   const essayUrls = essays
