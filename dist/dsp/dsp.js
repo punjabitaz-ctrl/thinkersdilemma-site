@@ -194,7 +194,13 @@
 
   /* ---------- worked examples ------------------------------------- */
   function renderExamples(host) {
+    var liveNames = {}; D.liveStates().forEach(function (r) { liveNames[r.state] = true; });
+    if (!D.examples.some(function (e) { return liveNames[e.state]; })) {
+      host.innerHTML = '<div class="board-empty"><b>Worked examples publish with the audits.</b><p>Each example is a real published audit, scored line by line. They appear here as the states go live, one a week from ' + D.fmtDate(D.launch) + ".</p></div>";
+      return;
+    }
     host.innerHTML = D.examples.map(function (e, idx) {
+      if (!liveNames[e.state]) return "";
       var r = D.score(e.pillars, e.penalty);
       var lines = D.pillars.map(function (p) {
         var v = e.pillars[p.key];
@@ -202,7 +208,7 @@
       }).join("");
       var ok = r.score === e.published;
       return '<article class="example">' +
-        '<header><h3>' + esc(e.state) + '</h3><span class="entry">Entry ' + e.entry + "</span>" + chip(r.band.grade) + "</header>" +
+        '<header><h3>' + esc(e.state) + '</h3><span class="entry">Week ' + D.weekOf(e.state) + "</span>" + chip(r.band.grade) + "</header>" +
         '<table class="dsp-table small"><thead><tr><th>Pillar</th><th class="pts">Score</th><th class="pts">Weight</th><th class="pts">Points</th></tr></thead><tbody>' + lines +
         '<tr class="tot"><td colspan="3">Weighted total</td><td class="pts">' + r.weighted.toFixed(2) + "</td></tr>" +
         '<tr><td colspan="3">Exemption penalty</td><td class="pts">' + (e.comp ? "−" + e.penalty : "N/A") + "</td></tr>" +
@@ -583,14 +589,18 @@
   /* ---------- boot ------------------------------------------------ */
   /* Findings that name specific states appear only once those audits are live. */
   function pruneFindings() {
-    var sec = document.querySelector("[data-findings]"); if (!sec) return;
     var live = {}; D.liveStates().forEach(function (r) { live[r.state] = r.status !== "reaudit"; });
-    var items = $$("[data-needs]", sec), kept = 0;
-    items.forEach(function (el) {
-      var need = el.getAttribute("data-needs"), ok = need === "*" ? Object.keys(live).some(function (k) { return live[k]; }) : need.split(",").every(function (n) { return live[n]; });
-      if (!ok) { el.parentNode.removeChild(el); return; }
-      kept++; var no = $(".no", el); if (no) no.textContent = String(kept).padStart(2, "0");
+    function ok(el) {
+      var need = el.getAttribute("data-needs");
+      return need === "*" ? Object.keys(live).some(function (k) { return live[k]; }) : need.split(",").every(function (n) { return n in live; });
+    }
+    var sec = document.querySelector("[data-findings]"), kept = 0;
+    $$("[data-needs]").forEach(function (el) {
+      var inSec = sec && sec.contains(el);
+      if (!ok(el)) { el.parentNode.removeChild(el); return; }
+      if (inSec) { kept++; var no = $(".no", el); if (no) no.textContent = String(kept).padStart(2, "0"); }
     });
+    if (!sec) return;
     var t = $("[data-find-title]", sec), n = $("[data-find-note]", sec);
     if (!kept) { sec.parentNode.removeChild(sec); }
     else {
