@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="colors_and_type.css">
 <link rel="stylesheet" href="site.css">
 <link rel="stylesheet" href="thumb-art.css">
+<link rel="stylesheet" href="dsp/dsp.css">
 </head>
 <body class="paper-grain" data-page="home">
 
@@ -133,6 +134,20 @@
     <div class="runtext threecol" data-render="home-excerpt"></div>
   </section>
 
+  <!-- DIGITAL SOVEREIGNTY AUDIT -->
+  <section class="dsp-home" id="dsp" data-reveal aria-labelledby="dsp-h">
+    <div class="dh-main">
+      <span class="dh-k">Weekend Edition · A Thinkers Dilemma Series</span>
+      <h2 id="dsp-h">Digital <em>Sovereignty</em> Audit</h2>
+      <p class="dh-dek">If your data were taken from you tomorrow, what could you actually do about it? We grade all fifty states on one published rubric, one state a week.</p>
+      <div class="dh-ctas"><a class="btn" href="dsp/index.html">See the leaderboard</a><a class="btn ghost" href="dsp/declaration.html">Read the Declaration</a></div>
+    </div>
+    <div class="dh-side">
+      <div class="dsp-countdown" data-dsp="countdown" aria-live="off"></div>
+      <div class="dsp-stats dh-stats" data-dsp="stats"></div>
+    </div>
+  </section>
+
   <!-- SECONDARY STORIES -->
   <section style="padding: 40px 0;">
     <div class="sec-head" data-reveal>
@@ -232,6 +247,8 @@
 <script src="render.js"></script>
 <script src="site.js"></script>
 <script src="thumb-art.js"></script>
+<script src="dsp/dsp-data.js"></script>
+<script src="dsp/dsp.js"></script>
 <script src="rss-sync.js"></script>
 </body>
 </html>

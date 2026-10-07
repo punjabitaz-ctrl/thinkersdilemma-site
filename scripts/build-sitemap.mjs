@@ -46,6 +46,7 @@ function main() {
     { loc: "/notes.html",   prio: "0.6", freq: "weekly",  mod: newest },
     { loc: "/about.html",   prio: "0.5", freq: "monthly", mod: newest },
     { loc: "/dsp/",             prio: "0.8", freq: "weekly",  mod: newest },
+    { loc: "/dsp/declaration.html", prio: "0.8", freq: "monthly", mod: newest },
     { loc: "/dsp/methodology.html", prio: "0.7", freq: "monthly", mod: newest },
     { loc: "/dsp/grading.html",     prio: "0.7", freq: "monthly", mod: newest },
   ];
