@@ -12,6 +12,12 @@
     asOf: "Entry 12",
     totalStates: 50,
 
+    /* Launch: Week 1 publishes Nov 5, 2026. Entries 1-12 (already audited) run
+       as Weeks 1-12; Entry N publishes in Week N. Weeks are 7 days apart. */
+    launch: "2026-11-05",
+    verifiedOn: "2026-10-07",
+    tagline: "50 states graded in 50 weeks",
+
     pillars: [
       {
         key: "ownership", name: "Ownership", weight: 25, heavy: true,
@@ -106,24 +112,82 @@
       { min: 0,  max: 19,  grade: "F", short: "The Void", long: "Residents have essentially no recourse." }
     ],
 
-    /* Audited states, Entries 1-12 (Rubric v1.1). Order here is audit order. */
+    /* Audited states, Entries 1-12 (Rubric v1.1). Order here is audit order.
+       verified = date the entry was last checked against primary law.
+       updates  = dated log of post-audit changes. A score changes only when an
+       enacted, in-force change moves a rubric criterion. */
     states: [
-      { entry: 1,  state: "New York",       score: 16, grade: "F", comp: false, finding: "Real enforcement, none of it yours." },
-      { entry: 2,  state: "California",     score: 67, grade: "C", comp: true,  finding: "The only single-request broker deletion in America (DROP). Residents can sue only after a breach." },
-      { entry: 3,  state: "Texas",          score: 48, grade: "D", comp: true,  finding: "About $2.78B in privacy settlements, and no resident can sue." },
-      { entry: 4,  state: "Florida",        score: 21, grade: "E", comp: true,  finding: "A Digital Bill of Rights with a threshold set so high it covers almost no one." },
-      { entry: 5,  state: "Pennsylvania",   score: 19, grade: "F", comp: false, finding: "Residents have standing through consumer-protection law, not privacy law." },
-      { entry: 6,  state: "Illinois",       score: 31, grade: "E", comp: false, finding: "The strongest private remedy in the country, for biometrics only." },
-      { entry: 7,  state: "Ohio",           score: 11, grade: "F", comp: false, finding: "Its national first protects businesses from lawsuits, not residents from harm." },
-      { entry: 8,  state: "Georgia",        score: 20, grade: "E", comp: true,  finding: "Forecast as a Void state, then enacted SB 111 mid-cycle." },
-      { entry: 9,  state: "North Carolina", score: 14, grade: "F", comp: false, finding: "An aggressive attorney general and not one consumer data right." },
-      { entry: 10, state: "Michigan",       score: 12, grade: "F", comp: false, finding: "The first exact forecast of the series (error zero)." },
-      { entry: 11, state: "New Jersey",     score: 46, grade: "D", comp: true,  finding: "Rights like California's, a courthouse door like nobody's." },
-      { entry: 12, state: "Virginia",       score: 33, grade: "E", comp: true,  finding: "The most-copied privacy law in America, with zero enforcement actions in three years." }
+      { entry: 1,  week: 1,  state: "New York",       score: 16, grade: "F", comp: false, verified: "2026-10-07", finding: "Real enforcement, none of it yours.",
+        updates: [
+          { date: "2026-07-28", text: "AG finalized SAFE for Kids Act rules (published July 29). Compliance due January 25, 2027; AG enforcement only.", effect: "No score change. Re-check January 25, 2027." }
+        ] },
+      { entry: 2,  week: 2,  state: "California",     score: 67, grade: "C", comp: true,  verified: "2026-10-07", finding: "The only single-request broker deletion in America (DROP). Residents can sue only after a breach.",
+        updates: [
+          { date: "2026-08-01", text: "Data brokers began processing DROP deletion requests, then every 45 days.", effect: "No score change. No change found to the private right of action." }
+        ] },
+      { entry: 3,  week: 3,  state: "Texas",          score: 48, grade: "D", comp: true,  verified: "2026-10-07", finding: "About $2.78B in privacy settlements, and no resident can sue.",
+        updates: [] },
+      { entry: 4,  week: 4,  state: "Florida",        score: 13, grade: "F", comp: true,  verified: "2026-10-07", finding: "A Digital Bill of Rights with a threshold set so high it covers almost no one.",
+        scoreWas: 21, pillars: { ownership: 35, consent: 40, portability: 38, erasure: 30, accountability: 32 }, penalty: 22,
+        updates: [
+          { date: "2026-06-29", text: "The Roku case under the Digital Bill of Rights concluded: $25M in compliance engineering, no monetary fine, no finding of wrongdoing.", effect: "Re-scored. The enforcement criterion rewards penalties collected, so it stays at 6/20." },
+          { date: "2026-10-07", text: "Arithmetic reconciliation: the published pillar scores (35, 40, 38, 30, 32) weight to 34.55; less the 22-point penalty that is 13, not 21.", effect: "Score corrected from 21 (E) to 13 (F). Pillars and penalty unchanged." }
+        ] },
+      { entry: 5,  week: 5,  state: "Pennsylvania",   score: 19, grade: "F", comp: false, verified: "2026-10-07", finding: "Residents have standing through consumer-protection law, not privacy law.",
+        updates: [
+          { date: "2026-06-24", text: "HB 78, a comprehensive privacy bill, cleared the Senate Communications & Technology Committee. No floor vote found.", effect: "No score change. Pending bills score zero. If enacted, Pennsylvania is re-audited as a comprehensive-law state." }
+        ] },
+      { entry: 6,  week: 6,  state: "Illinois",       score: 31, grade: "E", comp: false, verified: "2026-10-07", finding: "The strongest private remedy in the country, for biometrics only.",
+        updates: [
+          { date: "2026-04-01", text: "Seventh Circuit, Clay v. Union Pacific: the 2024 BIPA amendment applies to pending cases. One recovery per person for repeated collection by the same method.", effect: "No score change. The audit already scored damages as narrowed." }
+        ] },
+      { entry: 7,  week: 7,  state: "Ohio",           score: 11, grade: "F", comp: false, verified: "2026-10-07", finding: "Its national first protects businesses from lawsuits, not residents from harm.",
+        updates: [] },
+      { entry: 8,  week: 8,  state: "Georgia",        score: 20, grade: "E", comp: true,  verified: "2026-10-07", finding: "Forecast as a Void state, then enacted SB 111 mid-cycle.",
+        pillars: { ownership: 44, consent: 38, portability: 48, erasure: 44, accountability: 22 }, penalty: 17,
+        updates: [
+          { date: "2026-07-01", text: "SB 111 (Georgia Consumer Privacy Protection Act) took effect.", effect: "No score change. Already scored as enacted." }
+        ] },
+      { entry: 9,  week: 9,  state: "North Carolina", score: 14, grade: "F", comp: false, verified: "2026-10-07", finding: "An aggressive attorney general and not one consumer data right.",
+        updates: [] },
+      { entry: 10, week: 10, state: "Michigan",       score: 12, grade: "F", comp: false, verified: "2026-10-07", finding: "The first exact forecast of the series (error zero).",
+        updates: [] },
+      { entry: 11, week: 11, state: "New Jersey",     score: 46, grade: "D", comp: true,  verified: "2026-10-07", finding: "Rights like California's, a courthouse door like nobody's.",
+        updates: [
+          { date: "2026-06-02", text: "The Division of Consumer Affairs' proposed regulations expired without adoption. Enforcement rests on the statute alone.", effect: "Under review against the rulemaking criterion." },
+          { date: "2026-06-30", text: "An amendment took effect prohibiting the sale of sensitive data.", effect: "Under review against the consent criteria." }
+        ] },
+      { entry: 12, week: 12, state: "Virginia",       score: 33, grade: "E", comp: true,  verified: "2026-10-07", finding: "The most-copied privacy law in America, and no publicly announced enforcement action found in the Attorney General's releases as of October 7, 2026.",
+        pillars: { ownership: 48, consent: 40, portability: 50, erasure: 48, accountability: 28 }, penalty: 8,
+        updates: [
+          { date: "2026-07-01", text: "SB 388 took effect: a ban on the sale of precise geolocation data, enforced by the Attorney General through the VCDPA.", effect: "No score change." },
+          { date: "2026-10-07", text: "Wording changed from \u201czero enforcement actions\u201d to \u201cno publicly announced enforcement action found,\u201d backed by a dated check of Attorney General news releases.", effect: "No score change." }
+        ] }
     ],
 
     next: { entry: 13, state: "Washington", note: "The first audited state where a resident can personally sue over a data violation, if only for health data." },
-    watch: ["Louisiana", "Alabama", "Oklahoma"]
+    watch: ["Louisiana", "Alabama", "Oklahoma", "Vermont"],
+    watchNote: "Louisiana and Oklahoma take effect January 1, 2027, Alabama May 1, 2027, Vermont January 1, 2028. The original forecasts assumed none of them had a comprehensive law.",
+    preemption: {
+      bill: "SECURE Data Act (H.R. 8413)",
+      text: "Introduced April 22, 2026. Would preempt state privacy laws that \u201crelate to\u201d its provisions, with no private right of action. Early stage. Federal bills are not scored; the rubric grades states."
+    }
+  };
+
+  /* ---------- schedule helpers ------------------------------------ */
+  function parseDay(iso) { var p = iso.split("-"); return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2])); }
+  DSP.weekDate = function (week) { var d = parseDay(DSP.launch); d.setUTCDate(d.getUTCDate() + 7 * (week - 1)); return d; };
+  DSP.fmtDate = function (d) {
+    if (typeof d === "string") d = parseDay(d);
+    return ["January","February","March","April","May","June","July","August","September","October","November","December"][d.getUTCMonth()] + " " + d.getUTCDate() + ", " + d.getUTCFullYear();
+  };
+  /* Where are we in the 50 weeks? now = Date (defaults to today). */
+  DSP.phase = function (now) {
+    var t = (now || new Date()).getTime();
+    var launch = parseDay(DSP.launch).getTime();
+    if (t < launch) return { phase: "pre", days: Math.ceil((launch - t) / 864e5) };
+    var week = Math.min(DSP.totalStates, Math.floor((t - launch) / (7 * 864e5)) + 1);
+    return { phase: week >= DSP.totalStates ? "final" : "live", week: week };
   };
 
   /* ---------- scoring engine (pure) ------------------------------- */

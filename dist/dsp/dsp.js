@@ -40,7 +40,7 @@
       html +=
         '<article class="board-row" data-grade="' + r.grade + '">' +
         '<span class="c-rank">' + (i + 1) + "</span>" +
-        '<div class="c-state"><h3>' + esc(r.state) + '</h3><p>' + esc(r.finding) + '</p><span class="entry">Entry ' + r.entry + " of " + D.totalStates + "</span></div>" +
+        '<div class="c-state"><h3>' + esc(r.state) + '</h3><p>' + esc(r.finding) + '</p><span class="entry">Week ' + r.week + " · Entry " + r.entry + " of " + D.totalStates + " · Verified " + D.fmtDate(r.verified) + "</span>" + rescored(r) + updatesHtml(r) + "</div>" +
         '<span class="c-law ' + (r.comp ? "yes" : "no") + '">' + (r.comp ? "Yes" : "None") + "</span>" +
         '<div class="c-bar"><div class="track" role="img" aria-label="' + esc(r.state) + " scored " + r.score + ' out of 100"><i class="fill g-' + r.grade + '" style="width:' + r.score + '%"></i><b class="tick" style="left:70%"></b></div><span class="num">' + r.score + "</span></div>" +
         '<span class="c-grade">' + chip(r.grade) + "</span></article>";
@@ -73,6 +73,57 @@
     }
     var cnt = slot("board-count");
     if (cnt) cnt.textContent = rows.length;
+  }
+
+  /* ---------- update log helpers ---------------------------------- */
+  function rescored(r) {
+    if (r.scoreWas == null) return "";
+    return '<p class="rescored">Re-scored from ' + r.scoreWas + " to " + r.score + ". See the update log.</p>";
+  }
+  function updatesHtml(r) {
+    if (!r.updates || !r.updates.length) return '<p class="upd-none">No changes since audit.</p>';
+    return '<details class="upd"><summary>Updates since audit (' + r.updates.length + ")</summary><ul>" +
+      r.updates.map(function (u) {
+        return "<li><time>" + D.fmtDate(u.date) + "</time> " + esc(u.text) + ' <em>' + esc(u.effect) + "</em></li>";
+      }).join("") + "</ul></details>";
+  }
+
+  /* ---------- countdown ------------------------------------------- */
+  function renderCountdown(host) {
+    function draw() {
+      var ph = D.phase();
+      var launch = D.fmtDate(D.launch);
+      if (ph.phase === "pre") {
+        var ms = Date.parse(D.launch + "T00:00:00") - Date.now();
+        if (ms < 0) ms = 0;
+        var d = Math.floor(ms / 864e5), h = Math.floor(ms % 864e5 / 36e5), m = Math.floor(ms % 36e5 / 6e4);
+        host.innerHTML = '<div class="cd-label">Week 1 publishes ' + launch + '</div>' +
+          '<div class="cd-clock" role="timer" aria-label="' + d + " days, " + h + " hours, " + m + ' minutes until launch">' +
+          '<div><b>' + d + '</b><span>days</span></div><div><b>' + h + '</b><span>hours</span></div><div><b>' + m + '</b><span>minutes</span></div></div>' +
+          '<div class="cd-tag">' + esc(D.tagline) + "</div>";
+      } else {
+        host.innerHTML = '<div class="cd-label">Now publishing</div><div class="cd-week"><b>Week ' + ph.week + '</b><span>of ' + D.totalStates + "</span></div>" +
+          '<div class="cd-tag">' + esc(D.tagline) + "</div>";
+      }
+    }
+    draw();
+    setInterval(draw, 30000);
+  }
+
+  /* ---------- full update log ------------------------------------- */
+  function renderUpdateLog(host) {
+    var all = [];
+    D.states.forEach(function (s) { (s.updates || []).forEach(function (u) { all.push({ s: s, u: u }); }); });
+    all.sort(function (a, b) { return a.u.date < b.u.date ? 1 : a.u.date > b.u.date ? -1 : 0; });
+    host.innerHTML = '<ol class="logl">' + all.map(function (x) {
+      return "<li><time>" + D.fmtDate(x.u.date) + '</time><b>' + esc(x.s.state) + "</b><p>" + esc(x.u.text) + "</p><em>" + esc(x.u.effect) + "</em></li>";
+    }).join("") + "</ol>";
+  }
+
+  function renderWatch(host) {
+    host.innerHTML = '<div class="watch-box"><h3>Schedule watch</h3><p>' + esc(D.watchNote) + '</p><ul class="watch-list">' +
+      D.watch.map(function (w) { return "<li>" + esc(w) + "</li>"; }).join("") + "</ul></div>" +
+      '<div class="watch-box"><h3>Federal preemption watch</h3><p><b>' + esc(D.preemption.bill) + ".</b> " + esc(D.preemption.text) + "</p></div>";
   }
 
   /* ---------- pillar summary cards -------------------------------- */
@@ -281,6 +332,9 @@
   /* ---------- boot ------------------------------------------------ */
   function boot() {
     var h;
+    if ((h = slot("countdown"))) renderCountdown(h);
+    if ((h = slot("update-log"))) renderUpdateLog(h);
+    if ((h = slot("watch"))) renderWatch(h);
     if ((h = slot("stats"))) renderStats(h);
     if ((h = slot("board"))) renderBoard(h);
     if ((h = slot("pillar-cards"))) renderPillarCards(h);
@@ -291,7 +345,7 @@
     if ((h = slot("calculator"))) renderCalc(h);
     $$("[data-bind-stat]").forEach(function (el) {
       var st = stats(), k = el.getAttribute("data-bind-stat");
-      var map = { n: st.n, top: st.top.score, topState: st.top.state, topGrade: st.top.grade, bottom: st.bottom.score, bottomState: st.bottom.state, spread: st.spread, left: D.totalStates - st.n, nextEntry: D.next.entry, nextState: D.next.state };
+      var map = { n: st.n, top: st.top.score, topState: st.top.state, topGrade: st.top.grade, bottom: st.bottom.score, bottomState: st.bottom.state, spread: st.spread, left: D.totalStates - st.n, nextEntry: D.next.entry, nextState: D.next.state, launch: D.fmtDate(D.launch), verified: D.fmtDate(D.verifiedOn), lastWeek: D.fmtDate(D.weekDate(D.totalStates)), tagline: D.tagline };
       if (k in map) el.textContent = map[k];
     });
   }

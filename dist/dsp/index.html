@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Digital Sovereignty Audit — Thinkers Dilemma</title>
+<meta name="description" content="Fifty states graded on digital sovereignty in fifty weeks. A published rubric, a live leaderboard, and a dated log of every change.">
+<meta name="theme-color" content="#F2EBDD">
+<link rel="canonical" href="https://thinkersdilemma.com/dsp/">
+<meta property="og:title" content="Digital Sovereignty Audit — Thinkers Dilemma">
+<meta property="og:description" content="Fifty states graded on digital sovereignty in fifty weeks. A published rubric, a live leaderboard, and a dated log of every change.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thinkersdilemma.com/dsp/">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<script>(function(){try{var s=localStorage.getItem("td-theme");var n=s?s==="night":(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(n)document.documentElement.setAttribute("data-theme","night");}catch(e){}})();</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500;1,6..72,600;1,6..72,700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=optional">
+<link rel="stylesheet" href="../colors_and_type.css">
+<link rel="stylesheet" href="../site.css">
+<link rel="stylesheet" href="dsp.css">
+</head>
+<body class="paper-grain" data-page="dsp">
+
+<div class="utility">
+  <div class="wrap">
+    <div class="group">
+      <span data-bind="site.dateLine">Friday · May 30 · 2026</span>
+      <span class="dot">·</span>
+      <span>Issue № <span data-bind="site.issueNo">014</span></span>
+    </div>
+    <div class="group">
+      <span data-render="social" style="display:contents"></span>
+      <span class="dot">·</span>
+      <span class="live" data-bind="site.liveLabel">New episode Friday</span>
+    </div>
+  </div>
+</div>
+
+<nav class="mainnav">
+  <div class="wrap">
+    <a href="../index.html" class="mini-mark" aria-label="Thinkers Dilemma — front page">
+      <svg viewBox="0 0 100 100" fill="none">
+        <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="5"/>
+        <line x1="50" y1="4" x2="50" y2="96" stroke="currentColor" stroke-width="5"/>
+        <path d="M50 4 A46 46 0 0 0 50 96 Z" fill="currentColor"/>
+        <circle cx="68" cy="50" r="4" fill="currentColor"/>
+      </svg>
+    </a>
+    <a href="../index.html">Front Page</a>
+    <a href="../essays.html">Essays</a>
+    <a href="../episodes.html">Episodes</a>
+    <a href="../notes.html">Field Notes</a>
+    <a href="../archive.html">Archive</a>
+    <a href="index.html" class="active">Digital Sovereignty</a>
+    <a href="../about.html">About</a>
+    <a href="../index.html#subscribe">Subscribe</a>
+  </div>
+</nav>
+
+<div class="dsp-subnav">
+  <div class="wrap">
+    <span class="label">Digital Sovereignty Audit</span>
+    <a href="index.html" class="active">Leaderboard</a><a href="methodology.html">Methodology</a><a href="grading.html">Grading system</a>
+    <a class="back" href="../index.html">← Thinkers Dilemma</a>
+  </div>
+</div>
+
+
+<main class="wrap" id="top">
+  <header class="page-head dsp-head" data-screen-label="DSP — page head">
+    <div>
+      <div class="ph-kicker"><span>Weekend Edition</span><span class="sep"></span><span class="muted">A Thinkers Dilemma Series</span></div>
+      <h1 class="ph-title">Digital <em>Sovereignty</em> Audit</h1>
+      <p class="ph-dek">Fifty states, one question, graded on a published rubric. If your data were taken from you tomorrow, what could you actually do about it?</p>
+      <p class="dsp-asof">Last verified <span data-bind-stat="verified"></span> · Rubric v1.1</p>
+    </div>
+    <div class="dsp-countdown" data-dsp="countdown" aria-live="off"></div>
+  </header>
+
+  <section class="dsp-section" aria-label="Audit progress">
+    <div class="dsp-stats" data-dsp="stats"></div>
+  </section>
+
+  <div class="dsp-standard" id="standard">
+    <span class="k">The Standard</span>
+    <blockquote>If your data were taken from you tomorrow, sold, leaked, subpoenaed, or used in a way you never agreed to, what, in this state, could you actually do about it?</blockquote>
+    <p class="then">If the honest answer is <b>nothing</b>, the state does not have digital sovereignty. It has a privacy policy.</p>
+  </div>
+
+  <section class="dsp-section" id="leaderboard">
+    <div class="sec-head"><span class="num">№ 01</span><span class="title">The leaderboard</span><span class="note">Showing <span data-dsp="board-count">12</span> of <span data-bind-stat="n"></span> audited · 50 by <span data-bind-stat="lastWeek"></span></span></div>
+    <div class="board-tools"><div class="chips" data-dsp="board-filter"></div></div>
+    <div data-dsp="board"></div>
+  </section>
+
+  <section class="dsp-section" id="findings">
+    <div class="sec-head"><span class="num">№ 02</span><span class="title">What the first twelve show</span><span class="note">Three findings</span></div>
+    <div class="dsp-findings">
+      <div class="dsp-finding"><span class="no">01</span><h3>The best score is a <span data-bind-stat="top"></span>.</h3><p><span data-bind-stat="topState"></span> leads the board with a <span data-bind-stat="topGrade"></span>. No audited state has reached the 70 where a B begins. The hypothesis going in was that none would.</p></div>
+      <div class="dsp-finding"><span class="no">02</span><h3>Money is not sovereignty.</h3><p>Texas has collected about $2.78B in privacy settlements, and no Texas resident has standing to sue. Enforcement dollars and citizen power are different things.</p></div>
+      <div class="dsp-finding"><span class="no">03</span><h3>Having a law is not having a remedy.</h3><p>Virginia, with a comprehensive statute and no publicly announced enforcement action found, outscores Illinois by two points, 33 to 31. Illinois has no comprehensive law and the strongest private remedy in the country, for biometrics only.</p></div>
+    </div>
+  </section>
+
+  <section class="dsp-section" id="pillars">
+    <div class="sec-head"><span class="num">№ 03</span><span class="title">Five pillars, one score</span><span class="note"><a href="grading.html">Full grading system →</a></span></div>
+    <div class="dsp-pillars" data-dsp="pillar-cards"></div>
+    <p class="dsp-footnote">Accountability and Ownership carry the most weight. Accountability is the only pillar that can invalidate the others: a state can score well on the first four and still be worthless if nobody can sue.</p>
+  </section>
+
+  <section class="dsp-section" id="how">
+    <div class="sec-head"><span class="num">№ 04</span><span class="title">How an entry works</span><span class="note"><a href="methodology.html">Methodology →</a></span></div>
+    <div class="dsp-steps">
+      <div class="dsp-step"><h3>Read the statute for its exemptions</h3><p>The audit reads the law the way a lawyer for the other side would, starting with who it leaves out.</p></div>
+      <div class="dsp-step"><h3>Score five pillars from criteria</h3><p>Every pillar is 0 to 100, built from fixed criteria with fixed points. Laws are scored as enacted, never as pending.</p></div>
+      <div class="dsp-step"><h3>Apply the penalty and the Reality Test</h3><p>States with a comprehensive law lose points for exemptions. The Reality Test can cap a score the arithmetic flatters.</p></div>
+      <div class="dsp-step"><h3>Publish the score and the forecast</h3><p>Each entry ships with a 500-word article, a date stamp, and the pre-registered forecast next to the result.</p></div>
+    </div>
+  </section>
+
+  <section class="dsp-section" id="updates">
+    <div class="sec-head"><span class="num">№ 05</span><span class="title">Updates since audit</span><span class="note">Newest first</span></div>
+    <div class="dsp-callout"><span class="k">The policy</span>
+      <p>Every entry carries a date stamp and a dated log of changes since the audit. A score changes only when an enacted, in-force change moves a rubric criterion, and the change is published here. The ruler stays frozen. The world is allowed to move.</p></div>
+    <div data-dsp="update-log"></div>
+  </section>
+
+  <section class="dsp-section" id="watch">
+    <div class="sec-head"><span class="num">№ 06</span><span class="title">On the watch list</span><span class="note">Not scored</span></div>
+    <div class="watch-grid" data-dsp="watch"></div>
+  </section>
+
+  <section class="dsp-section" id="next" style="padding-bottom:24px">
+    <div class="sec-head"><span class="num">№ 07</span><span class="title">Next in the series</span><span class="note">One state a week</span></div>
+    <div class="dsp-next">
+      <div><span class="k">Entry <span data-bind-stat="nextEntry"></span> of 50</span><h3 data-bind-stat="nextState"></h3><p>The first audited state where a resident can personally sue over a data violation, if only for health data.</p></div>
+      <div><span class="k">The weekend edition</span><p>One state graded every week for fifty weeks, with the score, the article and the forecast published together. Free on Substack.</p><a class="btn" href="../index.html#subscribe">Subscribe</a></div>
+    </div>
+  </section>
+</main>
+
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="top">
+      <div class="brand">
+        <div class="wm">Thinkers Dilemma</div>
+        <div class="tag">A work of inquiry</div>
+        <p>Society through a critical lens, asking the tough questions in good faith and at unhurried length.</p>
+      </div>
+      <div class="col"><h4>Read</h4>
+        <a href="../essay-019.html">Latest essay</a>
+        <a href="../essays.html">All essays</a>
+        <a href="index.html">Digital Sovereignty Audit</a>
+        <a href="../index.html#subscribe">Subscribe free</a>
+      </div>
+      <div class="col"><h4>The audit</h4>
+        <a href="index.html">Leaderboard</a>
+        <a href="methodology.html">Methodology</a>
+        <a href="grading.html">Grading system</a>
+        <a href="grading.html#calculator">Score calculator</a>
+      </div>
+      <div class="col"><h4>Connect</h4>
+        <a href="../about.html">About</a>
+        <a href="https://thinkersdilemma.substack.com">Substack</a>
+        <a href="mailto:hello@thinkersdilemma.com">Contact</a>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© MMXXVI Taz Punjabi · Thinkers Dilemma</span>
+      <span>Who benefits? · Who pays? · Who decides?</span>
+    </div>
+  </div>
+</footer>
+
+<script src="../content-substack.js"></script>
+<script src="../render.js"></script>
+<script src="../site.js"></script>
+<script src="dsp-data.js"></script>
+<script src="dsp.js"></script>
+<noscript><p style="text-align:center;font:14px sans-serif;padding:16px">The leaderboard and calculator need JavaScript. Methodology text is readable without it.</p></noscript>
+</body>
+</html>
