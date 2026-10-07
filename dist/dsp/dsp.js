@@ -16,19 +16,27 @@
   function chip(grade) { return '<span class="grade-chip g-' + grade + '" aria-label="Grade ' + grade + '">' + grade + "</span>"; }
 
   /* states withdrawn for re-audit carry no score and are kept out of every statistic */
-  function scored() { return D.states.filter(function (x) { return x.status !== "reaudit"; }); }
-  function pendingStates() { return D.states.filter(function (x) { return x.status === "reaudit"; }); }
+  /* only audits whose week has arrived count; the board, stats and logs grow week by week */
+  function scored() { return D.liveStates().filter(function (x) { return x.status !== "reaudit"; }); }
+  function pendingStates() { return D.liveStates().filter(function (x) { return x.status === "reaudit"; }); }
 
   /* ---------- derived stats (never hard-coded) -------------------- */
   function stats() {
     var s = scored().sort(function (a, b) { return b.score - a.score; });
-    var top = s[0], bottom = s[s.length - 1];
+    var top = s[0] || null, bottom = s[s.length - 1] || null;
     var aboveC = s.filter(function (x) { return x.score >= 70; }).length;
-    return { n: s.length, pending: D.states.length - s.length, top: top, bottom: bottom, spread: top.score - bottom.score, aboveC: aboveC };
+    return { n: s.length, pending: pendingStates().length, top: top, bottom: bottom, spread: top ? top.score - bottom.score : null, aboveC: aboveC };
   }
 
   function renderStats(host) {
     var st = stats();
+    if (!st.n) {
+      host.innerHTML =
+        '<div class="dsp-stat"><span class="n">0<small>/' + D.totalStates + '</small></span><span class="l">Audits published</span></div>' +
+        '<div class="dsp-stat"><span class="n">' + D.weekOf(D.next.state) + '</span><span class="l">Next week<br>' + esc(D.next.state) + " &middot; " + D.fmtDate(D.weekDate(D.weekOf(D.next.state))) + "</span></div>" +
+        '<div class="dsp-stat"><span class="n">' + D.totalStates + '</span><span class="l">Weeks to Wyoming<br>' + D.fmtDate(D.weekDate(D.totalStates)) + "</span></div>";
+      return;
+    }
     host.innerHTML =
       '<div class="dsp-stat"><span class="n">' + st.n + '<small>/' + D.totalStates + '</small></span><span class="l">States audited' + (st.pending ? '<br>+ ' + st.pending + ' under correction' : "") + '</span></div>' +
       '<div class="dsp-stat"><span class="n">' + st.top.score + '</span><span class="l">Highest score<br>' + esc(st.top.state) + " · " + st.top.grade + "</span></div>" +
@@ -39,6 +47,13 @@
   /* ---------- leaderboard ----------------------------------------- */
   function renderBoard(host) {
     var rows = scored().sort(function (a, b) { return b.score - a.score || a.entry - b.entry; });
+    if (!rows.length && !pendingStates().length) {
+      host.innerHTML = '<div class="board-empty"><b>No audits are published yet.</b><p>The leaderboard ranks every state whose audit has gone live, and re-ranks each Thursday as a new one is added. Week 1 is Alabama, ' +
+        D.weekdayName(D.launch) + ", " + D.fmtDate(D.launch) + ", 12:00 a.m. Eastern. Wyoming closes the series on " + D.fmtDate(D.weekDate(D.totalStates)) + ".</p></div>";
+      var c0 = slot("board-count"); if (c0) c0.textContent = 0;
+      var f0 = slot("board-filter"); if (f0) f0.innerHTML = "";
+      return;
+    }
     var html = '<div class="board-head" aria-hidden="true"><span>#</span><span>State</span><span class="c-law">Comprehensive law</span><span class="c-bar">Sovereignty Score</span><span class="c-grade">Grade</span></div>';
     rows.forEach(function (r, i) {
       html +=
@@ -57,13 +72,13 @@
         '<div class="c-bar"><span class="pend-note">Score withdrawn. Republished in Week ' + r.week + ".</span></div>" +
         '<span class="c-grade"><span class="grade-chip g-pending" aria-label="Under correction">?</span></span></article>';
     });
-    html += '<p class="board-foot"><b class="tickkey"></b> The line at 70 is where a B begins. No audited state has crossed it.</p>';
+    html += '<p class="board-foot"><b class="tickkey"></b> The line at 70 is where a B begins.' + (rows.some(function (r) { return r.score >= 70; }) ? "" : " No published state has crossed it.") + "</p>";
     host.innerHTML = html;
 
     var chipsHost = slot("board-filter");
     if (chipsHost) {
       var grades = ["all"].concat(D.bands.map(function (b) { return b.grade; }).filter(function (g) {
-        return D.states.some(function (s) { return s.grade === g; });
+        return D.liveStates().some(function (s) { return s.grade === g; });
       }));
       chipsHost.innerHTML = grades.map(function (g, i) {
         return '<button type="button" class="chip' + (i === 0 ? " active" : "") + '" data-g="' + g + '">' + (g === "all" ? "All" : "Grade " + g) + "</button>";
@@ -125,7 +140,7 @@
   /* ---------- full update log ------------------------------------- */
   function renderUpdateLog(host) {
     var all = [];
-    D.states.forEach(function (s) { (s.updates || []).forEach(function (u) { all.push({ s: s, u: u }); }); });
+    D.liveStates().forEach(function (s) { (s.updates || []).forEach(function (u) { all.push({ s: s, u: u }); }); });
     all.sort(function (a, b) { return a.u.date < b.u.date ? 1 : a.u.date > b.u.date ? -1 : 0; });
     host.innerHTML = '<ol class="logl">' + all.map(function (x) {
       return "<li><time>" + D.fmtDate(x.u.date) + '</time><b>' + esc(x.s.state) + "</b><p>" + esc(x.u.text) + "</p><em>" + esc(x.u.effect) + "</em></li>";
@@ -450,7 +465,13 @@
   function renderStateDetail(host) {
     var name = host.getAttribute("data-state");
     var r = D.states.filter(function (x) { return x.state === name; })[0];
-    if (!r) { host.innerHTML = "<p>This audit has not been published yet.</p>"; return; }
+    if (!r || !D.isLive(r)) {
+      var wk = D.weekOf(name);
+      host.innerHTML = '<section class="sd-locked"><span class="ek">Week ' + wk + " of " + D.totalStates + "</span><h2>The " + esc(name) + " audit publishes <em>" +
+        D.weekdayName(D.weekDate(wk)) + ", " + D.fmtDate(D.weekDate(wk)) + ".</em></h2><p>States publish alphabetically, one a week, from Alabama on " + D.fmtDate(D.launch) +
+        ' to Wyoming on ' + D.fmtDate(D.weekDate(D.totalStates)) + '.</p><a class="up-link" href="states.html#map-' + D.slug(name) + '">See it on the map</a></section>';
+      return;
+    }
     var pending = r.status === "reaudit";
     var band = pending ? null : D.gradeFor(r.score);
     var pubDate = D.fmtDate(D.weekDate(r.week));
@@ -544,7 +565,7 @@
     var ordered = D.roster, i = ordered.indexOf(name), prev = ordered[i - 1], next = ordered[i + 1];
     function nb(n, dir) {
       if (!n) return "<span></span>";
-      var rec = D.states.filter(function (x) { return x.state === n; })[0];
+      var rec = D.liveStates().filter(function (x) { return x.state === n; })[0];
       var href = rec ? stateHref(D.slug(n)) : "states.html#map-" + D.slug(n);
       return '<a class="sd-' + dir + '" href="' + href + '"><span>' + (dir === "prev" ? "&larr; Previous" : "Next &rarr;") + "</span><b>" + esc(n) + "</b><i>" + (rec ? (rec.status === "reaudit" ? "Under correction" : rec.score + " · " + rec.grade) : "Queued") + "</i></a>";
     }
@@ -578,9 +599,17 @@
     revealActiveSubnav();
     $$("[data-bind-stat]").forEach(function (el) {
       var st = stats(), k = el.getAttribute("data-bind-stat");
-      var map = { n: st.n, top: st.top.score, topState: st.top.state, topGrade: st.top.grade, bottom: st.bottom.score, bottomState: st.bottom.state, spread: st.spread, left: D.totalStates - st.n, nextEntry: D.next.entry, nextState: D.next.state, launch: D.fmtDate(D.launch), verified: D.fmtDate(D.verifiedOn), lastWeek: D.fmtDate(D.weekDate(D.totalStates)), tagline: D.tagline };
+      var map = { n: st.n, top: st.top ? st.top.score : "–", topState: st.top ? st.top.state : "–", topGrade: st.top ? st.top.grade : "–", bottom: st.bottom ? st.bottom.score : "–", bottomState: st.bottom ? st.bottom.state : "–", spread: st.spread == null ? "–" : st.spread, left: D.totalStates - st.n, nextEntry: D.next.entry, nextState: D.next.state, launch: D.fmtDate(D.launch), verified: D.fmtDate(D.verifiedOn), lastWeek: D.fmtDate(D.weekDate(D.totalStates)), tagline: D.tagline };
       if (k in map) el.textContent = map[k];
     });
   }
+  /* a page left open re-ranks itself the moment the next audit goes live */
+  (function () {
+    if (D.preview()) return;
+    var at = D.nextChangeAt();
+    if (!at) return;
+    var wait = at - Date.now();
+    if (wait > 0 && wait < 2147483000) setTimeout(function () { location.reload(); }, wait + 500);
+  })();
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot); else boot();
 })();

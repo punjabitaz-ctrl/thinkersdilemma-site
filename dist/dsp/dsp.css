@@ -725,3 +725,15 @@ html[data-theme="night"] .embargo-card { box-shadow: 8px 8px 0 rgba(0,0,0,0.55);
 .vt-empty { background: transparent; border: 1.5px dashed var(--rule); height: 36px; display: block; }
 .hc-skel { height: 190px; border: 1.5px dashed var(--rule); }
 @media (max-width: 860px) { .embargo-body { max-height: 700px; } .embargo-veil { padding-top: 28px; } .embargo-card { top: 110px; padding: 24px 20px 20px; } }
+
+/* ---------- empty leaderboard and not-yet-published state page ---------- */
+.board-empty { border: 1.5px solid var(--ink); background: var(--paper-hi); padding: 28px 28px 24px; margin: 8px 0 4px; }
+.board-empty b { font: 500 clamp(22px, 2.6vw, 28px)/1.2 var(--serif); display: block; margin-bottom: 8px; }
+.board-empty p { font: 400 15px/1.6 var(--sans); color: var(--ink-2); max-width: 62ch; }
+.sd-locked { max-width: 640px; margin: 40px 0 60px; border: 1.5px solid var(--ink); background: var(--paper-hi); padding: 30px 30px 26px; box-shadow: 8px 8px 0 rgba(20,17,14,0.2); }
+html[data-theme="night"] .sd-locked { box-shadow: 8px 8px 0 rgba(0,0,0,0.55); }
+.sd-locked .ek { font: 500 10px/1 var(--mono); letter-spacing: 0.22em; text-transform: uppercase; color: var(--signal); }
+.sd-locked h2 { font: 500 clamp(24px, 3vw, 32px)/1.15 var(--serif); margin: 14px 0 12px; }
+.sd-locked h2 em { color: var(--signal); }
+.sd-locked p { font: 400 15px/1.55 var(--sans); color: var(--ink-2); margin-bottom: 20px; }
+.sd-locked .up-link { display: inline-block; padding: 13px 20px; }

@@ -216,6 +216,15 @@
   DSP.revealed = function () { return DSP.published() || DSP.preview(); };
   /* A state's audit is public once its own week has arrived (or in preview). */
   DSP.isLive = function (rec, now) { return DSP.preview() || (now ? now.getTime() : Date.now()) >= DSP.weekAt(rec.week); };
+  /* The published slice of the schedule: every ranking, count and chart reads this. */
+  DSP.liveStates = function (now) { return DSP.states.filter(function (r) { return DSP.isLive(r, now); }); };
+  /* Next instant the public view changes (launch, then each Thursday), or null after Week 50. */
+  DSP.nextChangeAt = function (now) {
+    var t = (now || new Date()).getTime();
+    if (t < DSP.launchAt) return DSP.launchAt;
+    for (var w = 2; w <= DSP.totalStates; w++) { var a = DSP.weekAt(w); if (a > t) return a; }
+    return null;
+  };
   /* Where are we in the 50 weeks? now = Date (defaults to today). */
   DSP.phase = function (now) {
     var t = (now || new Date()).getTime();
