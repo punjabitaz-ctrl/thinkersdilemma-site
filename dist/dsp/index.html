@@ -95,12 +95,12 @@
     <div data-dsp="viz-dist"></div>
   </section>
 
-  <section class="dsp-section" id="findings">
-    <div class="sec-head"><span class="num">№ 02</span><span class="title">What the first twelve show</span><span class="note">Three findings</span></div>
+  <section class="dsp-section" id="findings" data-findings>
+    <div class="sec-head"><span class="num">№ 02</span><span class="title" data-find-title>What the audits show so far</span><span class="note" data-find-note>Findings</span></div>
     <div class="dsp-findings">
-      <div class="dsp-finding"><span class="no">01</span><h3>The best score is a <span data-bind-stat="top"></span>.</h3><p><span data-bind-stat="topState"></span> leads the board with a <span data-bind-stat="topGrade"></span>. No audited state has reached the 70 where a B begins. The hypothesis going in was that none would.</p></div>
-      <div class="dsp-finding"><span class="no">02</span><h3>Money is not sovereignty.</h3><p>Texas has collected about $2.78B in privacy settlements, and no Texas resident has standing to sue. Enforcement dollars and citizen power are different things.</p></div>
-      <div class="dsp-finding"><span class="no">03</span><h3>Having a law is not having a remedy.</h3><p>Virginia, with a comprehensive statute and no publicly announced enforcement action found, outscores Illinois by two points, 33 to 31. Illinois has no comprehensive law and the strongest private remedy in the country, for biometrics only.</p></div>
+      <div class="dsp-finding" data-needs="*"><span class="no">01</span><h3>The best score is a <span data-bind-stat="top"></span>.</h3><p><span data-bind-stat="topState"></span> leads the board with a <span data-bind-stat="topGrade"></span>. <span data-bind-stat="topClaim"></span></p></div>
+      <div class="dsp-finding" data-needs="Texas"><span class="no">02</span><h3>Money is not sovereignty.</h3><p>Texas has collected about $2.78B in privacy settlements, and no Texas resident has standing to sue. Enforcement dollars and citizen power are different things.</p></div>
+      <div class="dsp-finding" data-needs="Virginia,Illinois"><span class="no">03</span><h3>Having a law is not having a remedy.</h3><p>Virginia, with a comprehensive statute and no publicly announced enforcement action found, outscores Illinois by two points, 33 to 31. Illinois has no comprehensive law and the strongest private remedy in the country, for biometrics only.</p></div>
     </div>
   </section>
 
