@@ -251,7 +251,9 @@ html { scroll-padding-top: 110px; }
   .dsp-subnav .wrap { overflow-x: auto; scrollbar-width: none; flex-wrap: nowrap; }
   .dsp-subnav .wrap::-webkit-scrollbar { display: none; }
   .dsp-subnav .label { display: none; }
-  .dsp-subnav .back { margin-left: 0; }
+  .dsp-subnav .back { display: none; }
+  .dsp-subnav a { padding: 14px 8px; font-size: 10px; letter-spacing: 0.04em; }
+  .dsp-subnav a.active::after { left: 8px; right: 8px; }
   .dsp-stat .n { font-size: 48px; }
   .board-head { display: none; }
   .board-row { grid-template-columns: 32px minmax(0, 1fr) 40px; gap: 6px 14px; align-items: start; }
