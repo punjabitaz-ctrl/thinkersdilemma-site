@@ -77,8 +77,21 @@
     <div class="dsp-countdown" data-dsp="countdown" aria-live="off"></div>
   </header>
 
+  <section class="dsp-section" id="map">
+    <div class="sec-head"><span class="num">&#8470; 01</span><span class="title">The map</span><span class="note">Select a state</span></div>
+    <div data-dsp="us-map"></div>
+  </section>
+
+  <section class="dsp-section" id="glance">
+    <div class="sec-head"><span class="num">&#8470; 02</span><span class="title">The data at a glance</span><span class="note"><a href="index.html#leaderboard">Ranked leaderboard &rarr;</a></span></div>
+    <h3 class="viz-title">Every scored state, by grade band</h3>
+    <div data-dsp="viz-dist"></div>
+    <h3 class="viz-title">Pillar scores, state by state</h3>
+    <div data-dsp="viz-pillar-heat"></div>
+  </section>
+
   <section class="dsp-section" id="states">
-    <div class="sec-head"><span class="num">&#8470; 01</span><span class="title">All fifty states</span><span class="note">Showing <span data-dsp="state-count">50</span> of 50 &middot; <a href="index.html">Ranked leaderboard &rarr;</a></span></div>
+    <div class="sec-head"><span class="num">&#8470; 03</span><span class="title">All fifty states</span><span class="note">Showing <span data-dsp="state-count">50</span> of 50</span></div>
     <div class="state-tools">
       <div class="chips" data-dsp="state-filter"></div>
       <input class="state-search" type="search" placeholder="Find a state" aria-label="Find a state" data-dsp="state-search" autocomplete="off">
@@ -128,7 +141,9 @@
 <script src="../render.js"></script>
 <script src="../site.js"></script>
 <script src="dsp-data.js"></script>
+<script src="us-map-data.js"></script>
 <script src="dsp.js"></script>
+<script src="dsp-viz.js"></script>
 <noscript><p style="text-align:center;font:14px sans-serif;padding:16px">The leaderboard and calculator need JavaScript. Methodology text is readable without it.</p></noscript>
 </body>
 </html>

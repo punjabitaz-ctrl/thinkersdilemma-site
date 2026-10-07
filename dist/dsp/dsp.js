@@ -495,10 +495,10 @@
         '<div><span class="n">' + (err > 0 ? "+" : "") + err + '</span><span class="l">Error (audited &minus; forecast)</span></div></div></section>';
     }
 
-    h += '<section class="sd-block" id="infographic">' + head("The data, one picture") +
+    h += '<section class="sd-block" id="infographic">' + head("The data, in pictures", "Drawn from the scores") +
       (r.infographic
         ? '<figure class="sd-info"><img src="' + esc(r.infographic) + '" alt="Data infographic for ' + esc(name) + '" loading="lazy"></figure>'
-        : '<div class="sd-hold sd-info-slot">Data-only infographic for ' + esc(name) + " publishes with the audit.</div>") + "</section>";
+        : '<div class="viz-host" data-viz-state="' + esc(name) + '"></div>') + "</section>";
 
     h += '<section class="sd-block" id="updates">' + head("Updates since audit", "Last verified " + D.fmtDate(r.verified));
     if (r.updates && r.updates.length) {
@@ -519,7 +519,7 @@
     function nb(n, dir) {
       if (!n) return "<span></span>";
       var rec = D.states.filter(function (x) { return x.state === n; })[0];
-      var href = rec ? stateHref(D.slug(n)) : "states.html#" + D.slug(n);
+      var href = rec ? stateHref(D.slug(n)) : "states.html#map-" + D.slug(n);
       return '<a class="sd-' + dir + '" href="' + href + '"><span>' + (dir === "prev" ? "&larr; Previous" : "Next &rarr;") + "</span><b>" + esc(n) + "</b><i>" + (rec ? (rec.status === "reaudit" ? "Under correction" : rec.score + " · " + rec.grade) : "Queued") + "</i></a>";
     }
     h += '<nav class="sd-pager" aria-label="Other states">' + nb(prev, "prev") + nb(next, "next") + "</nav>";
