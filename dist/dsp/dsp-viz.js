@@ -32,7 +32,7 @@
 
   function rec(name) { return D.states.filter(function (x) { return x.state === name; })[0] || null; }
   function statusOf(name) { var r = rec(name); return !r ? "queued" : (r.status === "reaudit" ? "reaudit" : "audited"); }
-  function scoredList() { return D.states.filter(function (x) { return x.status !== "reaudit" && (!PAGE_GATED || (REV && D.isLive(x))); }); }
+  function scoredList() { return D.liveStates().filter(function (x) { return x.status !== "reaudit"; }); }
   /* what the public may see for a state right now (null = not published yet) */
   function vrec(n) { var r = rec(n); return r && REV && D.isLive(r) ? r : null; }
   function vstatus(n) { var r = vrec(n); return !r ? "queued" : (r.status === "reaudit" ? "reaudit" : "audited"); }
@@ -215,6 +215,7 @@
      ================================================================= */
   function renderDist(host) {
     var sc = scoredList();
+    if (!sc.length) { host.innerHTML = '<p class="vz-cap">No audits are published yet. This chart fills in as each week\u2019s audit goes live.</p>'; return; }
     var cols = D.bands.slice().reverse().map(function (b) {
       var m = sc.filter(function (s) { return s.grade === b.grade; }).sort(function (a, c) { return a.score - c.score; });
       var tiles = m.map(function (s, i) {
@@ -225,7 +226,7 @@
     }).join("");
     var med = median(sc.map(function (s) { return s.score; }));
     var top = sc.slice().sort(function (a, b) { return b.score - a.score; });
-    var pend = D.states.filter(function (x) { return x.status === "reaudit"; });
+    var pend = D.liveStates().filter(function (x) { return x.status === "reaudit"; });
     host.innerHTML = '<div class="vz-dist">' + cols + "</div>" +
       '<p class="vz-cap">' + sc.length + " scored states. Median <b>" + Math.round(med) + "</b>, high <a href=\"" + href(top[0].state) + '">' + esc(top[0].state) + " " + top[0].score + "</a>, low <a href=\"" + href(top[top.length - 1].state) + '">' + esc(top[top.length - 1].state) + " " + top[top.length - 1].score + "</a>." +
       (pend.length ? " " + pend.map(function (p) { return '<a href="' + href(p.state) + '">' + esc(p.state) + "</a>"; }).join(", ") + " is under correction and not shown." : "") +
@@ -239,6 +240,7 @@
   function renderPillarHeat(host) {
     var rows = scoredList().map(function (r) { return { r: r, pil: pillarsFor(r) }; }).filter(function (x) { return x.pil; }).sort(function (a, b) { return b.r.score - a.r.score; });
     var total = scoredList().length;
+    if (!rows.length) { host.innerHTML = '<p class="vz-cap">Pillar scores appear here as each audit goes live.</p>'; return; }
     var head = D.pillars.map(function (p, i) { return '<th scope="col"><a href="declaration.html#art-' + ["i", "ii", "iii", "iv", "v"][i] + '">' + esc(p.name) + "</a><small>" + p.weight + "%</small></th>"; }).join("");
     var body = rows.map(function (x) {
       return '<tr><th scope="row"><a href="' + href(x.r.state) + '">' + esc(x.r.state) + "</a></th>" + D.pillars.map(function (p) {
