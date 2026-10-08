@@ -17,10 +17,10 @@ window.TD_CONTENT = {
     established: "MMXXVI",
     questions: "Who benefits? · Who pays? · Who decides?",
 
-    issueNo: "019",
+    issueNo: "020",
     issueLabel: "The DEI Rollback",
     dateLine: "Tuesday · June 30 · 2026",
-    volume: "Vol. I · No. 019",
+    volume: "Vol. I · No. 020",
     datelineCenter: "Technology, culture, diaspora — <b>asked in good faith</b>",
     readers: 1840,
     liveLabel: "New essay this week",
@@ -31,8 +31,8 @@ window.TD_CONTENT = {
     ],
 
     ticker: [
-      { text: "The AI Replacement Anxiety is Real!", star: true },
-      { text: "New essay · October 4, 2026", hot: true },
+      { text: "Open Source vs. Closed AI", star: true },
+      { text: "New essay · October 8, 2026", hot: true },
       { text: "Who benefits?" },
       { text: "Who pays?", star: true },
       { text: "Who decides?" },
@@ -45,7 +45,7 @@ window.TD_CONTENT = {
       blurb: "A newsletter and podcast at the intersection of technology, culture, diaspora experience, and systems thinking. For people who refuse comfortable answers.",
       columns: [
         { title: "Read", links: [
-          { label: "Latest essay", href: "essay-019.html" },
+          { label: "Latest essay", href: "essay-020.html" },
           { label: "All essays", href: "essays.html" },
           { label: "Subscribe free", href: "index.html#subscribe" },
           { label: "Archive", href: "archive.html" },
@@ -73,18 +73,18 @@ window.TD_CONTENT = {
     /* @gen:lead */ lead: {
       kickerTag: "The lead · Technology",
       kickerCat: "Technology",
-      titleHtml: "The AI Replacement Anxiety is Real!",
-      dek: "Are we asking the right questions?",
-      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; October 4, 2026",
-      plateLabel: "Essay", plateNum: "019", plateName: "The AI Replacement Anxiety",
-      plateSub: "Filed 10 · 04 · 26",
-      href: "essay-019.html"
+      titleHtml: "Open Source vs. Closed AI",
+      dek: "The Battle for the Cognitive Infrastructure of the 21st Century",
+      byline: "By <b>Taz Punjabi</b> &nbsp;·&nbsp; October 8, 2026",
+      plateLabel: "Essay", plateNum: "020", plateName: "Open Source vs. Closed AI",
+      plateSub: "Filed 10 · 08 · 26",
+      href: "essay-020.html"
     } /* @end:lead */,
 
     /* @gen:excerpt */ excerpt: [
-      "Type ‘ will AI take my job ’ into a search engine and watch the volume curve. It is vertical. The answers in most articles are a variation of “maybe” or “here’s a list of safe careers.” But the question itself smuggles in a profound, unexamined assumption: that the nature of work, and the social contract that governs it, is a fixed thing. It is not. It never was.",
-      "The productive question is not which jobs AI replaces. It is what work is actually *for*, and who gets to decide the terms of that purpose when the technology changes the very definition of human contribution. We are about to have that conversation, whether we are prepared for it or not.",
-      "To argue about the future, we must first confront the present. There is a tendency to treat AI impact as a matter of speculation, but the early data provides a concrete, uncomfortable baseline. <a class=\"jump\" href=\"essay-019.html\">Read the full essay</a>"
+      "Somewhere this week, a frontier model trained by a closed lab representing tens of billions of dollars in compute, talent, and curated data sat behind a proprietary API, metering access by the token. The same week, a research consortium released open weights on Hugging Face that approximated ninety percent of that model’s capability and could be run on a single workstation with modest VRAM. This is not merely a developer tools story.",
+      "The question of who can see, modify, and run AI models is a question about democratic access to the cognitive infrastructure of the next century. The architecture decides who gets to participate in the new economy, and by October 2026, that decision is no longer theoretical. It is being written in boardrooms, courts, and sovereign data centers worldwide.",
+      "The vocabulary needs to be precise because the political claims built on it are not. In traditional software, “open source” means you can read, modify, and redistribute the code under a permissive license. In AI, the terrain is more layered, and regulatory frameworks have begun to formalize these distinctions: <a class=\"jump\" href=\"essay-020.html\">Read the full essay</a>"
     ] /* @end:excerpt */,
 
     quote: {
@@ -101,7 +101,13 @@ window.TD_CONTENT = {
 
   /* ---- ESSAYS (real posts, newest first) --------------------------- */
   essays: [
-    { no: "019", cat: "technology", catLabel: "The lead · Technology", lead: true,
+    { no: "020", cat: "technology", catLabel: "The lead · Technology", lead: true,
+      titleHtml: "Open Source vs. Closed AI",
+      dek: "The Battle for the Cognitive Infrastructure of the 21st Century",
+      readMin: 9, date: "October 8, 2026", dateShort: "10 · 08 · 26", year: "2026", type: "Essay",
+      localHref: "essay-020.html", href: "https://thinkersdilemma.substack.com/p/open-source-vs-closed-ai" },
+
+    { no: "019", cat: "technology",
       titleHtml: "The AI Replacement Anxiety is Real!",
       dek: "Are we asking the right questions?",
       readMin: 10, date: "October 4, 2026", dateShort: "10 · 04 · 26", year: "2026", type: "Essay",
@@ -239,10 +245,10 @@ window.TD_CONTENT = {
   /* ---- PAGE INTROS ------------------------------------------------- */
   pages: {
     essays: {
-      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "19 essays · 2026",
+      /* @gen:essays-count */ kicker: "Written inquiry", kickerMuted: "20 essays · 2026",
       titleHtml: "Essays",
-      dek: "19 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
-      sideBig: "19", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
+      dek: "20 essays on technology, culture, diaspora experience, and systems thinking — asking the questions that follow us around.",
+      sideBig: "20", sideLabelHtml: "Essays published<br>since May 2026" /* @end:essays-count */
     },
     episodes: {
       kicker: "Podcast companion", kickerMuted: "Free to listen",
